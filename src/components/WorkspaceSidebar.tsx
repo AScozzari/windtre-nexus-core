@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, CheckSquare, Calendar, MessageCircle, Clock, Bell, AlertCircle, User, Phone, Mail, MapPin, TrendingUp, Zap, Star, CalendarIcon, CalendarDays } from 'lucide-react';
+import { ChevronLeft, ChevronRight, CheckSquare, Calendar, MessageCircle, Clock, Bell, AlertCircle, User, Phone, Mail, MapPin, TrendingUp, Zap, Star, CalendarIcon, CalendarDays, Eye, Edit3, MoreHorizontal, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -621,21 +621,36 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                               {task.descrizione}
                             </p>
                             
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-2">
-                                <Badge variant={
-                                  task.priorita === 'Alta' ? 'destructive' : 
-                                  task.priorita === 'Media' ? 'default' : 'secondary'
-                                } className="text-xs transition-all duration-300 group-hover:scale-105">
-                                  {task.priorita}
-                                </Badge>
-                              </div>
-                              
-                              <span className="text-xs text-muted-foreground flex items-center gap-1 transition-all duration-300 group-hover:text-primary">
-                                <Clock className="h-3 w-3 transition-transform duration-300 group-hover:rotate-12" />
-                                {task.scadenza}
-                              </span>
-                            </div>
+                             <div className="flex items-center justify-between">
+                               <div className="flex items-center gap-2">
+                                 <Badge variant={
+                                   task.priorita === 'Alta' ? 'destructive' : 
+                                   task.priorita === 'Media' ? 'default' : 'secondary'
+                                 } className="text-xs transition-all duration-300 group-hover:scale-105">
+                                   {task.priorita}
+                                 </Badge>
+                               </div>
+                               
+                               <div className="flex items-center gap-1">
+                                 <span className="text-xs text-muted-foreground flex items-center gap-1 transition-all duration-300 group-hover:text-primary">
+                                   <Clock className="h-3 w-3 transition-transform duration-300 group-hover:rotate-12" />
+                                   {task.scadenza}
+                                 </span>
+                                 
+                                 {/* Action shortcuts */}
+                                 <div className="flex items-center gap-1 ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                                   <Button variant="ghost" size="sm" className="h-6 w-6 p-0 hover:bg-primary/10" title="Visualizza">
+                                     <Eye className="h-3 w-3" />
+                                   </Button>
+                                   <Button variant="ghost" size="sm" className="h-6 w-6 p-0 hover:bg-primary/10" title="Modifica">
+                                     <Edit3 className="h-3 w-3" />
+                                   </Button>
+                                   <Button variant="ghost" size="sm" className="h-6 w-6 p-0 hover:bg-destructive/10 text-destructive" title="Elimina">
+                                     <Trash2 className="h-3 w-3" />
+                                   </Button>
+                                 </div>
+                               </div>
+                             </div>
                           </div>
                         </div>
                       </CardContent>
@@ -782,12 +797,17 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                                          <Button variant="outline" size="sm" className="h-5 text-xs px-2 flex-1 min-w-0">
                                            📅 Dettaglio
                                          </Button>
-                                         <Button variant="ghost" size="sm" className="h-5 text-xs px-1 flex-shrink-0">
-                                           ✏️
-                                         </Button>
-                                         <Button variant="ghost" size="sm" className="h-5 text-xs px-1 flex-shrink-0">
-                                           📧
-                                         </Button>
+                                         <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                                           <Button variant="ghost" size="sm" className="h-5 w-5 p-0 hover:bg-primary/10" title="Visualizza">
+                                             <Eye className="h-3 w-3" />
+                                           </Button>
+                                           <Button variant="ghost" size="sm" className="h-5 w-5 p-0 hover:bg-primary/10" title="Modifica">
+                                             <Edit3 className="h-3 w-3" />
+                                           </Button>
+                                           <Button variant="ghost" size="sm" className="h-5 w-5 p-0 hover:bg-secondary/80" title="Altro">
+                                             <MoreHorizontal className="h-3 w-3" />
+                                           </Button>
+                                         </div>
                                        </div>
                                      </div>
                                    </div>
@@ -941,11 +961,26 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                                 </div>
                                 
                                 {/* Compact Location Row */}
-                                <div className="flex items-center gap-1 mt-1 text-xs text-muted-foreground">
-                                  <MapPin className="h-3 w-3 flex-shrink-0" />
-                                  <span className="truncate" title={evento.location}>
-                                    {evento.location}
-                                  </span>
+                                <div className="flex items-center justify-between text-xs">
+                                  <div className="flex items-center gap-1 min-w-0 flex-1">
+                                    <MapPin className="h-3 w-3 flex-shrink-0 text-muted-foreground" />
+                                    <span className="truncate text-muted-foreground" title={evento.location}>
+                                      {evento.location}
+                                    </span>
+                                  </div>
+                                  
+                                  {/* Action shortcuts */}
+                                  <div className="flex items-center gap-1 ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                                    <Button variant="ghost" size="sm" className="h-5 w-5 p-0 hover:bg-primary/10" title="Visualizza">
+                                      <Eye className="h-3 w-3" />
+                                    </Button>
+                                    <Button variant="ghost" size="sm" className="h-5 w-5 p-0 hover:bg-primary/10" title="Modifica">
+                                      <Edit3 className="h-3 w-3" />
+                                    </Button>
+                                    <Button variant="ghost" size="sm" className="h-5 w-5 p-0 hover:bg-secondary/80" title="Altro">
+                                      <MoreHorizontal className="h-3 w-3" />
+                                    </Button>
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -1033,18 +1068,33 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                               {lead.cliente} • {lead.azienda}
                             </p>
                             
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-2">
-                                <Badge variant={lead.priorita === 'Alta' ? 'destructive' : 'secondary'} className="text-xs transition-all duration-300 group-hover:scale-105">
-                                  {lead.priorita}
-                                </Badge>
-                              </div>
-                              
-                              <span className="text-xs text-muted-foreground flex items-center gap-1 transition-all duration-300 group-hover:text-primary">
-                                <Clock className="h-3 w-3 transition-transform duration-300 group-hover:rotate-12" />
-                                {lead.tempo}
-                              </span>
-                            </div>
+                             <div className="flex items-center justify-between">
+                               <div className="flex items-center gap-2">
+                                 <Badge variant={lead.priorita === 'Alta' ? 'destructive' : 'secondary'} className="text-xs transition-all duration-300 group-hover:scale-105">
+                                   {lead.priorita}
+                                 </Badge>
+                               </div>
+                               
+                               <div className="flex items-center gap-1">
+                                 <span className="text-xs text-muted-foreground flex items-center gap-1 transition-all duration-300 group-hover:text-primary">
+                                   <Clock className="h-3 w-3 transition-transform duration-300 group-hover:rotate-12" />
+                                   {lead.tempo}
+                                 </span>
+                                 
+                                 {/* Action shortcuts */}
+                                 <div className="flex items-center gap-1 ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                                   <Button variant="ghost" size="sm" className="h-6 w-6 p-0 hover:bg-primary/10" title="Visualizza">
+                                     <Eye className="h-3 w-3" />
+                                   </Button>
+                                   <Button variant="ghost" size="sm" className="h-6 w-6 p-0 hover:bg-primary/10" title="Modifica">
+                                     <Edit3 className="h-3 w-3" />
+                                   </Button>
+                                   <Button variant="ghost" size="sm" className="h-6 w-6 p-0 hover:bg-green-500/10 text-green-600" title="Chiama">
+                                     <Phone className="h-3 w-3" />
+                                   </Button>
+                                 </div>
+                               </div>
+                             </div>
                           </div>
                         </div>
                       </CardContent>
