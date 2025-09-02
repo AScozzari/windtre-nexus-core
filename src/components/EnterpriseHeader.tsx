@@ -32,11 +32,11 @@ export const EnterpriseHeader = () => {
   ];
 
   return (
-    <header className={`glass-strong border-b border-border/50 relative ${isMobile ? 'p-2' : 'p-4'}`}>
+    <header className={`glass-strong border-b border-border/50 relative ${isMobile ? 'px-3 py-2' : 'p-4'}`}>
       <div className="flex items-center justify-between">
         {/* Left Side - Logo and Navigation */}
         <div className="flex items-center gap-2">
-          <SidebarTrigger className="lg:hidden" />
+          {isMobile && <SidebarTrigger />}
           
           <div className="flex items-center gap-2">
             <img 

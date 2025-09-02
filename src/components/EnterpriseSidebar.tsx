@@ -100,9 +100,9 @@ export function EnterpriseSidebar({ onCollapseChange }: EnterpriseSidebarProps) 
   return (
     <Sidebar
       className={cn(
-        "transition-all duration-300",
+        "transition-all duration-300 bg-sidebar-background backdrop-blur-md border-r border-sidebar-border",
         isMobile 
-          ? "h-[calc(100vh-4rem)] mt-16" 
+          ? "h-[calc(100vh-3rem)] mt-12 z-50" 
           : "mt-20 h-[calc(100vh-5rem)]"
       )}
       collapsible={isMobile ? "offcanvas" : "icon"}
