@@ -1,4 +1,4 @@
-
+import { EnterpriseLayout } from "@/components/EnterpriseLayout";
 import { DashboardStats } from "@/components/DashboardStats";
 import { DashboardCharts } from "@/components/DashboardCharts";
 import { Button } from "@/components/ui/button";
@@ -9,7 +9,7 @@ import heroImage from '@/assets/hero-dashboard.jpg';
 
 const Index = () => {
   return (
-    <div>
+    <EnterpriseLayout>
       {/* Hero Section */}
       <div className="relative mb-8 overflow-hidden rounded-2xl">
         <div 
@@ -133,7 +133,7 @@ const Index = () => {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </EnterpriseLayout>
   );
 };
 

@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,33 +13,33 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useNavigate } from 'react-router-dom';
 
 const windtreLogo = '/lovable-uploads/0729be2a-b1da-4ecc-a1d4-321013db32d6.png';
 
 export const EnterpriseHeader = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [showResults, setShowResults] = useState(false);
+  const navigate = useNavigate();
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 h-16 glass border-b border-border/30 backdrop-blur-xl bg-background/70">
-      <div className="h-full px-4 flex items-center justify-between w-full">
-        {/* Left Side - Logo integrato e Navigation */}
+    <header className="glass-strong border-b border-border/50 p-4 relative">
+      <div className="flex items-center justify-between">
+        {/* Left Side - Logo and Navigation */}
         <div className="flex items-center gap-4">
           <SidebarTrigger className="lg:hidden" />
           
           <div className="flex items-center gap-3">
-            {/* Logo W3 integrato nell'header */}
-            <div className="flex items-center gap-3">
-              <img 
-                src={windtreLogo} 
-                alt="WindTre W3 Logo" 
-                className="h-8 w-auto object-contain"
-              />
-              <div className="hidden sm:block">
-                <h1 className="text-base font-bold bg-gradient-primary bg-clip-text text-transparent leading-tight">
-                  WindTre Enterprise
-                </h1>
-                <p className="text-xs text-muted-foreground">Dashboard Unificato</p>
-              </div>
+            <img 
+              src={windtreLogo} 
+              alt="WindTre W3 Logo" 
+              className="h-10 w-auto object-contain"
+            />
+            <div className="hidden sm:block">
+              <h1 className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+                WindTre Enterprise
+              </h1>
+              <p className="text-xs text-muted-foreground">Multitenant Dashboard</p>
             </div>
           </div>
         </div>
@@ -58,44 +59,23 @@ export const EnterpriseHeader = () => {
 
         {/* Right Side - Actions */}
         <div className="flex items-center gap-2">
-        {/* Tenant Selector */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="glass" size="sm" className="gap-2">
-              <Globe className="h-4 w-4" />
-              <span className="hidden sm:inline">WindTre Retail Nord SRL</span>
-              <Badge variant="secondary" className="ml-1">Milano Centro</Badge>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="glass border-border/50 w-64">
-            <DropdownMenuLabel>Seleziona Ragione Sociale & Negozio</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <div className="flex flex-col">
-                <span className="font-medium">WindTre Retail Nord SRL</span>
-                <span className="text-xs text-muted-foreground">Milano Centro - VIA001 (Attuale)</span>
-              </div>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <div className="flex flex-col">
-                <span className="font-medium">WindTre Retail Centro SRL</span>
-                <span className="text-xs text-muted-foreground">Roma EUR - VIA002</span>
-              </div>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <div className="flex flex-col">
-                <span className="font-medium">WindTre Retail Sud SRL</span>
-                <span className="text-xs text-muted-foreground">Napoli Centro - VIA003</span>
-              </div>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <div className="flex flex-col">
-                <span className="font-medium">WindTre Corporate SPA</span>
-                <span className="text-xs text-muted-foreground">Sede Centrale - HQ001</span>
-              </div>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+          {/* Tenant Selector */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="glass" size="sm" className="gap-2">
+                <Globe className="h-4 w-4" />
+                <span className="hidden sm:inline">Tenant: Corporate</span>
+                <Badge variant="secondary" className="ml-1">PRO</Badge>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="glass border-border/50">
+              <DropdownMenuLabel>Seleziona Tenant</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>Corporate (Attuale)</DropdownMenuItem>
+              <DropdownMenuItem>Branch Milano</DropdownMenuItem>
+              <DropdownMenuItem>Branch Roma</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
 
           {/* Notifications */}
           <Button variant="glass" size="icon" className="relative">

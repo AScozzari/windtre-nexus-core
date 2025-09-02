@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+import { EnterpriseLayout } from "@/components/EnterpriseLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -130,7 +130,7 @@ const Clienti = () => {
   };
 
   return (
-    <div>
+    <EnterpriseLayout>
       {/* Header Section */}
       <div className="mb-8">
         <div className="flex items-center justify-between mb-6">
@@ -332,7 +332,7 @@ const Clienti = () => {
           </CardContent>
         </Card>
       )}
-    </div>
+    </EnterpriseLayout>
   );
 };
 
