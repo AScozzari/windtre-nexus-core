@@ -65,7 +65,6 @@ export const EnterpriseHeader = () => {
               <Button variant="glass" size="sm" className="gap-2">
                 <Globe className="h-4 w-4" />
                 <span className="hidden sm:inline">Tenant: Corporate</span>
-                <Badge variant="secondary" className="ml-1">PRO</Badge>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="glass border-border/50">
