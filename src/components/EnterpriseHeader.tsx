@@ -57,23 +57,44 @@ export const EnterpriseHeader = () => {
 
         {/* Right Side - Actions */}
         <div className="flex items-center gap-2">
-          {/* Tenant Selector */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="glass" size="sm" className="gap-2">
-                <Globe className="h-4 w-4" />
-                <span className="hidden sm:inline">Tenant: Corporate</span>
-                <Badge variant="secondary" className="ml-1">PRO</Badge>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="glass border-border/50">
-              <DropdownMenuLabel>Seleziona Tenant</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Corporate (Attuale)</DropdownMenuItem>
-              <DropdownMenuItem>Branch Milano</DropdownMenuItem>
-              <DropdownMenuItem>Branch Roma</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+        {/* Tenant Selector */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="glass" size="sm" className="gap-2">
+              <Globe className="h-4 w-4" />
+              <span className="hidden sm:inline">WindTre Retail Nord SRL</span>
+              <Badge variant="secondary" className="ml-1">Milano Centro</Badge>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="glass border-border/50 w-64">
+            <DropdownMenuLabel>Seleziona Ragione Sociale & Negozio</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <div className="flex flex-col">
+                <span className="font-medium">WindTre Retail Nord SRL</span>
+                <span className="text-xs text-muted-foreground">Milano Centro - VIA001 (Attuale)</span>
+              </div>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <div className="flex flex-col">
+                <span className="font-medium">WindTre Retail Centro SRL</span>
+                <span className="text-xs text-muted-foreground">Roma EUR - VIA002</span>
+              </div>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <div className="flex flex-col">
+                <span className="font-medium">WindTre Retail Sud SRL</span>
+                <span className="text-xs text-muted-foreground">Napoli Centro - VIA003</span>
+              </div>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <div className="flex flex-col">
+                <span className="font-medium">WindTre Corporate SPA</span>
+                <span className="text-xs text-muted-foreground">Sede Centrale - HQ001</span>
+              </div>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
 
           {/* Notifications */}
           <Button variant="glass" size="icon" className="relative">

@@ -3,20 +3,25 @@ import { NavLink, useLocation } from "react-router-dom";
 import {
   Home,
   Users,
-  Phone,
-  Wifi,
+  FileText,
   CreditCard,
   BarChart3,
   Settings,
   Shield,
-  Globe,
   MessageSquare,
-  FileText,
   Activity,
   Database,
-  Zap,
   ChevronDown,
-  Building2
+  Building2,
+  UserCheck,
+  ClipboardList,
+  Calculator,
+  Bot,
+  Calendar,
+  Award,
+  FolderOpen,
+  Receipt,
+  Zap
 } from "lucide-react";
 import {
   Sidebar,
@@ -44,25 +49,34 @@ const mainNavigation = [
   { title: "Fatturazione", url: "/fatturazione", icon: CreditCard },
 ];
 
-const serviceNavigation = [
-  { title: "Mobile", url: "/servizi/mobile", icon: Phone },
-  { title: "Fibra & WiFi", url: "/servizi/fibra", icon: Wifi },
-  { title: "Energia", url: "/servizi/energia", icon: Zap },
-  { title: "Business", url: "/servizi/business", icon: Building2 },
+const hrNavigation = [
+  { title: "Dipendenti", url: "/hr/dipendenti", icon: UserCheck },
+  { title: "Turni & Orari", url: "/hr/turni", icon: Calendar },
+  { title: "Ferie & Permessi", url: "/hr/ferie", icon: ClipboardList },
+  { title: "Valutazioni", url: "/hr/valutazioni", icon: Award },
+  { title: "Formazione", url: "/hr/formazione", icon: Activity },
 ];
 
-const analyticsNavigation = [
-  { title: "Metriche", url: "/analytics/metriche", icon: BarChart3 },
-  { title: "Performance", url: "/analytics/performance", icon: Activity },
-  { title: "Reports", url: "/analytics/reports", icon: FileText },
+const adminNavigation = [
+  { title: "Documenti", url: "/admin/documenti", icon: FolderOpen },
+  { title: "Procedure", url: "/admin/procedure", icon: ClipboardList },
+  { title: "Audit & Log", url: "/admin/audit", icon: Shield },
+  { title: "Configurazioni", url: "/admin/config", icon: Settings },
+  { title: "Backup", url: "/admin/backup", icon: Database },
 ];
 
-const systemNavigation = [
-  { title: "Configurazione", url: "/sistema/config", icon: Settings },
-  { title: "Sicurezza", url: "/sistema/sicurezza", icon: Shield },
-  { title: "Database", url: "/sistema/database", icon: Database },
-  { title: "API", url: "/sistema/api", icon: Globe },
-  { title: "Support", url: "/sistema/support", icon: MessageSquare },
+const cassaNavigation = [
+  { title: "POS & Vendite", url: "/cassa/pos", icon: Receipt },
+  { title: "Incassi", url: "/cassa/incassi", icon: Calculator },
+  { title: "Chiusure", url: "/cassa/chiusure", icon: CreditCard },
+  { title: "Prodotti", url: "/cassa/prodotti", icon: Building2 },
+];
+
+const aiToolsNavigation = [
+  { title: "Analytics AI", url: "/ai/analytics", icon: BarChart3 },
+  { title: "Chat Bot", url: "/ai/chatbot", icon: MessageSquare },
+  { title: "Automazioni", url: "/ai/automazioni", icon: Zap },
+  { title: "Predizioni", url: "/ai/predizioni", icon: Bot },
 ];
 
 export function EnterpriseSidebar() {
@@ -70,9 +84,10 @@ export function EnterpriseSidebar() {
   const location = useLocation();
   const currentPath = location.pathname;
   
-  const [servicesOpen, setServicesOpen] = useState(true);
-  const [analyticsOpen, setAnalyticsOpen] = useState(false);
-  const [systemOpen, setSystemOpen] = useState(false);
+  const [hrOpen, setHrOpen] = useState(true);
+  const [adminOpen, setAdminOpen] = useState(false);
+  const [cassaOpen, setCassaOpen] = useState(false);
+  const [aiOpen, setAiOpen] = useState(false);
 
   const isCollapsed = state === "collapsed";
   const isActive = (path: string) => currentPath === path;
@@ -123,16 +138,16 @@ export function EnterpriseSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        {/* Services Navigation */}
+        {/* HR Navigation */}
         <SidebarGroup>
-          <Collapsible open={servicesOpen} onOpenChange={setServicesOpen}>
+          <Collapsible open={hrOpen} onOpenChange={setHrOpen}>
             <SidebarGroupLabel asChild>
               <CollapsibleTrigger className="flex w-full items-center justify-between text-windtre-purple font-semibold hover:text-windtre-purple-light transition-colors">
-                {!isCollapsed && "Servizi"}
+                {!isCollapsed && "Risorse Umane"}
                 {!isCollapsed && (
                   <ChevronDown className={cn(
                     "h-4 w-4 transition-transform duration-200",
-                    servicesOpen && "rotate-180"
+                    hrOpen && "rotate-180"
                   )} />
                 )}
               </CollapsibleTrigger>
@@ -140,7 +155,7 @@ export function EnterpriseSidebar() {
             <CollapsibleContent>
               <SidebarGroupContent>
                 <SidebarMenu>
-                  {serviceNavigation.map((item) => (
+                  {hrNavigation.map((item) => (
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton asChild className={getNavClasses(item.url)}>
                         <NavLink to={item.url} className="flex items-center gap-3">
@@ -156,16 +171,16 @@ export function EnterpriseSidebar() {
           </Collapsible>
         </SidebarGroup>
 
-        {/* Analytics Navigation */}
+        {/* Admin Navigation */}
         <SidebarGroup>
-          <Collapsible open={analyticsOpen} onOpenChange={setAnalyticsOpen}>
+          <Collapsible open={adminOpen} onOpenChange={setAdminOpen}>
             <SidebarGroupLabel asChild>
               <CollapsibleTrigger className="flex w-full items-center justify-between text-info font-semibold hover:text-info/80 transition-colors">
-                {!isCollapsed && "Analytics"}
+                {!isCollapsed && "Amministrazione"}
                 {!isCollapsed && (
                   <ChevronDown className={cn(
                     "h-4 w-4 transition-transform duration-200",
-                    analyticsOpen && "rotate-180"
+                    adminOpen && "rotate-180"
                   )} />
                 )}
               </CollapsibleTrigger>
@@ -173,7 +188,7 @@ export function EnterpriseSidebar() {
             <CollapsibleContent>
               <SidebarGroupContent>
                 <SidebarMenu>
-                  {analyticsNavigation.map((item) => (
+                  {adminNavigation.map((item) => (
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton asChild className={getNavClasses(item.url)}>
                         <NavLink to={item.url} className="flex items-center gap-3">
@@ -189,16 +204,16 @@ export function EnterpriseSidebar() {
           </Collapsible>
         </SidebarGroup>
 
-        {/* System Navigation */}
+        {/* Cassa Navigation */}
         <SidebarGroup>
-          <Collapsible open={systemOpen} onOpenChange={setSystemOpen}>
+          <Collapsible open={cassaOpen} onOpenChange={setCassaOpen}>
             <SidebarGroupLabel asChild>
-              <CollapsibleTrigger className="flex w-full items-center justify-between text-muted-foreground font-semibold hover:text-foreground transition-colors">
-                {!isCollapsed && "Sistema"}
+              <CollapsibleTrigger className="flex w-full items-center justify-between text-success font-semibold hover:text-success/80 transition-colors">
+                {!isCollapsed && "Cassa"}
                 {!isCollapsed && (
                   <ChevronDown className={cn(
                     "h-4 w-4 transition-transform duration-200",
-                    systemOpen && "rotate-180"
+                    cassaOpen && "rotate-180"
                   )} />
                 )}
               </CollapsibleTrigger>
@@ -206,7 +221,40 @@ export function EnterpriseSidebar() {
             <CollapsibleContent>
               <SidebarGroupContent>
                 <SidebarMenu>
-                  {systemNavigation.map((item) => (
+                  {cassaNavigation.map((item) => (
+                    <SidebarMenuItem key={item.title}>
+                      <SidebarMenuButton asChild className={getNavClasses(item.url)}>
+                        <NavLink to={item.url} className="flex items-center gap-3">
+                          <item.icon className="h-5 w-5 flex-shrink-0" />
+                          {!isCollapsed && <span>{item.title}</span>}
+                        </NavLink>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  ))}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </CollapsibleContent>
+          </Collapsible>
+        </SidebarGroup>
+
+        {/* AI Tools Navigation */}
+        <SidebarGroup>
+          <Collapsible open={aiOpen} onOpenChange={setAiOpen}>
+            <SidebarGroupLabel asChild>
+              <CollapsibleTrigger className="flex w-full items-center justify-between text-warning font-semibold hover:text-warning/80 transition-colors">
+                {!isCollapsed && "AI Tools"}
+                {!isCollapsed && (
+                  <ChevronDown className={cn(
+                    "h-4 w-4 transition-transform duration-200",
+                    aiOpen && "rotate-180"
+                  )} />
+                )}
+              </CollapsibleTrigger>
+            </SidebarGroupLabel>
+            <CollapsibleContent>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  {aiToolsNavigation.map((item) => (
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton asChild className={getNavClasses(item.url)}>
                         <NavLink to={item.url} className="flex items-center gap-3">
