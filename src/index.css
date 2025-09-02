@@ -2,95 +2,197 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
+/* WindTre Enterprise Design System - Professional glassmorphism design
+All colors based on official WindTre brand palette - HSL format only
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* WindTre Brand Colors */
+    --windtre-orange: 18 100% 50%;        /* #FF6900 - Primary brand orange */
+    --windtre-orange-light: 18 100% 65%;  /* Lighter orange for accents */
+    --windtre-orange-dark: 18 100% 35%;   /* Darker orange for depth */
+    --windtre-purple: 270 67% 47%;        /* #7B2CBF - Secondary brand purple */
+    --windtre-purple-light: 270 67% 65%;  /* Lighter purple */
+    --windtre-purple-dark: 270 67% 30%;   /* Darker purple */
+    
+    /* Glassmorphism Base Colors */
+    --glass-white: 0 0% 100%;
+    --glass-black: 0 0% 0%;
+    --glass-neutral: 210 20% 50%;
+    
+    /* Main Theme Colors */
+    --background: 210 25% 97%;             /* Soft neutral background */
+    --foreground: 210 15% 15%;             /* Dark text */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: var(--glass-white);
+    --card-foreground: 210 15% 15%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: var(--glass-white);
+    --popover-foreground: 210 15% 15%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: var(--windtre-orange);      /* WindTre orange primary */
+    --primary-foreground: var(--glass-white);
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: var(--windtre-purple);    /* WindTre purple secondary */
+    --secondary-foreground: var(--glass-white);
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 210 25% 95%;
+    --muted-foreground: 210 15% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: var(--windtre-orange-light);
+    --accent-foreground: var(--glass-white);
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: var(--glass-white);
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 210 25% 90%;
+    --input: 210 25% 92%;
+    --ring: var(--windtre-orange);
 
-    --radius: 0.5rem;
+    --radius: 1rem;
 
-    --sidebar-background: 0 0% 98%;
+    /* Glassmorphism Effects */
+    --glass-bg: hsla(var(--glass-white), 0.25);
+    --glass-bg-strong: hsla(var(--glass-white), 0.35);
+    --glass-border: hsla(var(--glass-white), 0.18);
+    --glass-shadow: 0 8px 32px hsla(var(--glass-black), 0.1);
+    --glass-blur: blur(16px);
 
-    --sidebar-foreground: 240 5.3% 26.1%;
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--windtre-orange)), hsl(var(--windtre-orange-light)));
+    --gradient-secondary: linear-gradient(135deg, hsl(var(--windtre-purple)), hsl(var(--windtre-purple-light)));
+    --gradient-glass: linear-gradient(135deg, hsla(var(--glass-white), 0.3), hsla(var(--glass-white), 0.1));
+    --gradient-background: linear-gradient(135deg, hsl(210 25% 97%), hsl(210 30% 95%));
 
-    --sidebar-primary: 240 5.9% 10%;
+    /* Enterprise Sidebar */
+    --sidebar-background: hsla(var(--glass-white), 0.15);
+    --sidebar-foreground: 210 15% 25%;
+    --sidebar-primary: var(--windtre-orange);
+    --sidebar-primary-foreground: var(--glass-white);
+    --sidebar-accent: hsla(var(--windtre-orange), 0.1);
+    --sidebar-accent-foreground: 210 15% 25%;
+    --sidebar-border: hsla(var(--glass-white), 0.2);
+    --sidebar-ring: var(--windtre-orange);
 
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Enterprise Status Colors */
+    --success: 120 60% 50%;
+    --success-foreground: var(--glass-white);
+    --warning: 43 100% 50%;
+    --warning-foreground: var(--glass-white);
+    --info: 210 100% 60%;
+    --info-foreground: var(--glass-white);
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 210 25% 8%;
+    --foreground: 210 15% 85%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: hsla(var(--glass-black), 0.4);
+    --card-foreground: 210 15% 85%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: hsla(var(--glass-black), 0.4);
+    --popover-foreground: 210 15% 85%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: var(--windtre-orange);
+    --primary-foreground: var(--glass-white);
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: var(--windtre-purple);
+    --secondary-foreground: var(--glass-white);
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 210 25% 15%;
+    --muted-foreground: 210 15% 65%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: var(--windtre-orange-light);
+    --accent-foreground: var(--glass-white);
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: var(--glass-white);
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 210 25% 20%;
+    --input: 210 25% 18%;
+    --ring: var(--windtre-orange);
+
+    /* Dark Glassmorphism */
+    --glass-bg: hsla(var(--glass-black), 0.25);
+    --glass-bg-strong: hsla(var(--glass-black), 0.35);
+    --glass-border: hsla(var(--glass-white), 0.1);
+    --glass-shadow: 0 8px 32px hsla(var(--glass-black), 0.3);
+
+    --sidebar-background: hsla(var(--glass-black), 0.3);
+    --sidebar-foreground: 210 15% 75%;
+    --sidebar-accent: hsla(var(--windtre-orange), 0.2);
+    --sidebar-accent-foreground: 210 15% 75%;
+    --sidebar-border: hsla(var(--glass-white), 0.1);
+
+    --gradient-background: linear-gradient(135deg, hsl(210 25% 8%), hsl(210 30% 10%));
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    background: var(--gradient-background);
+    min-height: 100vh;
+  }
+
+  /* Glassmorphism Base Classes */
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+  }
+
+  .glass-strong {
+    background: var(--glass-bg-strong);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+  }
+
+  /* Professional Animations */
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+
+  @keyframes glow {
+    from { box-shadow: 0 0 20px hsl(var(--windtre-orange) / 0.2); }
+    to { box-shadow: 0 0 30px hsl(var(--windtre-orange) / 0.4); }
+  }
+
+  /* Enterprise Professional Scrollbars */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--windtre-orange) / 0.3);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--windtre-orange) / 0.5);
   }
 }
 

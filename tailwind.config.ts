@@ -61,7 +61,47 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				// WindTre Brand Colors
+				windtre: {
+					orange: 'hsl(var(--windtre-orange))',
+					'orange-light': 'hsl(var(--windtre-orange-light))',
+					'orange-dark': 'hsl(var(--windtre-orange-dark))',
+					purple: 'hsl(var(--windtre-purple))',
+					'purple-light': 'hsl(var(--windtre-purple-light))',
+					'purple-dark': 'hsl(var(--windtre-purple-dark))'
+				},
+				// Enterprise Status Colors
+				success: {
+					DEFAULT: 'hsl(var(--success))',
+					foreground: 'hsl(var(--success-foreground))'
+				},
+				warning: {
+					DEFAULT: 'hsl(var(--warning))',
+					foreground: 'hsl(var(--warning-foreground))'
+				},
+				info: {
+					DEFAULT: 'hsl(var(--info))',
+					foreground: 'hsl(var(--info-foreground))'
 				}
+			},
+			// Glassmorphism utilities
+			backdropBlur: {
+				'glass': '16px',
+			},
+			backgroundImage: {
+				'gradient-primary': 'var(--gradient-primary)',
+				'gradient-secondary': 'var(--gradient-secondary)',
+				'gradient-glass': 'var(--gradient-glass)',
+			},
+			boxShadow: {
+				'glass': 'var(--glass-shadow)',
+				'glow-orange': '0 0 30px hsl(var(--windtre-orange) / 0.3)',
+				'glow-purple': '0 0 30px hsl(var(--windtre-purple) / 0.3)',
+			},
+			animation: {
+				'float': 'float 6s ease-in-out infinite',
+				'glow': 'glow 2s ease-in-out infinite alternate',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
