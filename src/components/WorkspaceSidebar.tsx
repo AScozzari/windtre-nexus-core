@@ -169,11 +169,6 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
           {/* Header */}
           <div className="mb-4">
             <h2 className="text-lg font-semibold text-purple-600">Workspace</h2>
-            <div className="flex gap-2 mt-2">
-              <Button variant="ghost" size="sm" className="bg-orange-100 text-orange-700 h-7">
-                Nuovo Cliente
-              </Button>
-            </div>
           </div>
 
           {/* Tabs */}
