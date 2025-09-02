@@ -438,7 +438,8 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                 <div className="space-y-3">
                   {tasks.map((task, index) => (
                     <Card key={task.id} className={cn(
-                      "border-border/30 bg-background/50 hover:bg-background/80 transition-all duration-200 cursor-pointer group",
+                      "border-border/30 bg-background/50 transition-all duration-300 cursor-pointer group",
+                      "hover:bg-background/80 hover:scale-[1.02] hover:shadow-lg hover:-translate-y-1",
                       task.completato && "opacity-60"
                     )}
                     onClick={() => toggleTask(task.id)}
@@ -447,7 +448,8 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                         <div className="flex items-start gap-3">
                           {/* Status Icon */}
                           <div className={cn(
-                            "w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors",
+                            "w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-300",
+                            "group-hover:scale-110 group-hover:rotate-3",
                             task.completato 
                               ? "bg-green-50 text-green-600 border border-green-200" 
                               : "bg-muted text-muted-foreground border border-border"
@@ -458,13 +460,14 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                           {/* Content */}
                           <div className="flex-1 min-w-0">
                             <h4 className={cn(
-                              "text-sm font-medium mb-1 group-hover:text-primary transition-colors",
+                              "text-sm font-medium mb-1 transition-all duration-300",
+                              "group-hover:text-primary group-hover:translate-x-1",
                               task.completato && "line-through text-muted-foreground"
                             )}>
                               {task.titolo}
                             </h4>
                             
-                            <p className="text-xs text-muted-foreground mb-2 line-clamp-2">
+                            <p className="text-xs text-muted-foreground mb-2 line-clamp-2 transition-colors duration-300 group-hover:text-foreground/80">
                               {task.descrizione}
                             </p>
                             
@@ -473,13 +476,13 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                                 <Badge variant={
                                   task.priorita === 'Alta' ? 'destructive' : 
                                   task.priorita === 'Media' ? 'default' : 'secondary'
-                                } className="text-xs">
+                                } className="text-xs transition-all duration-300 group-hover:scale-105">
                                   {task.priorita}
                                 </Badge>
                               </div>
                               
-                              <span className="text-xs text-muted-foreground flex items-center gap-1">
-                                <Clock className="h-3 w-3" />
+                              <span className="text-xs text-muted-foreground flex items-center gap-1 transition-all duration-300 group-hover:text-primary">
+                                <Clock className="h-3 w-3 transition-transform duration-300 group-hover:rotate-12" />
                                 {task.scadenza}
                               </span>
                             </div>
@@ -541,14 +544,16 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                 <div className="space-y-3">
                   {eventiCalendario.map((evento, index) => (
                     <Card key={evento.id} className={cn(
-                      "border-border/30 bg-background/50 hover:bg-background/80 transition-all duration-200 cursor-pointer group"
+                      "border-border/30 bg-background/50 transition-all duration-300 cursor-pointer group",
+                      "hover:bg-background/80 hover:scale-[1.02] hover:shadow-lg hover:-translate-y-1"
                     )}
                     >
                       <CardContent className="p-3">
                         <div className="flex items-start gap-3">
                           {/* Time Icon */}
                           <div className={cn(
-                            "w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 text-white transition-colors border",
+                            "w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-300 border",
+                            "group-hover:scale-110 group-hover:rotate-3",
                             evento.colore === 'blue' && "bg-blue-50 text-blue-600 border-blue-200",
                             evento.colore === 'purple' && "bg-purple-50 text-purple-600 border-purple-200", 
                             evento.colore === 'green' && "bg-green-50 text-green-600 border-green-200",
@@ -560,17 +565,17 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                           
                           {/* Content */}
                           <div className="flex-1 min-w-0">
-                            <h4 className="text-sm font-medium mb-1 group-hover:text-primary transition-colors">
+                            <h4 className="text-sm font-medium mb-1 transition-all duration-300 group-hover:text-primary group-hover:translate-x-1">
                               {evento.titolo}
                             </h4>
                             
-                            <p className="text-xs text-muted-foreground mb-2 line-clamp-2">
+                            <p className="text-xs text-muted-foreground mb-2 line-clamp-2 transition-colors duration-300 group-hover:text-foreground/80">
                               {evento.data} • {evento.location}
                             </p>
                             
                             <div className="flex items-center justify-between">
                               <div className="flex items-center gap-2">
-                                <Badge variant="outline" className="text-xs">
+                                <Badge variant="outline" className="text-xs transition-all duration-300 group-hover:scale-105">
                                   {evento.tipo === 'meeting' && 'Riunione'}
                                   {evento.tipo === 'presentation' && 'Presentazione'}
                                   {evento.tipo === 'training' && 'Formazione'}
@@ -578,8 +583,8 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                                 </Badge>
                               </div>
                               
-                              <span className="text-xs text-muted-foreground flex items-center gap-1">
-                                <Clock className="h-3 w-3" />
+                              <span className="text-xs text-muted-foreground flex items-center gap-1 transition-all duration-300 group-hover:text-primary">
+                                <Clock className="h-3 w-3 transition-transform duration-300 group-hover:rotate-12" />
                                 {evento.ora}
                               </span>
                             </div>
@@ -603,7 +608,8 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                 <div className="space-y-3">
                   {leads.map((lead, index) => (
                     <Card key={lead.id} className={cn(
-                      "border-border/30 bg-background/50 hover:bg-background/80 transition-all duration-200 cursor-pointer group",
+                      "border-border/30 bg-background/50 transition-all duration-300 cursor-pointer group",
+                      "hover:bg-background/80 hover:scale-[1.02] hover:shadow-lg hover:-translate-y-1",
                       !lead.letto && "bg-orange-50/30"
                     )}
                     onClick={() => markLeadAsRead(lead.id)}
@@ -612,7 +618,8 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                         <div className="flex items-start gap-3">
                           {/* Status Icon */}
                           <div className={cn(
-                            "w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors border",
+                            "w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-300 border",
+                            "group-hover:scale-110 group-hover:rotate-3",
                             lead.tipo === 'nuovo_lead' ? "bg-blue-50 text-blue-600 border-blue-200" :
                             lead.tipo === 'lead_qualificato' ? "bg-green-50 text-green-600 border-green-200" :
                             lead.tipo === 'appuntamento_fissato' ? "bg-purple-50 text-purple-600 border-purple-200" :
@@ -625,29 +632,29 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                              lead.tipo === 'contratto_in_chiusura' ? <Zap className="h-5 w-5" /> :
                              <Phone className="h-5 w-5" />}
                             {!lead.letto && (
-                              <div className="absolute -top-1 -right-1 w-3 h-3 bg-orange-500 rounded-full" />
+                              <div className="absolute -top-1 -right-1 w-3 h-3 bg-orange-500 rounded-full animate-pulse" />
                             )}
                           </div>
                           
                           {/* Content */}
                           <div className="flex-1 min-w-0">
-                            <h4 className="text-sm font-medium mb-1 group-hover:text-primary transition-colors">
+                            <h4 className="text-sm font-medium mb-1 transition-all duration-300 group-hover:text-primary group-hover:translate-x-1">
                               {lead.messaggio}
                             </h4>
                             
-                            <p className="text-xs text-muted-foreground mb-2 line-clamp-2">
+                            <p className="text-xs text-muted-foreground mb-2 line-clamp-2 transition-colors duration-300 group-hover:text-foreground/80">
                               {lead.cliente} • {lead.azienda}
                             </p>
                             
                             <div className="flex items-center justify-between">
                               <div className="flex items-center gap-2">
-                                <Badge variant={lead.priorita === 'Alta' ? 'destructive' : 'secondary'} className="text-xs">
+                                <Badge variant={lead.priorita === 'Alta' ? 'destructive' : 'secondary'} className="text-xs transition-all duration-300 group-hover:scale-105">
                                   {lead.priorita}
                                 </Badge>
                               </div>
                               
-                              <span className="text-xs text-muted-foreground flex items-center gap-1">
-                                <Clock className="h-3 w-3" />
+                              <span className="text-xs text-muted-foreground flex items-center gap-1 transition-all duration-300 group-hover:text-primary">
+                                <Clock className="h-3 w-3 transition-transform duration-300 group-hover:rotate-12" />
                                 {lead.tempo}
                               </span>
                             </div>
