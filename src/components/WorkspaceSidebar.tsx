@@ -231,9 +231,15 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
             size="sm"
             onClick={() => {
               setActiveTab('tasks');
-              if (isCollapsed && !manualToggle) {
-                setIsCollapsed(false);
-                onCollapseChange?.(false);
+              // Apri sempre il pannello quando clicco un'icona
+              setIsCollapsed(false);
+              onCollapseChange?.(false);
+              // Resetta il flag manualToggle per permettere auto-collapse successivo
+              setManualToggle(false);
+              // Cancella eventuali timeout
+              if (autoCollapseTimeout) {
+                clearTimeout(autoCollapseTimeout);
+                setAutoCollapseTimeout(null);
               }
             }}
             className={cn(
@@ -250,9 +256,15 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
             size="sm"
             onClick={() => {
               setActiveTab('calendar');
-              if (isCollapsed && !manualToggle) {
-                setIsCollapsed(false);
-                onCollapseChange?.(false);
+              // Apri sempre il pannello quando clicco un'icona
+              setIsCollapsed(false);
+              onCollapseChange?.(false);
+              // Resetta il flag manualToggle per permettere auto-collapse successivo
+              setManualToggle(false);
+              // Cancella eventuali timeout
+              if (autoCollapseTimeout) {
+                clearTimeout(autoCollapseTimeout);
+                setAutoCollapseTimeout(null);
               }
             }}
             className={cn(
@@ -269,9 +281,15 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
             size="sm"
             onClick={() => {
               setActiveTab('leads');
-              if (isCollapsed && !manualToggle) {
-                setIsCollapsed(false);
-                onCollapseChange?.(false);
+              // Apri sempre il pannello quando clicco un'icona
+              setIsCollapsed(false);
+              onCollapseChange?.(false);
+              // Resetta il flag manualToggle per permettere auto-collapse successivo
+              setManualToggle(false);
+              // Cancella eventuali timeout
+              if (autoCollapseTimeout) {
+                clearTimeout(autoCollapseTimeout);
+                setAutoCollapseTimeout(null);
               }
             }}
             className={cn(
