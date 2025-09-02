@@ -14,22 +14,19 @@ export const EnterpriseLayout = ({ children }: EnterpriseLayoutProps) => {
   const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(true);
 
   return (
-    <SidebarProvider>
-      {/* Professional Layout Container */}
-      <div className="layout-container">
+    <SidebarProvider defaultOpen={true}>
+      <div className="min-h-screen flex w-full">
+        {/* Left Sidebar */}
+        <EnterpriseSidebar />
         
-        {/* 1. Fixed Header with Glassmorphism */}
-        <EnterpriseHeader />
-        
-        {/* 2. Main Layout Content Area */}
-        <div className="layout-content">
+        {/* Main Content Area */}
+        <div className="flex-1 flex flex-col overflow-hidden">
+          {/* Fixed Header */}
+          <EnterpriseHeader />
           
-          {/* 3. Left Sidebar - Fixed height, no scroll interference */}
-          <EnterpriseSidebar />
-          
-          {/* 4. Central Content - Independent scroll */}
+          {/* Main Content */}
           <main className={cn(
-            "layout-main bg-gradient-to-br from-background to-muted/30",
+            "flex-1 overflow-y-auto bg-gradient-to-br from-background to-muted/30",
             "transition-all duration-500 ease-in-out",
             isRightSidebarOpen ? "mr-96" : "mr-12"
           )}>
@@ -37,15 +34,13 @@ export const EnterpriseLayout = ({ children }: EnterpriseLayoutProps) => {
               {children}
             </div>
           </main>
-          
         </div>
 
-        {/* 5. Right Sidebar - Fixed positioning */}
+        {/* Right Sidebar */}
         <RightSidebar 
           isOpen={isRightSidebarOpen} 
           onToggle={() => setIsRightSidebarOpen(!isRightSidebarOpen)} 
         />
-        
       </div>
     </SidebarProvider>
   );
