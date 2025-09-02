@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Bell, Search, Settings, User, Globe, X } from 'lucide-react';
+import { Bell, Search, Settings, User, Store, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { SidebarTrigger } from '@/components/ui/sidebar';
@@ -70,7 +70,7 @@ export const EnterpriseHeader = () => {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="glass" size="sm" className="gap-2">
-                <Globe className="h-4 w-4" />
+                <Store className="h-4 w-4" />
                 <span className="hidden sm:inline">{selectedStore}</span>
               </Button>
             </DropdownMenuTrigger>
