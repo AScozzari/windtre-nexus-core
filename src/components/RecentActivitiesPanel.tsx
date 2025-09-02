@@ -174,8 +174,7 @@ export const RecentActivitiesPanel = () => {
           {recentActivities.map((activity, index) => (
             <Card 
               key={activity.id} 
-              className="glass-strong border-border/30 hover:glass transition-all duration-200 animate-float"
-              style={{ animationDelay: `${index * 0.05}s` }}
+              className="glass-strong border-border/30 hover:glass transition-all duration-200"
             >
               <CardContent className="p-3">
                 <div className="flex items-start gap-3">
@@ -234,7 +233,7 @@ export const RecentActivitiesPanel = () => {
 
       <div className="p-3 border-t border-border/50">
         <div className="grid grid-cols-2 gap-2">
-          <Button variant="glass" size="sm" className="text-xs h-7">
+          <Button variant="secondary" size="sm" className="text-xs h-7">
             <Activity className="h-3 w-3 mr-1" />
             Log Completo
           </Button>
