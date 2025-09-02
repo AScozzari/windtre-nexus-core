@@ -139,56 +139,83 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
     }
   ]);
 
-  const [eventiCalendario] = useState([
+  const [eventiCalendario, setEventiCalendario] = useState([
     { 
       id: 1,
       titolo: 'Riunione Team Vendite Q1', 
       ora: '14:30', 
-      data: 'Oggi',
+      dataCompleta: new Date(2024, 11, 2), // 2 dicembre 2024
       tipo: 'meeting',
       partecipanti: 8,
       location: 'Sala Conferenze A',
-      colore: 'blue'
+      colore: 'blue',
+      descrizione: 'Revisione obiettivi Q1 e pianificazione strategie commerciali'
     },
     { 
       id: 2,
       titolo: 'Presentazione Risultati Trimestrali', 
       ora: '16:00', 
-      data: 'Oggi',
+      dataCompleta: new Date(2024, 11, 2), // Oggi
       tipo: 'presentation',
       partecipanti: 15,
       location: 'Auditorium Principale',
-      colore: 'purple'
+      colore: 'purple',
+      descrizione: 'Presentazione KPI e risultati del trimestre agli stakeholder'
     },
     { 
       id: 3,
       titolo: 'Training Nuovo Personale Vendite', 
       ora: '09:00', 
-      data: 'Domani',
+      dataCompleta: new Date(2024, 11, 3), // Domani
       tipo: 'training',
       partecipanti: 6,
       location: 'Aula Formazione B',
-      colore: 'green'
+      colore: 'green',
+      descrizione: 'Formazione su prodotti WindTre Business e tecniche di vendita'
     },
     { 
       id: 4,
       titolo: 'Demo Enterprise per Fortune 500', 
       ora: '11:30', 
-      data: 'Domani',
+      dataCompleta: new Date(2024, 11, 3), // Domani
       tipo: 'client',
       partecipanti: 5,
       location: 'Ufficio Direzione',
-      colore: 'orange'
+      colore: 'orange',
+      descrizione: 'Presentazione soluzioni enterprise per cliente multinazionale'
     },
     { 
       id: 5,
       titolo: 'Revisione Budget Marketing', 
       ora: '15:00', 
-      data: 'Mercoledì',
+      dataCompleta: new Date(2024, 11, 4), // Dopodomani
       tipo: 'meeting',
       partecipanti: 4,
       location: 'Sala Riunioni C',
-      colore: 'red'
+      colore: 'red',
+      descrizione: 'Analisi ROI campagne pubblicitarie e allocazione budget 2025'
+    },
+    { 
+      id: 6,
+      titolo: 'Call con Cliente Premium', 
+      ora: '10:00', 
+      dataCompleta: new Date(2024, 11, 5), // 5 dicembre
+      tipo: 'client',
+      partecipanti: 3,
+      location: 'Online - Teams',
+      colore: 'blue',
+      descrizione: 'Follow-up contratto renewal e upselling servizi aggiuntivi'
+    },
+    { 
+      id: 7,
+      titolo: 'Workshop Innovazione Digitale', 
+      ora: '14:00', 
+      dataCompleta: new Date(2024, 11, 6), // 6 dicembre
+      tipo: 'training',
+      partecipanti: 12,
+      location: 'Sala Magna',
+      colore: 'green',
+      descrizione: 'Esplorazione nuove tecnologie 5G e IoT per il business'
     }
   ]);
 
@@ -499,25 +526,35 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="text-sm font-medium">Calendario</h3>
                   <Badge variant="secondary" className="text-xs">
-                    {eventiCalendario.length} eventi
+                    {eventiCalendario.length} eventi totali
                   </Badge>
                 </div>
                 
-                {/* Calendario interattivo */}
+                {/* Calendario interattivo migliorato */}
                 <Card className="border-border/30 bg-background/50 mb-4">
-                  <CardContent className="p-2">
+                  <CardContent className="p-3">
                     <CalendarComponent
                       mode="single"
                       selected={selectedDate}
                       onSelect={setSelectedDate}
                       className={cn("p-0 pointer-events-auto")}
+                      modifiers={{
+                        hasEvents: eventiCalendario.map(evento => evento.dataCompleta)
+                      }}
+                      modifiersStyles={{
+                        hasEvents: { 
+                          backgroundColor: 'hsl(var(--primary))', 
+                          color: 'hsl(var(--primary-foreground))',
+                          fontWeight: 'bold'
+                        }
+                      }}
                       classNames={{
                         months: "space-y-0",
                         month: "space-y-2",
                         caption: "flex justify-center pt-1 relative items-center text-sm",
                         caption_label: "font-medium",
                         nav: "space-x-1 flex items-center",
-                        nav_button: "h-6 w-6 bg-transparent p-0 opacity-50 hover:opacity-100",
+                        nav_button: "h-6 w-6 bg-transparent p-0 opacity-50 hover:opacity-100 transition-opacity",
                         nav_button_previous: "absolute left-1",
                         nav_button_next: "absolute right-1",
                         table: "w-full border-collapse space-y-1",
@@ -525,9 +562,9 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                         head_cell: "text-muted-foreground rounded-md w-8 font-normal text-xs",
                         row: "flex w-full mt-0.5",
                         cell: "text-center text-xs p-0 relative [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
-                        day: "h-8 w-8 p-0 font-normal text-xs aria-selected:opacity-100 hover:bg-accent hover:text-accent-foreground rounded-md",
+                        day: "h-8 w-8 p-0 font-normal text-xs aria-selected:opacity-100 hover:bg-accent hover:text-accent-foreground rounded-md transition-colors",
                         day_selected: "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
-                        day_today: "bg-accent text-accent-foreground",
+                        day_today: "bg-accent text-accent-foreground font-bold",
                         day_outside: "text-muted-foreground opacity-50",
                         day_disabled: "text-muted-foreground opacity-50",
                         day_range_middle: "aria-selected:bg-accent aria-selected:text-accent-foreground",
@@ -537,12 +574,73 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                   </CardContent>
                 </Card>
                 
-                <div className="mb-3">
+                {/* Eventi per la data selezionata */}
+                {selectedDate && (
+                  <Card className="border-border/30 bg-blue-50/30 mb-4">
+                    <CardContent className="p-3">
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="text-sm font-medium">
+                          Eventi per {selectedDate.toLocaleDateString('it-IT', { 
+                            weekday: 'long', 
+                            year: 'numeric', 
+                            month: 'long', 
+                            day: 'numeric' 
+                          })}
+                        </h4>
+                        <Badge variant="outline" className="text-xs">
+                          {eventiCalendario.filter(evento => 
+                            evento.dataCompleta.toDateString() === selectedDate.toDateString()
+                          ).length} eventi
+                        </Badge>
+                      </div>
+                      
+                      {eventiCalendario.filter(evento => 
+                        evento.dataCompleta.toDateString() === selectedDate.toDateString()
+                      ).length === 0 ? (
+                        <p className="text-xs text-muted-foreground">Nessun evento programmato per questa data</p>
+                      ) : (
+                        <div className="space-y-2">
+                          {eventiCalendario
+                            .filter(evento => evento.dataCompleta.toDateString() === selectedDate.toDateString())
+                            .sort((a, b) => a.ora.localeCompare(b.ora))
+                            .map((evento) => (
+                              <div key={evento.id} className="flex items-center gap-2 p-2 rounded-md bg-background/50">
+                                <div className={cn(
+                                  "w-3 h-3 rounded-full",
+                                  evento.colore === 'blue' && "bg-blue-500",
+                                  evento.colore === 'purple' && "bg-purple-500",
+                                  evento.colore === 'green' && "bg-green-500",
+                                  evento.colore === 'orange' && "bg-orange-500",
+                                  evento.colore === 'red' && "bg-red-500"
+                                )} />
+                                <div className="flex-1">
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-xs font-medium">{evento.ora}</span>
+                                    <span className="text-xs">{evento.titolo}</span>
+                                  </div>
+                                  <p className="text-xs text-muted-foreground">{evento.location}</p>
+                                </div>
+                              </div>
+                            ))}
+                        </div>
+                      )}
+                    </CardContent>
+                  </Card>
+                )}
+                
+                <div className="flex items-center justify-between mb-3">
                   <h4 className="text-sm font-medium">Prossimi eventi</h4>
+                  <Badge variant="outline" className="text-xs">
+                    Prossimi 7 giorni
+                  </Badge>
                 </div>
                 
                 <div className="space-y-3">
-                  {eventiCalendario.map((evento, index) => (
+                  {eventiCalendario
+                    .filter(evento => evento.dataCompleta >= new Date())
+                    .sort((a, b) => a.dataCompleta.getTime() - b.dataCompleta.getTime())
+                    .slice(0, 5)
+                    .map((evento, index) => (
                     <Card key={evento.id} className={cn(
                       "border-border/30 bg-background/50 transition-all duration-300 cursor-pointer group",
                       "hover:bg-background/80 hover:scale-[1.02] hover:shadow-lg hover:-translate-y-1",
@@ -552,20 +650,24 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                       evento.colore === 'orange' && "bg-orange-50/30",
                       evento.colore === 'red' && "bg-red-50/30"
                     )}
+                    onClick={() => setSelectedDate(evento.dataCompleta)}
                     >
                       <CardContent className="p-3">
                         <div className="flex items-start gap-3">
-                          {/* Time Icon */}
+                          {/* Date Icon */}
                           <div className={cn(
-                            "w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-300 border",
+                            "w-10 h-10 rounded-lg flex flex-col items-center justify-center flex-shrink-0 transition-all duration-300 border text-xs font-bold",
                             "group-hover:scale-110 group-hover:rotate-3",
-                            evento.colore === 'blue' && "bg-blue-50 text-blue-600 border-blue-200",
-                            evento.colore === 'purple' && "bg-purple-50 text-purple-600 border-purple-200", 
-                            evento.colore === 'green' && "bg-green-50 text-green-600 border-green-200",
-                            evento.colore === 'orange' && "bg-orange-50 text-orange-600 border-orange-200",
-                            evento.colore === 'red' && "bg-red-50 text-red-600 border-red-200"
+                            evento.colore === 'blue' && "bg-blue-500 text-white border-blue-600",
+                            evento.colore === 'purple' && "bg-purple-500 text-white border-purple-600", 
+                            evento.colore === 'green' && "bg-green-500 text-white border-green-600",
+                            evento.colore === 'orange' && "bg-orange-500 text-white border-orange-600",
+                            evento.colore === 'red' && "bg-red-500 text-white border-red-600"
                           )}>
-                            <Calendar className="w-5 h-5" />
+                            <span className="leading-none">{evento.dataCompleta.getDate()}</span>
+                            <span className="leading-none text-xs opacity-90">
+                              {evento.dataCompleta.toLocaleDateString('it-IT', { month: 'short' }).toUpperCase()}
+                            </span>
                           </div>
                           
                           {/* Content */}
@@ -574,24 +676,32 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                               {evento.titolo}
                             </h4>
                             
-                            <p className="text-xs text-muted-foreground mb-2 line-clamp-2 transition-colors duration-300 group-hover:text-foreground/80">
-                              {evento.data} • {evento.location}
+                            <p className="text-xs text-muted-foreground mb-2 line-clamp-1 transition-colors duration-300 group-hover:text-foreground/80">
+                              {evento.descrizione}
                             </p>
                             
                             <div className="flex items-center justify-between">
                               <div className="flex items-center gap-2">
                                 <Badge variant="outline" className="text-xs transition-all duration-300 group-hover:scale-105">
-                                  {evento.tipo === 'meeting' && 'Riunione'}
-                                  {evento.tipo === 'presentation' && 'Presentazione'}
-                                  {evento.tipo === 'training' && 'Formazione'}
-                                  {evento.tipo === 'client' && 'Cliente'}
+                                  {evento.tipo === 'meeting' && '🤝 Riunione'}
+                                  {evento.tipo === 'presentation' && '🎯 Presentazione'}
+                                  {evento.tipo === 'training' && '📚 Formazione'}
+                                  {evento.tipo === 'client' && '👥 Cliente'}
                                 </Badge>
+                                <span className="text-xs text-muted-foreground">{evento.partecipanti}p</span>
                               </div>
                               
-                              <span className="text-xs text-muted-foreground flex items-center gap-1 transition-all duration-300 group-hover:text-primary">
-                                <Clock className="h-3 w-3 transition-transform duration-300 group-hover:rotate-12" />
-                                {evento.ora}
-                              </span>
+                              <div className="flex items-center gap-1">
+                                <Clock className="h-3 w-3 text-muted-foreground transition-transform duration-300 group-hover:rotate-12" />
+                                <span className="text-xs text-muted-foreground transition-all duration-300 group-hover:text-primary">
+                                  {evento.ora}
+                                </span>
+                              </div>
+                            </div>
+                            
+                            <div className="flex items-center gap-1 mt-1">
+                              <MapPin className="h-3 w-3 text-muted-foreground" />
+                              <span className="text-xs text-muted-foreground">{evento.location}</span>
                             </div>
                           </div>
                         </div>
