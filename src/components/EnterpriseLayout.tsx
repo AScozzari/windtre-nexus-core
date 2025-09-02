@@ -41,12 +41,10 @@ export const EnterpriseLayout = ({ children }: EnterpriseLayoutProps) => {
         </div>
 
         {/* 5. Right Sidebar - Fixed positioning */}
-        <div className="layout-sidebar-right">
-          <RightSidebar 
-            isOpen={isRightSidebarOpen} 
-            onToggle={() => setIsRightSidebarOpen(!isRightSidebarOpen)} 
-          />
-        </div>
+        <RightSidebar 
+          isOpen={isRightSidebarOpen} 
+          onToggle={() => setIsRightSidebarOpen(!isRightSidebarOpen)} 
+        />
         
       </div>
     </SidebarProvider>
