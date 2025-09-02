@@ -8,6 +8,9 @@ import Clienti from "./pages/Clienti";
 import Contratti from "./pages/Contratti";
 import Fatturazione from "./pages/Fatturazione";
 import ServiziMobile from "./pages/ServiziMobile";
+import HRDipendenti from "./pages/HRDipendenti";
+import CassaPOS from "./pages/CassaPOS";
+import AIAssistant from "./pages/AIAssistant";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +27,16 @@ const App = () => (
           <Route path="/contratti" element={<Contratti />} />
           <Route path="/fatturazione" element={<Fatturazione />} />
           <Route path="/servizi/mobile" element={<ServiziMobile />} />
+          
+          {/* HR Routes */}
+          <Route path="/hr/dipendenti" element={<HRDipendenti />} />
+          
+          {/* Cassa Routes */}
+          <Route path="/cassa/pos" element={<CassaPOS />} />
+          
+          {/* AI Tools Routes */}
+          <Route path="/ai/assistant" element={<AIAssistant />} />
+          
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
