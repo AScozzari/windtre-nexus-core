@@ -63,29 +63,30 @@ export const RightSidebar = ({ isOpen, onToggle }: RightSidebarProps) => {
 
       {/* Sidebar */}
       <div className={cn(
-        "fixed right-0 top-0 h-full z-50 flex transition-all duration-300",
+        "fixed right-0 top-0 h-full z-50 flex transition-transform duration-500 ease-out",
         isOpen ? "translate-x-0" : "translate-x-full lg:translate-x-[calc(100%-3rem)]"
       )}>
         {/* Toggle Button */}
         <div className="flex flex-col justify-center">
           <Button
-            variant="glass"
+            variant="secondary"
             size="icon"
             onClick={onToggle}
-            className="h-12 w-8 rounded-l-lg rounded-r-none border-r-0 shadow-lg glass-strong"
+            className="h-12 w-8 rounded-l-lg rounded-r-none border-r-0 shadow-lg glass-strong transition-all duration-300 hover:scale-105"
           >
             {isOpen ? (
-              <ChevronRight className="h-4 w-4" />
+              <ChevronRight className="h-4 w-4 transition-transform duration-300" />
             ) : (
-              <ChevronLeft className="h-4 w-4" />
+              <ChevronLeft className="h-4 w-4 transition-transform duration-300" />
             )}
           </Button>
         </div>
 
         {/* Sidebar Content */}
         <div className={cn(
-          "glass-strong border-l border-border/50 h-full flex flex-col shadow-2xl",
-          "w-80 lg:w-96"
+          "glass-strong border-l border-border/50 h-full flex flex-col shadow-2xl transition-all duration-500",
+          "w-80 lg:w-96",
+          isOpen ? "opacity-100" : "opacity-95"
         )}>
           {/* Header with Tabs */}
           <div className="border-b border-border/50 p-4">

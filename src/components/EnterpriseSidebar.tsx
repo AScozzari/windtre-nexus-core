@@ -49,6 +49,13 @@ const mainNavigation = [
   { title: "Fatturazione", url: "/fatturazione", icon: CreditCard },
 ];
 
+const crmNavigation = [
+  { title: "Lead Management", url: "/crm/leads", icon: Users },
+  { title: "Centro Comunicazioni", url: "/crm/comunicazione", icon: MessageSquare },
+  { title: "Pipeline Vendite", url: "/crm/pipeline", icon: BarChart3 },
+  { title: "GTM Analytics", url: "/crm/analytics", icon: Activity },
+];
+
 const hrNavigation = [
   { title: "Dipendenti", url: "/hr/dipendenti", icon: UserCheck },
   { title: "Turni & Orari", url: "/hr/turni", icon: Calendar },
@@ -85,6 +92,7 @@ export function EnterpriseSidebar() {
   const currentPath = location.pathname;
   
   const [hrOpen, setHrOpen] = useState(true);
+  const [crmOpen, setCrmOpen] = useState(false);
   const [adminOpen, setAdminOpen] = useState(false);
   const [cassaOpen, setCassaOpen] = useState(false);
   const [aiOpen, setAiOpen] = useState(false);
@@ -136,6 +144,39 @@ export function EnterpriseSidebar() {
               ))}
             </SidebarMenu>
           </SidebarGroupContent>
+        </SidebarGroup>
+
+        {/* CRM Navigation */}
+        <SidebarGroup>
+          <Collapsible open={crmOpen} onOpenChange={setCrmOpen}>
+            <SidebarGroupLabel asChild>
+              <CollapsibleTrigger className="flex w-full items-center justify-between text-windtre-orange font-semibold hover:text-windtre-orange-light transition-colors">
+                {!isCollapsed && "CRM & Vendite"}
+                {!isCollapsed && (
+                  <ChevronDown className={cn(
+                    "h-4 w-4 transition-transform duration-200",
+                    crmOpen && "rotate-180"
+                  )} />
+                )}
+              </CollapsibleTrigger>
+            </SidebarGroupLabel>
+            <CollapsibleContent>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  {crmNavigation.map((item) => (
+                    <SidebarMenuItem key={item.title}>
+                      <SidebarMenuButton asChild className={getNavClasses(item.url)}>
+                        <NavLink to={item.url} className="flex items-center gap-3">
+                          <item.icon className="h-5 w-5 flex-shrink-0" />
+                          {!isCollapsed && <span>{item.title}</span>}
+                        </NavLink>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  ))}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </CollapsibleContent>
+          </Collapsible>
         </SidebarGroup>
 
         {/* HR Navigation */}
