@@ -27,8 +27,10 @@ export const EnterpriseLayout = ({ children }: EnterpriseLayoutProps) => {
           {/* Contenuto principale */}
           <div className="flex-1 flex flex-col min-w-0">
             <div className={cn("flex flex-1", isRightSidebarOpen ? "lg:pr-96" : "lg:pr-12")}>
-              <main className="flex-1 p-6 bg-gradient-to-br from-background to-muted/30 overflow-y-auto">
-                {children}
+              <main className="flex-1 p-6 bg-gradient-to-br from-background to-muted/30 overflow-y-auto overflow-x-hidden max-w-full">
+                <div className="max-w-full">
+                  {children}
+                </div>
               </main>
             </div>
           </div>
