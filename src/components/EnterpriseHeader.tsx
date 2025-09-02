@@ -21,22 +21,23 @@ export const EnterpriseHeader = () => {
   return (
     <header className="fixed top-0 left-0 right-0 z-40 h-16 glass-strong border-b border-border/50 shadow-lg">
       <div className="h-full px-4 flex items-center justify-between">
-        {/* Left Side - Logo and Navigation */}
+        {/* Left Side - Logo integrato e Navigation */}
         <div className="flex items-center gap-4">
           <SidebarTrigger className="lg:hidden" />
           
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/20">
+          <div className="flex items-center gap-3">
+            {/* Logo W3 integrato nell'header */}
+            <div className="flex items-center gap-3 px-3 py-2 rounded-lg bg-gradient-to-r from-windtre-orange/10 to-windtre-purple/10 border border-windtre-orange/20">
               <img 
                 src={windtreLogo} 
                 alt="WindTre W3 Logo" 
-                className="h-8 w-auto object-contain"
+                className="h-7 w-auto object-contain"
               />
-              <div className="hidden sm:block border-l border-white/20 pl-3">
-                <h1 className="text-lg font-bold bg-gradient-primary bg-clip-text text-transparent">
+              <div className="hidden sm:block">
+                <h1 className="text-base font-bold bg-gradient-primary bg-clip-text text-transparent leading-tight">
                   WindTre Enterprise
                 </h1>
-                <p className="text-xs text-muted-foreground">Multitenant Dashboard</p>
+                <p className="text-xs text-muted-foreground">Dashboard Unificato</p>
               </div>
             </div>
           </div>

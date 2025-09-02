@@ -84,12 +84,11 @@ export const RightSidebar = ({ isOpen, onToggle }: RightSidebarProps) => {
 
         {/* Sidebar Content */}
         <div className={cn(
-          "glass-strong border-l border-border/50 h-full flex flex-col shadow-2xl transition-all duration-500",
-          "w-80 lg:w-96",
-          isOpen ? "opacity-100" : "opacity-95"
+          "glass-strong border-l border-border/50 h-full flex flex-col shadow-2xl",
+          "w-80 lg:w-96"
         )}>
           {/* Header with Tabs */}
-          <div className="border-b border-border/50 p-4">
+          <div className="border-b border-border/50 p-4 flex-shrink-0">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-bold bg-gradient-primary bg-clip-text text-transparent">
                 Workspace
@@ -128,8 +127,8 @@ export const RightSidebar = ({ isOpen, onToggle }: RightSidebarProps) => {
             </div>
           </div>
 
-          {/* Panel Content */}
-          <div className="flex-1 overflow-hidden">
+          {/* Panel Content con scroll indipendente */}
+          <div className="flex-1 overflow-y-auto">
             <ActiveComponent />
           </div>
         </div>

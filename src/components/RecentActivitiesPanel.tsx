@@ -169,7 +169,7 @@ export const RecentActivitiesPanel = () => {
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-2">
+      <div className="flex-1 overflow-y-auto p-2 max-h-96">
         <div className="space-y-2">
           {recentActivities.map((activity, index) => (
             <Card 
