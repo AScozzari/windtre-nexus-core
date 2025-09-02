@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, CheckSquare, Calendar, MessageCircle, Clock, Bell, AlertCircle, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -8,10 +8,25 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Calendar as CalendarComponent } from '@/components/ui/calendar';
 import { cn } from '@/lib/utils';
 
-export const WorkspaceSidebar = () => {
+interface WorkspaceSidebarProps {
+  onCollapseChange?: (isCollapsed: boolean) => void;
+}
+
+export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [activeTab, setActiveTab] = useState('tasks');
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
+
+  const toggleCollapse = () => {
+    const newCollapsed = !isCollapsed;
+    setIsCollapsed(newCollapsed);
+    onCollapseChange?.(newCollapsed);
+  };
+
+  // Notifica il parent del stato iniziale
+  useEffect(() => {
+    onCollapseChange?.(isCollapsed);
+  }, [onCollapseChange]);
 
   const tasks = [
     { 
@@ -143,7 +158,7 @@ export const WorkspaceSidebar = () => {
       <Button
         variant="ghost"
         size="sm"
-        onClick={() => setIsCollapsed(!isCollapsed)}
+        onClick={toggleCollapse}
         className="absolute -left-6 top-4 z-40 bg-background border border-border/50 rounded-full p-1 h-6 w-6"
       >
         {isCollapsed ? <ChevronLeft className="h-3 w-3" /> : <ChevronRight className="h-3 w-3" />}
