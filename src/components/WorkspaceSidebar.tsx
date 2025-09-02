@@ -642,7 +642,13 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                     <Card key={lead.id} className={cn(
                       "border-border/30 transition-all duration-300 hover:shadow-lg hover-scale cursor-pointer animate-fade-in group",
                       !lead.letto ? "bg-orange-50/50 border-orange-200 shadow-sm" : "bg-background/50",
-                      "hover:bg-background/80"
+                      "hover:bg-background/80",
+                      "border-l-4",
+                      lead.tipo === 'nuovo_lead' && "border-l-blue-500",
+                      lead.tipo === 'lead_qualificato' && "border-l-green-500",
+                      lead.tipo === 'appuntamento_fissato' && "border-l-purple-500",
+                      lead.tipo === 'contratto_in_chiusura' && "border-l-emerald-500",
+                      lead.tipo === 'follow_up_richiesto' && "border-l-orange-500"
                     )}
                     style={{ animationDelay: `${index * 0.1}s` }}
                     onClick={() => markLeadAsRead(lead.id)}
@@ -652,11 +658,11 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                           {/* Status Icon */}
                           <div className={cn(
                             "w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-200 group-hover:scale-110",
-                            lead.tipo === 'nuovo_lead' ? "bg-blue-500/20 text-blue-600 border-2 border-blue-500/30" :
-                            lead.tipo === 'lead_qualificato' ? "bg-green-500/20 text-green-600 border-2 border-green-500/30" :
-                            lead.tipo === 'appuntamento_fissato' ? "bg-purple-500/20 text-purple-600 border-2 border-purple-500/30" :
-                            lead.tipo === 'contratto_in_chiusura' ? "bg-emerald-500/20 text-emerald-600 border-2 border-emerald-500/30" :
-                            "bg-orange-500/20 text-orange-600 border-2 border-orange-500/30"
+                            lead.tipo === 'nuovo_lead' ? "bg-blue-500/20 text-blue-600" :
+                            lead.tipo === 'lead_qualificato' ? "bg-green-500/20 text-green-600" :
+                            lead.tipo === 'appuntamento_fissato' ? "bg-purple-500/20 text-purple-600" :
+                            lead.tipo === 'contratto_in_chiusura' ? "bg-emerald-500/20 text-emerald-600" :
+                            "bg-orange-500/20 text-orange-600"
                           )}>
                             {lead.tipo === 'nuovo_lead' ? <Star className="h-5 w-5" /> :
                              lead.tipo === 'lead_qualificato' ? <TrendingUp className="h-5 w-5" /> :
