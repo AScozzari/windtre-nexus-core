@@ -15,12 +15,12 @@ export const EnterpriseLayout = ({ children }: EnterpriseLayoutProps) => {
 
   return (
     <SidebarProvider>
-      <div className="min-h-screen w-full">
+      <div className="h-screen w-full overflow-hidden">
         {/* 1. Header fisso trasparente */}
         <EnterpriseHeader />
         
         {/* Layout principale a 4 blocchi */}
-        <div className="flex w-full h-screen pt-16">
+        <div className="flex w-full h-full pt-16">
           {/* 2. Sidebar sinistra - fissa dinamica full height */}
           <EnterpriseSidebar />
           
