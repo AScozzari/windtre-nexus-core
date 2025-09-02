@@ -438,64 +438,46 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                 <div className="space-y-3">
                   {tasks.map((task, index) => (
                     <Card key={task.id} className={cn(
-                      "border-border/30 transition-all duration-300 hover:shadow-lg hover-scale cursor-pointer animate-fade-in group",
-                      task.completato ? "bg-muted/30 opacity-70" : "bg-background/50",
-                      task.urgente && !task.completato && "border-orange-200 shadow-sm",
-                      "hover:bg-background/80"
+                      "border-border/30 bg-background/50 hover:bg-background/80 transition-all duration-200 cursor-pointer group",
+                      task.completato && "opacity-60"
                     )}
-                    style={{ animationDelay: `${index * 0.1}s` }}
                     onClick={() => toggleTask(task.id)}
                     >
                       <CardContent className="p-3">
                         <div className="flex items-start gap-3">
                           {/* Status Icon */}
                           <div className={cn(
-                            "w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-200 group-hover:scale-110",
+                            "w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors",
                             task.completato 
-                              ? "bg-success/20 text-success border-2 border-success/30" 
-                              : "bg-muted/30 border-2 border-muted-foreground/30 hover:border-primary/50"
+                              ? "bg-green-50 text-green-600 border border-green-200" 
+                              : "bg-muted text-muted-foreground border border-border"
                           )}>
-                            {task.completato ? (
-                              <CheckSquare className="w-5 h-5 animate-scale-in" />
-                            ) : (
-                              <CheckSquare className="w-5 h-5 opacity-50" />
-                            )}
+                            <CheckSquare className="w-5 h-5" />
                           </div>
                           
                           {/* Content */}
                           <div className="flex-1 min-w-0">
-                            <div className="flex items-start justify-between mb-1">
-                              <h4 className={cn(
-                                "text-sm font-medium leading-tight transition-all duration-200 group-hover:text-primary",
-                                task.completato && "line-through text-muted-foreground"
-                              )}>
-                                {task.titolo}
-                              </h4>
-                              {task.urgente && !task.completato && (
-                                <AlertCircle className="h-4 w-4 text-orange-500 flex-shrink-0 animate-pulse" />
-                              )}
-                            </div>
+                            <h4 className={cn(
+                              "text-sm font-medium mb-1 group-hover:text-primary transition-colors",
+                              task.completato && "line-through text-muted-foreground"
+                            )}>
+                              {task.titolo}
+                            </h4>
                             
-                            {/* Subtitle */}
-                            <p className="text-xs text-muted-foreground mb-3 line-clamp-2 group-hover:text-foreground/80 transition-colors">
+                            <p className="text-xs text-muted-foreground mb-2 line-clamp-2">
                               {task.descrizione}
                             </p>
                             
-                            {/* Metadata */}
-                            <div className="flex items-center gap-2 mb-2">
-                              <Badge variant={
-                                task.priorita === 'Alta' ? 'destructive' : 
-                                task.priorita === 'Media' ? 'secondary' : 'outline'
-                              } className="text-xs">
-                                {task.priorita}
-                              </Badge>
-                              <Badge variant="outline" className="text-xs">
-                                {task.categoria}
-                              </Badge>
-                            </div>
-                            
-                            {/* Footer info */}
                             <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                <Badge variant={
+                                  task.priorita === 'Alta' ? 'destructive' : 
+                                  task.priorita === 'Media' ? 'default' : 'secondary'
+                                } className="text-xs">
+                                  {task.priorita}
+                                </Badge>
+                              </div>
+                              
                               <span className="text-xs text-muted-foreground flex items-center gap-1">
                                 <Clock className="h-3 w-3" />
                                 {task.scadenza}
@@ -559,65 +541,46 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                 <div className="space-y-3">
                   {eventiCalendario.map((evento, index) => (
                     <Card key={evento.id} className={cn(
-                      "border-border/30 bg-background/50 hover:shadow-lg transition-all duration-300 hover-scale cursor-pointer animate-fade-in group",
-                      "hover:bg-background/80"
+                      "border-border/30 bg-background/50 hover:bg-background/80 transition-all duration-200 cursor-pointer group"
                     )}
-                    style={{ animationDelay: `${index * 0.1}s` }}
                     >
                       <CardContent className="p-3">
                         <div className="flex items-start gap-3">
                           {/* Time Icon */}
                           <div className={cn(
-                            "w-10 h-10 rounded-lg flex flex-col items-center justify-center text-white transition-all duration-200 group-hover:scale-110",
-                            evento.colore === 'blue' && "bg-blue-500",
-                            evento.colore === 'purple' && "bg-purple-500", 
-                            evento.colore === 'green' && "bg-green-500",
-                            evento.colore === 'orange' && "bg-orange-500",
-                            evento.colore === 'red' && "bg-red-500"
+                            "w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 text-white transition-colors border",
+                            evento.colore === 'blue' && "bg-blue-50 text-blue-600 border-blue-200",
+                            evento.colore === 'purple' && "bg-purple-50 text-purple-600 border-purple-200", 
+                            evento.colore === 'green' && "bg-green-50 text-green-600 border-green-200",
+                            evento.colore === 'orange' && "bg-orange-50 text-orange-600 border-orange-200",
+                            evento.colore === 'red' && "bg-red-50 text-red-600 border-red-200"
                           )}>
-                            <span className="text-xs font-bold leading-none">
-                              {evento.ora.split(':')[0]}
-                            </span>
-                            <span className="text-xs leading-none">
-                              {evento.ora.split(':')[1]}
-                            </span>
+                            <Calendar className="w-5 h-5" />
                           </div>
                           
                           {/* Content */}
                           <div className="flex-1 min-w-0">
-                            <div className="flex items-start justify-between mb-1">
-                              <h4 className="text-sm font-medium leading-tight group-hover:text-primary transition-colors">
-                                {evento.titolo}
-                              </h4>
-                            </div>
+                            <h4 className="text-sm font-medium mb-1 group-hover:text-primary transition-colors">
+                              {evento.titolo}
+                            </h4>
                             
-                            {/* Subtitle */}
-                            <p className="text-xs text-muted-foreground mb-3 group-hover:text-foreground/80 transition-colors">
+                            <p className="text-xs text-muted-foreground mb-2 line-clamp-2">
                               {evento.data} • {evento.location}
                             </p>
                             
-                            {/* Metadata */}
-                            <div className="flex items-center gap-2 mb-2">
-                              <Badge variant="outline" className="text-xs">
-                                {evento.tipo === 'meeting' && '🤝 Riunione'}
-                                {evento.tipo === 'presentation' && '🎯 Presentazione'}
-                                {evento.tipo === 'training' && '📚 Formazione'}
-                                {evento.tipo === 'client' && '👥 Cliente'}
-                              </Badge>
-                              <Badge variant="secondary" className="text-xs">
-                                {evento.partecipanti} persone
-                              </Badge>
-                            </div>
-                            
-                            {/* Footer info */}
                             <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                <Badge variant="outline" className="text-xs">
+                                  {evento.tipo === 'meeting' && 'Riunione'}
+                                  {evento.tipo === 'presentation' && 'Presentazione'}
+                                  {evento.tipo === 'training' && 'Formazione'}
+                                  {evento.tipo === 'client' && 'Cliente'}
+                                </Badge>
+                              </div>
+                              
                               <span className="text-xs text-muted-foreground flex items-center gap-1">
                                 <Clock className="h-3 w-3" />
                                 {evento.ora}
-                              </span>
-                              <span className="text-xs text-muted-foreground flex items-center gap-1">
-                                <MapPin className="h-3 w-3" />
-                                Sala riunioni
                               </span>
                             </div>
                           </div>
@@ -640,29 +603,21 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                 <div className="space-y-3">
                   {leads.map((lead, index) => (
                     <Card key={lead.id} className={cn(
-                      "border-border/30 transition-all duration-300 hover:shadow-lg hover-scale cursor-pointer animate-fade-in group",
-                      !lead.letto ? "bg-orange-50/50 border-orange-200 shadow-sm" : "bg-background/50",
-                      "hover:bg-background/80",
-                      "border-l-4",
-                      lead.tipo === 'nuovo_lead' && "border-l-blue-500",
-                      lead.tipo === 'lead_qualificato' && "border-l-green-500",
-                      lead.tipo === 'appuntamento_fissato' && "border-l-purple-500",
-                      lead.tipo === 'contratto_in_chiusura' && "border-l-emerald-500",
-                      lead.tipo === 'follow_up_richiesto' && "border-l-orange-500"
+                      "border-border/30 bg-background/50 hover:bg-background/80 transition-all duration-200 cursor-pointer group",
+                      !lead.letto && "bg-orange-50/30"
                     )}
-                    style={{ animationDelay: `${index * 0.1}s` }}
                     onClick={() => markLeadAsRead(lead.id)}
                     >
                       <CardContent className="p-3">
                         <div className="flex items-start gap-3">
                           {/* Status Icon */}
                           <div className={cn(
-                            "w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-200 group-hover:scale-110",
-                            lead.tipo === 'nuovo_lead' ? "bg-blue-500/20 text-blue-600" :
-                            lead.tipo === 'lead_qualificato' ? "bg-green-500/20 text-green-600" :
-                            lead.tipo === 'appuntamento_fissato' ? "bg-purple-500/20 text-purple-600" :
-                            lead.tipo === 'contratto_in_chiusura' ? "bg-emerald-500/20 text-emerald-600" :
-                            "bg-orange-500/20 text-orange-600"
+                            "w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors border",
+                            lead.tipo === 'nuovo_lead' ? "bg-blue-50 text-blue-600 border-blue-200" :
+                            lead.tipo === 'lead_qualificato' ? "bg-green-50 text-green-600 border-green-200" :
+                            lead.tipo === 'appuntamento_fissato' ? "bg-purple-50 text-purple-600 border-purple-200" :
+                            lead.tipo === 'contratto_in_chiusura' ? "bg-emerald-50 text-emerald-600 border-emerald-200" :
+                            "bg-orange-50 text-orange-600 border-orange-200"
                           )}>
                             {lead.tipo === 'nuovo_lead' ? <Star className="h-5 w-5" /> :
                              lead.tipo === 'lead_qualificato' ? <TrendingUp className="h-5 w-5" /> :
@@ -670,43 +625,31 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                              lead.tipo === 'contratto_in_chiusura' ? <Zap className="h-5 w-5" /> :
                              <Phone className="h-5 w-5" />}
                             {!lead.letto && (
-                              <div className="absolute -top-1 -right-1 w-3 h-3 bg-orange-500 rounded-full animate-pulse" />
+                              <div className="absolute -top-1 -right-1 w-3 h-3 bg-orange-500 rounded-full" />
                             )}
                           </div>
                           
                           {/* Content */}
                           <div className="flex-1 min-w-0">
-                            <div className="flex items-start justify-between mb-1">
-                              <h4 className="text-sm font-medium leading-tight group-hover:text-primary transition-colors">
-                                {lead.messaggio}
-                              </h4>
-                            </div>
+                            <h4 className="text-sm font-medium mb-1 group-hover:text-primary transition-colors">
+                              {lead.messaggio}
+                            </h4>
                             
-                            {/* Subtitle */}
-                            <p className="text-xs text-muted-foreground mb-3 group-hover:text-foreground/80 transition-colors">
+                            <p className="text-xs text-muted-foreground mb-2 line-clamp-2">
                               {lead.cliente} • {lead.azienda}
                             </p>
                             
-                            {/* Metadata */}
-                            <div className="flex items-center gap-2 mb-2">
-                              <Badge variant={lead.priorita === 'Alta' ? 'destructive' : 'secondary'} className="text-xs">
-                                {lead.priorita}
-                              </Badge>
-                              <Badge variant="outline" className="text-xs text-green-600">
-                                {lead.potenziale}
-                              </Badge>
-                            </div>
-                            
-                            {/* Footer info */}
                             <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                <Badge variant={lead.priorita === 'Alta' ? 'destructive' : 'secondary'} className="text-xs">
+                                  {lead.priorita}
+                                </Badge>
+                              </div>
+                              
                               <span className="text-xs text-muted-foreground flex items-center gap-1">
                                 <Clock className="h-3 w-3" />
-                                {lead.tempo} • {lead.fonte}
+                                {lead.tempo}
                               </span>
-                              <Button variant="ghost" size="sm" className="h-6 text-xs px-2 hover:bg-primary hover:text-primary-foreground">
-                                <Phone className="h-3 w-3 mr-1" />
-                                Chiama
-                              </Button>
                             </div>
                           </div>
                         </div>
