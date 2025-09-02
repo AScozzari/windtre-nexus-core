@@ -223,6 +223,73 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
         {isCollapsed ? <ChevronLeft className="h-3 w-3" /> : <ChevronRight className="h-3 w-3" />}
       </Button>
 
+      {isCollapsed && (
+        <div className="flex flex-col items-center gap-3 pt-4">
+          {/* Icone dei tool quando collassato */}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => {
+              setActiveTab('tasks');
+              if (isCollapsed && !manualToggle) {
+                setIsCollapsed(false);
+                onCollapseChange?.(false);
+              }
+            }}
+            className={cn(
+              "w-8 h-8 p-0 transition-colors",
+              activeTab === 'tasks' ? "bg-primary text-primary-foreground" : "hover:bg-muted"
+            )}
+            title="Tasks"
+          >
+            <CheckSquare className="h-4 w-4" />
+          </Button>
+          
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => {
+              setActiveTab('calendar');
+              if (isCollapsed && !manualToggle) {
+                setIsCollapsed(false);
+                onCollapseChange?.(false);
+              }
+            }}
+            className={cn(
+              "w-8 h-8 p-0 transition-colors",
+              activeTab === 'calendar' ? "bg-primary text-primary-foreground" : "hover:bg-muted"
+            )}
+            title="Calendario"
+          >
+            <Calendar className="h-4 w-4" />
+          </Button>
+          
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => {
+              setActiveTab('leads');
+              if (isCollapsed && !manualToggle) {
+                setIsCollapsed(false);
+                onCollapseChange?.(false);
+              }
+            }}
+            className={cn(
+              "w-8 h-8 p-0 transition-colors",
+              activeTab === 'leads' ? "bg-primary text-primary-foreground" : "hover:bg-muted"
+            )}
+            title="Leads"
+          >
+            <MessageCircle className="h-4 w-4" />
+          </Button>
+          
+          {/* Badge notifiche quando collassato */}
+          {notificheLeads.filter(n => !n.letto).length > 0 && (
+            <div className="w-2 h-2 bg-destructive rounded-full animate-pulse" />
+          )}
+        </div>
+      )}
+
       {!isCollapsed && (
         <div className="p-4 h-full flex flex-col">
           {/* Header */}
