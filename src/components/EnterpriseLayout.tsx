@@ -4,6 +4,7 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { EnterpriseSidebar } from './EnterpriseSidebar';
 import { EnterpriseHeader } from './EnterpriseHeader';
 import { RightSidebar } from './RightSidebar';
+import { cn } from '@/lib/utils';
 
 interface EnterpriseLayoutProps {
   children: ReactNode;
@@ -17,7 +18,7 @@ export const EnterpriseLayout = ({ children }: EnterpriseLayoutProps) => {
       <div className="min-h-screen flex w-full relative">
         <EnterpriseSidebar />
         
-        <div className="flex-1 flex flex-col min-w-0">
+        <div className={cn("flex-1 flex flex-col min-w-0", isRightSidebarOpen ? "lg:pr-96" : "lg:pr-12")}>
           <EnterpriseHeader />
           
           <main className="flex-1 p-6 bg-gradient-to-br from-background to-muted/30">
