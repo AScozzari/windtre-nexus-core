@@ -156,7 +156,7 @@ export function EnterpriseSidebar() {
   return (
     <Sidebar
       className={cn(
-        "glass-strong border-r border-border/50 transition-all duration-500 relative z-30",
+        "glass-strong border-r border-border/50 transition-all duration-500 relative z-30 animate-fade-in",
         isCollapsed ? "w-16" : "w-72"
       )}
       collapsible="icon"
@@ -205,7 +205,7 @@ export function EnterpriseSidebar() {
             <SidebarMenu className="space-y-1">
               {mainNavigation.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild className={getNavClasses(item.url)}>
+                  <SidebarMenuButton asChild className={cn(getNavClasses(item.url), "hover-scale")}>
                     <NavLink to={item.url} end className="flex items-center gap-3 px-3 py-2.5 rounded-lg">
                       <item.icon className="h-5 w-5 flex-shrink-0" />
                       {(!isCollapsed || shouldShowExpanded) && (
@@ -248,7 +248,7 @@ export function EnterpriseSidebar() {
                 <SidebarMenu className="space-y-1 mt-2">
                   {crmNavigation.map((item) => (
                     <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton asChild className={getNavClasses(item.url)}>
+                      <SidebarMenuButton asChild className={cn(getNavClasses(item.url), "hover-scale")}>
                         <NavLink to={item.url} className="flex items-center gap-3 px-3 py-2 rounded-lg ml-4">
                           <item.icon className="h-4 w-4 flex-shrink-0" />
                           {(!isCollapsed || shouldShowExpanded) && <span>{item.title}</span>}
@@ -284,7 +284,7 @@ export function EnterpriseSidebar() {
                 <SidebarMenu className="space-y-1 mt-2">
                   {hrNavigation.map((item) => (
                     <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton asChild className={getNavClasses(item.url)}>
+                      <SidebarMenuButton asChild className={cn(getNavClasses(item.url), "hover-scale")}>
                         <NavLink to={item.url} className="flex items-center gap-3 px-3 py-2 rounded-lg ml-4">
                           <item.icon className="h-4 w-4 flex-shrink-0" />
                           {(!isCollapsed || shouldShowExpanded) && <span>{item.title}</span>}
@@ -320,7 +320,7 @@ export function EnterpriseSidebar() {
                 <SidebarMenu className="space-y-1 mt-2">
                   {adminNavigation.map((item) => (
                     <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton asChild className={getNavClasses(item.url)}>
+                      <SidebarMenuButton asChild className={cn(getNavClasses(item.url), "hover-scale")}>
                         <NavLink to={item.url} className="flex items-center gap-3 px-3 py-2 rounded-lg ml-4">
                           <item.icon className="h-4 w-4 flex-shrink-0" />
                           {(!isCollapsed || shouldShowExpanded) && <span>{item.title}</span>}
@@ -356,7 +356,7 @@ export function EnterpriseSidebar() {
                 <SidebarMenu className="space-y-1 mt-2">
                   {cassaNavigation.map((item) => (
                     <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton asChild className={getNavClasses(item.url)}>
+                      <SidebarMenuButton asChild className={cn(getNavClasses(item.url), "hover-scale")}>
                         <NavLink to={item.url} className="flex items-center gap-3 px-3 py-2 rounded-lg ml-4">
                           <item.icon className="h-4 w-4 flex-shrink-0" />
                           {(!isCollapsed || shouldShowExpanded) && <span>{item.title}</span>}
@@ -392,7 +392,7 @@ export function EnterpriseSidebar() {
                 <SidebarMenu className="space-y-1 mt-2">
                   {aiToolsNavigation.map((item) => (
                     <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton asChild className={getNavClasses(item.url)}>
+                      <SidebarMenuButton asChild className={cn(getNavClasses(item.url), "hover-scale")}>
                         <NavLink to={item.url} className="flex items-center gap-3 px-3 py-2 rounded-lg ml-4">
                           <item.icon className="h-4 w-4 flex-shrink-0" />
                           {(!isCollapsed || shouldShowExpanded) && <span>{item.title}</span>}

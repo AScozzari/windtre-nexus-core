@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { EnterpriseLayout } from '@/components/EnterpriseLayout';
+
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -145,8 +145,7 @@ const CRMComunicazione = () => {
   };
 
   return (
-    <EnterpriseLayout>
-      <div className="h-[calc(100vh-8rem)] flex flex-col">
+    <div className="h-[calc(100vh-8rem)] flex flex-col">
         {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
           <div>
@@ -382,7 +381,6 @@ const CRMComunicazione = () => {
           </div>
         </div>
       </div>
-    </EnterpriseLayout>
   );
 };
 

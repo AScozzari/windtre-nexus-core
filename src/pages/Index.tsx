@@ -1,4 +1,4 @@
-import { EnterpriseLayout } from "@/components/EnterpriseLayout";
+
 import { DashboardStats } from "@/components/DashboardStats";
 import { DashboardCharts } from "@/components/DashboardCharts";
 import { Button } from "@/components/ui/button";

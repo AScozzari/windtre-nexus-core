@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { EnterpriseLayout } from "@/components/EnterpriseLayout";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -185,7 +185,7 @@ const HRDipendenti = () => {
   const dipartimenti = [...new Set(mockDipendenti.map(d => d.dipartimento))];
 
   return (
-    <EnterpriseLayout>
+    <div>
       {/* Header Section */}
       <div className="mb-8">
         <div className="flex items-center justify-between mb-6">
@@ -451,7 +451,7 @@ const HRDipendenti = () => {
           </CardContent>
         </Card>
       )}
-    </EnterpriseLayout>
+    </div>
   );
 };
 
