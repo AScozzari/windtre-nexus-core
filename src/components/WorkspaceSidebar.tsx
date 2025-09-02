@@ -439,7 +439,8 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                     <Card key={task.id} className={cn(
                       "border-border/30 bg-background/50 transition-all duration-300 cursor-pointer group",
                       "hover:bg-background/80 hover:scale-[1.02] hover:shadow-lg hover:-translate-y-1",
-                      task.completato ? "opacity-60" : "bg-blue-50/30"
+                      !task.completato && "bg-orange-50/30",
+                      task.completato && "opacity-60"
                     )}
                     onClick={() => toggleTask(task.id)}
                     >
