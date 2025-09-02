@@ -349,8 +349,7 @@ const CRMLeads = () => {
           </TabsContent>
         </Tabs>
       </div>
-    </div>
-  );
-};
+    );
+  };
 
-export default CRMLeads;
+  export default CRMLeads;
