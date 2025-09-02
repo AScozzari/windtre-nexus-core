@@ -100,31 +100,31 @@ export function EnterpriseSidebar({ onCollapseChange }: EnterpriseSidebarProps) 
   return (
     <Sidebar
       className={cn(
-        "transition-all duration-300 bg-sidebar-background backdrop-blur-md border-r border-sidebar-border",
+        "transition-all duration-300 border-r",
         isMobile 
-          ? "h-[calc(100vh-3rem)] mt-12 z-50" 
-          : "mt-20 h-[calc(100vh-5rem)]"
+          ? "h-[calc(100vh-3rem)] mt-12 z-50 bg-sidebar-background shadow-lg" 
+          : "mt-20 h-[calc(100vh-5rem)] bg-sidebar-background/50 backdrop-blur-md border-sidebar-border"
       )}
       collapsible={isMobile ? "offcanvas" : "icon"}
       onMouseEnter={!isMobile ? handleMouseEnter : undefined}
       onMouseLeave={!isMobile ? handleMouseLeave : undefined}
     >
-      <SidebarContent className="pt-4">
+      <SidebarContent className="pt-6 px-2">
         <SidebarGroup>
           <SidebarGroupContent>
-            <SidebarMenu className="space-y-1">
+            <SidebarMenu className="space-y-2">
               {navigation.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild className={getNavClasses(item.url)}>
                     <NavLink 
                       to={item.url} 
                       end={item.url === "/"} 
-                      className="flex items-center gap-3 px-3 py-2"
+                      className="flex items-center gap-3 px-4 py-3 rounded-lg"
                     >
                       <item.icon className="h-5 w-5 flex-shrink-0" />
                       {!collapsed && (
-                        <div className="flex items-center justify-between flex-1">
-                          <span className="font-medium text-sm">{item.title}</span>
+                        <div className="flex items-center justify-between flex-1 min-w-0">
+                          <span className="font-medium text-sm truncate">{item.title}</span>
                         </div>
                       )}
                     </NavLink>
