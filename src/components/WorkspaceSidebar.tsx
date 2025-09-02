@@ -313,7 +313,6 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
         onClick={toggleCollapse}
         className="absolute -left-6 top-4 z-40 bg-background border border-border/50 rounded-full p-1 h-6 w-6"
       >
-        {isCollapsed ? <ChevronLeft className="h-3 w-3" /> : <ChevronRight className="h-3 w-3" />}
       </Button>
 
       {isCollapsed && (
