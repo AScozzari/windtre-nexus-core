@@ -158,7 +158,7 @@ export function EnterpriseSidebar({ onCollapseChange }: EnterpriseSidebarProps) 
   return (
     <Sidebar
       className={cn(
-        "glass-strong border-r border-border/50 transition-all duration-300",
+        "glass-strong border-r border-border/50 transition-all duration-300 mt-20 h-[calc(100vh-5rem)]",
         isCollapsed ? "w-14" : "w-64"
       )}
       collapsible="icon"
