@@ -9,7 +9,7 @@ interface EnterpriseLayoutProps {
 }
 
 export const EnterpriseLayout = ({ children }: EnterpriseLayoutProps) => {
-  const [workspaceCollapsed, setWorkspaceCollapsed] = useState(true); // Inizia chiuso per auto-collapse
+  const [workspaceCollapsed, setWorkspaceCollapsed] = useState(true);
 
   return (
     <SidebarProvider>
@@ -17,7 +17,9 @@ export const EnterpriseLayout = ({ children }: EnterpriseLayoutProps) => {
         <EnterpriseSidebar />
         
         <div className="flex-1 flex flex-col">
-          <EnterpriseHeader />
+          <div className="sticky top-0 z-40">
+            <EnterpriseHeader />
+          </div>
           
           <main className={`flex-1 p-6 bg-gradient-to-br from-background to-muted/30 transition-all duration-300 ${
             workspaceCollapsed ? 'pr-16' : 'pr-96'
