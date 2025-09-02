@@ -724,77 +724,76 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                             .filter(evento => evento.dataCompleta.toDateString() === selectedDate.toDateString())
                             .sort((a, b) => a.ora.localeCompare(b.ora))
                             .map((evento) => (
-                               <Card key={evento.id} className="border-border/30 bg-background/50 hover:bg-background/80 transition-all duration-200 cursor-pointer group">
-                                 <CardContent className="p-3">
-                                   <div className="flex items-start gap-3">
-                                     {/* Time & Type Icon */}
+                               <Card key={evento.id} className="w-full border-border/30 bg-background/50 hover:bg-background/80 transition-all duration-200 cursor-pointer group">
+                                 <CardContent className="p-2">
+                                   <div className="flex items-start gap-2">
+                                     {/* Compact Time Badge */}
                                      <div className={cn(
-                                       "w-12 h-12 rounded-lg flex flex-col items-center justify-center text-white transition-all duration-200 group-hover:scale-105",
+                                       "w-8 h-8 rounded-md flex flex-col items-center justify-center text-white text-xs font-bold transition-all duration-200 group-hover:scale-105 flex-shrink-0",
                                        evento.colore === 'blue' && "bg-blue-500",
                                        evento.colore === 'purple' && "bg-purple-500",
                                        evento.colore === 'green' && "bg-green-500",
                                        evento.colore === 'orange' && "bg-orange-500",
                                        evento.colore === 'red' && "bg-red-500"
                                      )}>
-                                       <span className="text-xs font-bold leading-none">{evento.ora.split(':')[0]}</span>
-                                       <span className="text-xs leading-none">{evento.ora.split(':')[1]}</span>
+                                       <span className="text-xs leading-none">{evento.ora.split(':')[0]}</span>
+                                       <span className="text-xs leading-none opacity-80">{evento.ora.split(':')[1]}</span>
                                      </div>
                                      
-                                     {/* Event Details */}
+                                     {/* Compact Event Details */}
                                      <div className="flex-1 min-w-0">
-                                       <div className="flex items-start justify-between mb-2">
-                                         <h4 className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
+                                       <div className="flex items-start justify-between mb-1">
+                                         <h4 className="text-xs font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-1 pr-1">
                                            {evento.titolo}
                                          </h4>
-                                         <Badge variant="outline" className="text-xs ml-2">
-                                           {evento.tipo === 'meeting' && '🤝 Riunione'}
-                                           {evento.tipo === 'presentation' && '🎯 Presentazione'}
-                                           {evento.tipo === 'training' && '📚 Formazione'}
-                                           {evento.tipo === 'client' && '👥 Cliente'}
+                                         <Badge variant="outline" className="text-xs px-1 py-0 h-4 flex-shrink-0">
+                                           {evento.tipo === 'meeting' && '🤝'}
+                                           {evento.tipo === 'presentation' && '🎯'}
+                                           {evento.tipo === 'training' && '📚'}
+                                           {evento.tipo === 'client' && '👥'}
                                          </Badge>
                                        </div>
                                        
-                                       {/* Descrizione completa */}
-                                       <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
+                                       {/* Compact Description */}
+                                       <p className="text-xs text-muted-foreground mb-2 line-clamp-1 leading-tight">
                                          {evento.descrizione}
                                        </p>
                                        
-                                       {/* Info dettagliate */}
-                                       <div className="space-y-2">
-                                         <div className="flex items-center gap-4">
-                                           <div className="flex items-center gap-1">
-                                             <MapPin className="h-3 w-3 text-muted-foreground" />
-                                             <span className="text-xs text-muted-foreground">{evento.location}</span>
-                                           </div>
-                                           <div className="flex items-center gap-1">
-                                             <User className="h-3 w-3 text-muted-foreground" />
-                                             <span className="text-xs text-muted-foreground">{evento.partecipanti} partecipanti</span>
-                                           </div>
+                                       {/* Compact Info Row */}
+                                       <div className="flex items-center justify-between text-xs text-muted-foreground">
+                                         <div className="flex items-center gap-1 flex-1 min-w-0">
+                                           <MapPin className="h-3 w-3 flex-shrink-0" />
+                                           <span className="truncate">{evento.location}</span>
                                          </div>
-                                         
-                                         <div className="flex items-center gap-1">
-                                           <Clock className="h-3 w-3 text-muted-foreground" />
-                                           <span className="text-xs text-muted-foreground">
-                                             {evento.ora} - {(() => {
-                                               const [hours, minutes] = evento.ora.split(':').map(Number);
-                                               const endTime = new Date();
-                                               endTime.setHours(hours + 1, minutes);
-                                               return endTime.toTimeString().slice(0, 5);
-                                             })()}
-                                           </span>
+                                         <div className="flex items-center gap-1 ml-2 flex-shrink-0">
+                                           <User className="h-3 w-3" />
+                                           <span>{evento.partecipanti}</span>
                                          </div>
                                        </div>
                                        
-                                       {/* Azioni */}
-                                       <div className="flex items-center gap-2 mt-3 pt-2 border-t border-border/30">
-                                         <Button variant="outline" size="sm" className="h-6 text-xs px-2 flex-1">
-                                           📅 Vai al dettaglio
+                                       {/* Compact Duration */}
+                                       <div className="flex items-center gap-1 mt-1 text-xs text-muted-foreground">
+                                         <Clock className="h-3 w-3" />
+                                         <span>
+                                           {evento.ora} - {(() => {
+                                             const [hours, minutes] = evento.ora.split(':').map(Number);
+                                             const endTime = new Date();
+                                             endTime.setHours(hours + 1, minutes);
+                                             return endTime.toTimeString().slice(0, 5);
+                                           })()}
+                                         </span>
+                                       </div>
+                                       
+                                       {/* Compact Actions */}
+                                       <div className="flex items-center gap-1 mt-2 pt-1 border-t border-border/30">
+                                         <Button variant="outline" size="sm" className="h-5 text-xs px-2 flex-1 min-w-0">
+                                           📅 Dettaglio
                                          </Button>
-                                         <Button variant="ghost" size="sm" className="h-6 text-xs px-2">
-                                           ✏️ Modifica
+                                         <Button variant="ghost" size="sm" className="h-5 text-xs px-1 flex-shrink-0">
+                                           ✏️
                                          </Button>
-                                         <Button variant="ghost" size="sm" className="h-6 text-xs px-2">
-                                           📧 Invita
+                                         <Button variant="ghost" size="sm" className="h-5 text-xs px-1 flex-shrink-0">
+                                           📧
                                          </Button>
                                        </div>
                                      </div>
@@ -886,16 +885,16 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                     ) : (
                       eventiFiltered.slice(0, 6).map((evento, index) => (
                         <Card key={evento.id} className={cn(
-                          "border-border/30 bg-background/50 transition-all duration-300 cursor-pointer group",
-                          "hover:bg-background/80 hover:scale-[1.02] hover:shadow-lg hover:-translate-y-1",
-                          index < 2 && "ring-1 ring-primary/20" // Evidenzia i primi 2 eventi
+                          "w-full border-border/30 bg-background/50 transition-all duration-300 cursor-pointer group",
+                          "hover:bg-background/80 hover:scale-[1.01] hover:shadow-md",
+                          index < 2 && "ring-1 ring-primary/20"
                         )}>
-                          <CardContent className="p-3">
-                            <div className="flex items-start gap-3">
-                              {/* Enhanced Time Badge with Date */}
-                              <div className="flex flex-col items-center gap-1">
+                          <CardContent className="p-2">
+                            <div className="flex items-start gap-2">
+                              {/* Compact Time Badge with Date */}
+                              <div className="flex flex-col items-center gap-1 flex-shrink-0">
                                 <div className={cn(
-                                  "w-12 h-12 rounded-lg flex flex-col items-center justify-center text-white transition-all duration-200 group-hover:scale-105",
+                                  "w-9 h-9 rounded-lg flex flex-col items-center justify-center text-white transition-all duration-200 group-hover:scale-105",
                                   evento.colore === 'blue' && "bg-blue-500",
                                   evento.colore === 'purple' && "bg-purple-500", 
                                   evento.colore === 'green' && "bg-green-500",
@@ -903,9 +902,9 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                                   evento.colore === 'red' && "bg-red-500"
                                 )}>
                                   <span className="text-xs font-bold leading-none">{evento.ora.split(':')[0]}</span>
-                                  <span className="text-xs leading-none">{evento.ora.split(':')[1]}</span>
+                                  <span className="text-xs leading-none opacity-80">{evento.ora.split(':')[1]}</span>
                                 </div>
-                                <span className="text-xs font-medium text-center text-muted-foreground">
+                                <span className="text-xs font-medium text-center text-muted-foreground leading-none">
                                   {evento.dataCompleta.toLocaleDateString('it-IT', { 
                                     day: 'numeric',
                                     month: 'short'
@@ -913,47 +912,45 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                                 </span>
                               </div>
                               
-                              {/* Event Details Enhanced */}
+                              {/* Compact Event Details */}
                               <div className="flex-1 min-w-0">
-                                <div className="flex items-start justify-between mb-2">
-                                  <h4 className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2">
+                                <div className="flex items-start justify-between mb-1">
+                                  <h4 className="text-xs font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-1 pr-1">
                                     {evento.titolo}
                                   </h4>
                                   {index < 2 && (
-                                    <Badge variant="default" className="text-xs ml-2 bg-primary/10 text-primary border-primary/20">
-                                      ⭐ Priorità
+                                    <Badge variant="default" className="text-xs px-1 py-0 h-4 bg-primary/10 text-primary border-primary/20 flex-shrink-0">
+                                      ⭐
                                     </Badge>
                                   )}
                                 </div>
                                 
-                                {/* Descrizione breve */}
-                                <p className="text-xs text-muted-foreground mb-2 line-clamp-2 leading-relaxed">
+                                {/* Compact Description */}
+                                <p className="text-xs text-muted-foreground mb-2 line-clamp-1 leading-tight">
                                   {evento.descrizione}
                                 </p>
                                 
-                                {/* Metadata row */}
-                                <div className="flex items-center justify-between">
-                                  <div className="flex items-center gap-3">
-                                    <Badge variant="outline" className="text-xs">
-                                      {evento.tipo === 'meeting' && '🤝 Riunione'}
-                                      {evento.tipo === 'presentation' && '🎯 Presentazione'}
-                                      {evento.tipo === 'training' && '📚 Formazione'}
-                                      {evento.tipo === 'client' && '👥 Cliente'}
+                                {/* Compact Metadata Row */}
+                                <div className="flex items-center justify-between text-xs">
+                                  <div className="flex items-center gap-1 min-w-0 flex-1">
+                                    <Badge variant="outline" className="text-xs px-1 py-0 h-4 flex-shrink-0">
+                                      {evento.tipo === 'meeting' && '🤝'}
+                                      {evento.tipo === 'presentation' && '🎯'}
+                                      {evento.tipo === 'training' && '📚'}
+                                      {evento.tipo === 'client' && '👥'}
                                     </Badge>
                                   </div>
                                   
-                                  <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                                    <div className="flex items-center gap-1">
-                                      <User className="h-3 w-3" />
-                                      <span>{evento.partecipanti}</span>
-                                    </div>
+                                  <div className="flex items-center gap-1 text-muted-foreground ml-2 flex-shrink-0">
+                                    <User className="h-3 w-3" />
+                                    <span>{evento.partecipanti}</span>
                                   </div>
                                 </div>
                                 
-                                {/* Location row */}
-                                <div className="flex items-center gap-1 mt-1">
-                                  <MapPin className="h-3 w-3 text-muted-foreground flex-shrink-0" />
-                                  <span className="text-xs text-muted-foreground truncate" title={evento.location}>
+                                {/* Compact Location Row */}
+                                <div className="flex items-center gap-1 mt-1 text-xs text-muted-foreground">
+                                  <MapPin className="h-3 w-3 flex-shrink-0" />
+                                  <span className="truncate" title={evento.location}>
                                     {evento.location}
                                   </span>
                                 </div>
