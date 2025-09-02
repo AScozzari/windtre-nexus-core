@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, CheckSquare, Calendar, MessageCircle, Clock, Bell, AlertCircle, User } from 'lucide-react';
+import { ChevronLeft, ChevronRight, CheckSquare, Calendar, MessageCircle, Clock, Bell, AlertCircle, User, Phone, Mail, MapPin, TrendingUp, Zap, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -17,7 +17,221 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
   const [activeTab, setActiveTab] = useState('tasks');
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
   const [autoCollapseTimeout, setAutoCollapseTimeout] = useState<NodeJS.Timeout | null>(null);
-  const [manualToggle, setManualToggle] = useState(false); // Flag per distinguere toggle manuale
+  const [manualToggle, setManualToggle] = useState(false);
+  const [tasks, setTasks] = useState([
+    { 
+      id: 1, 
+      titolo: 'Follow-up cliente Premium', 
+      descrizione: 'Chiamare Mario Rossi per rinnovo contratto Enterprise',
+      priorita: 'Alta', 
+      scadenza: 'Oggi 15:00',
+      completato: false,
+      urgente: true,
+      categoria: 'vendite'
+    },
+    { 
+      id: 2, 
+      titolo: 'Preparare documentazione', 
+      descrizione: 'Contratto fibra ottica per Laura Bianchi',
+      priorita: 'Media', 
+      scadenza: 'Domani 10:00',
+      completato: false,
+      urgente: false,
+      categoria: 'documentazione'
+    },
+    { 
+      id: 3, 
+      titolo: 'Verifica pagamento', 
+      descrizione: 'Controllo fattura cliente Giuseppe Verde - €2.300',
+      priorita: 'Bassa', 
+      scadenza: 'Venerdì 16:00',
+      completato: true,
+      urgente: false,
+      categoria: 'amministrativo'
+    },
+    { 
+      id: 4, 
+      titolo: 'Attivazione servizi', 
+      descrizione: 'Nuovo contratto mobile 5G + fibra 1GB/s',
+      priorita: 'Alta', 
+      scadenza: 'Oggi 17:30',
+      completato: false,
+      urgente: true,
+      categoria: 'tecnico'
+    },
+    { 
+      id: 5, 
+      titolo: 'Demo prodotto WindTre Business', 
+      descrizione: 'Presentazione soluzioni per PMI - Azienda Tecno Solutions',
+      priorita: 'Alta', 
+      scadenza: 'Lunedì 09:30',
+      completato: false,
+      urgente: false,
+      categoria: 'vendite'
+    }
+  ]);
+
+  const [leads, setLeads] = useState([
+    {
+      id: 1,
+      tipo: 'nuovo_lead',
+      messaggio: 'Lead interessato a Piano Business Pro',
+      cliente: 'Alessandro Martini',
+      azienda: 'Digital Marketing SRL',
+      fonte: 'LinkedIn Ads',
+      priorita: 'Alta',
+      tempo: '2 min fa',
+      letto: false,
+      potenziale: '€15.000/anno',
+      telefono: '+39 349 123 4567'
+    },
+    {
+      id: 2,
+      tipo: 'lead_qualificato',
+      messaggio: 'Lead qualificato pronto per chiamata',
+      cliente: 'Francesca Lombardi',
+      azienda: 'Consulting Express',
+      fonte: 'Campagna Email',
+      priorita: 'Alta',
+      tempo: '8 min fa',
+      letto: false,
+      potenziale: '€25.000/anno',
+      telefono: '+39 335 987 6543'
+    },
+    {
+      id: 3,
+      tipo: 'appuntamento_fissato',
+      messaggio: 'Demo confermata per martedì',
+      cliente: 'Roberto Conti',
+      azienda: 'Startup Innovation Hub',
+      fonte: 'Chiamata diretta',
+      priorita: 'Media',
+      tempo: '45 min fa',
+      letto: true,
+      potenziale: '€8.500/anno',
+      telefono: '+39 347 456 7890'
+    },
+    {
+      id: 4,
+      tipo: 'contratto_in_chiusura',
+      messaggio: 'Contratto in fase di finalizzazione',
+      cliente: 'Maria Ferretti',
+      azienda: 'E-commerce Plus',
+      fonte: 'Referral Partner',
+      priorita: 'Alta',
+      tempo: '1 ora fa',
+      letto: false,
+      potenziale: '€32.000/anno',
+      telefono: '+39 366 234 5678'
+    },
+    {
+      id: 5,
+      tipo: 'follow_up_richiesto',
+      messaggio: 'Richieste info su soluzioni Cloud',
+      cliente: 'Giuseppe Bianchi',
+      azienda: 'Manufacturing Co.',
+      fonte: 'Website Form',
+      priorita: 'Media',
+      tempo: '2 ore fa',
+      letto: true,
+      potenziale: '€18.000/anno',
+      telefono: '+39 328 876 5432'
+    }
+  ]);
+
+  const [eventiCalendario] = useState([
+    { 
+      id: 1,
+      titolo: 'Riunione Team Vendite Q1', 
+      ora: '14:30', 
+      data: 'Oggi',
+      tipo: 'meeting',
+      partecipanti: 8,
+      location: 'Sala Conferenze A',
+      colore: 'blue'
+    },
+    { 
+      id: 2,
+      titolo: 'Presentazione Risultati Trimestrali', 
+      ora: '16:00', 
+      data: 'Oggi',
+      tipo: 'presentation',
+      partecipanti: 15,
+      location: 'Auditorium Principale',
+      colore: 'purple'
+    },
+    { 
+      id: 3,
+      titolo: 'Training Nuovo Personale Vendite', 
+      ora: '09:00', 
+      data: 'Domani',
+      tipo: 'training',
+      partecipanti: 6,
+      location: 'Aula Formazione B',
+      colore: 'green'
+    },
+    { 
+      id: 4,
+      titolo: 'Demo Enterprise per Fortune 500', 
+      ora: '11:30', 
+      data: 'Domani',
+      tipo: 'client',
+      partecipanti: 5,
+      location: 'Ufficio Direzione',
+      colore: 'orange'
+    },
+    { 
+      id: 5,
+      titolo: 'Revisione Budget Marketing', 
+      ora: '15:00', 
+      data: 'Mercoledì',
+      tipo: 'meeting',
+      partecipanti: 4,
+      location: 'Sala Riunioni C',
+      colore: 'red'
+    }
+  ]);
+
+  // Simula notifiche in tempo reale
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (Math.random() < 0.3) { // 30% di probabilità ogni 10 secondi
+        const newLead = {
+          id: Date.now(),
+          tipo: ['nuovo_lead', 'lead_qualificato', 'follow_up_richiesto'][Math.floor(Math.random() * 3)] as any,
+          messaggio: [
+            'Nuovo lead interessato a soluzioni Enterprise',
+            'Lead qualificato da campagna Google Ads',
+            'Richiesta demo per soluzioni Cloud'
+          ][Math.floor(Math.random() * 3)],
+          cliente: ['Andrea Rossi', 'Giulia Verdi', 'Marco Neri', 'Elena Blu'][Math.floor(Math.random() * 4)],
+          azienda: ['Tech Solutions SRL', 'Digital Hub', 'Innovation Co.', 'Future Corp'][Math.floor(Math.random() * 4)],
+          fonte: ['Website', 'LinkedIn', 'Google Ads', 'Referral'][Math.floor(Math.random() * 4)],
+          priorita: ['Alta', 'Media'][Math.floor(Math.random() * 2)] as any,
+          tempo: 'Ora',
+          letto: false,
+          potenziale: `€${(Math.random() * 30000 + 5000).toFixed(0)}/anno`,
+          telefono: `+39 3${Math.floor(Math.random() * 90000000 + 10000000)}`
+        };
+        
+        setLeads(prev => [newLead, ...prev.slice(0, 7)]); // Mantieni solo le ultime 8
+      }
+    }, 10000); // Ogni 10 secondi
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const toggleTask = (taskId: number) => {
+    setTasks(prev => prev.map(task => 
+      task.id === taskId ? { ...task, completato: !task.completato } : task
+    ));
+  };
+
+  const markLeadAsRead = (leadId: number) => {
+    setLeads(prev => prev.map(lead => 
+      lead.id === leadId ? { ...lead, letto: true } : lead
+    ));
+  };
 
   const toggleCollapse = () => {
     const newCollapsed = !isCollapsed;
@@ -82,127 +296,6 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
   useEffect(() => {
     onCollapseChange?.(isCollapsed);
   }, [onCollapseChange]);
-
-  const tasks = [
-    { 
-      id: 1, 
-      titolo: 'Follow-up cliente Premium', 
-      descrizione: 'Chiamare Mario Rossi per rinnovo contratto',
-      priorita: 'Alta', 
-      scadenza: 'Oggi 15:00',
-      completato: false,
-      urgente: true
-    },
-    { 
-      id: 2, 
-      titolo: 'Preparare documentazione', 
-      descrizione: 'Contratto fibra per Laura Bianchi',
-      priorita: 'Media', 
-      scadenza: 'Domani 10:00',
-      completato: false,
-      urgente: false
-    },
-    { 
-      id: 3, 
-      titolo: 'Verifica pagamento', 
-      descrizione: 'Controllo fattura cliente Giuseppe Verde',
-      priorita: 'Bassa', 
-      scadenza: 'Venerdì 16:00',
-      completato: true,
-      urgente: false
-    },
-    { 
-      id: 4, 
-      titolo: 'Attivazione servizi', 
-      descrizione: 'Nuovo contratto mobile + fibra',
-      priorita: 'Alta', 
-      scadenza: 'Oggi 17:30',
-      completato: false,
-      urgente: true
-    },
-  ];
-
-  const eventiCalendario = [
-    { 
-      id: 1,
-      titolo: 'Riunione Team Vendite', 
-      ora: '14:30', 
-      data: 'Oggi',
-      tipo: 'meeting',
-      partecipanti: 8,
-      location: 'Sala Conferenze A'
-    },
-    { 
-      id: 2,
-      titolo: 'Presentazione Q1 Results', 
-      ora: '16:00', 
-      data: 'Oggi',
-      tipo: 'presentation',
-      partecipanti: 15,
-      location: 'Auditorium'
-    },
-    { 
-      id: 3,
-      titolo: 'Training nuovo personale', 
-      ora: '09:00', 
-      data: 'Domani',
-      tipo: 'training',
-      partecipanti: 6,
-      location: 'Aula Formazione'
-    },
-    { 
-      id: 4,
-      titolo: 'Incontro con cliente Enterprise', 
-      ora: '11:30', 
-      data: 'Domani',
-      tipo: 'client',
-      partecipanti: 3,
-      location: 'Ufficio Direzione'
-    },
-  ];
-
-  const notificheLeads = [
-    {
-      id: 1,
-      tipo: 'nuovo_lead',
-      messaggio: 'Nuovo lead interessato a Piano Business',
-      cliente: 'Alessandro Martini',
-      fonte: 'Website Form',
-      priorita: 'Alta',
-      tempo: '5 min fa',
-      letto: false
-    },
-    {
-      id: 2,
-      tipo: 'lead_qualificato',
-      messaggio: 'Lead qualificato pronto per chiamata',
-      cliente: 'Francesca Lombardi',
-      fonte: 'Campagna Email',
-      priorita: 'Alta',
-      tempo: '15 min fa',
-      letto: false
-    },
-    {
-      id: 3,
-      tipo: 'appuntamento_fissato',
-      messaggio: 'Appuntamento confermato per demo',
-      cliente: 'Roberto Conti',
-      fonte: 'Chiamata diretta',
-      priorita: 'Media',
-      tempo: '1 ora fa',
-      letto: true
-    },
-    {
-      id: 4,
-      tipo: 'follow_up_richiesto',
-      messaggio: 'Cliente richiede informazioni aggiuntive',
-      cliente: 'Maria Ferretti',
-      fonte: 'Chat supporto',
-      priorita: 'Media',
-      tempo: '2 ore fa',
-      letto: true
-    },
-  ];
 
   return (
     <div 
@@ -302,7 +395,7 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
           </Button>
           
           {/* Badge notifiche quando collassato */}
-          {notificheLeads.filter(n => !n.letto).length > 0 && (
+          {leads.filter(n => !n.letto).length > 0 && (
             <div className="w-2 h-2 bg-destructive rounded-full animate-pulse" />
           )}
         </div>
@@ -343,37 +436,43 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                 </div>
                 
                 <div className="space-y-3">
-                  {tasks.map((task) => (
+                  {tasks.map((task, index) => (
                     <Card key={task.id} className={cn(
-                      "border-border/30 transition-all duration-200 hover:shadow-sm",
-                      task.completato ? "bg-muted/30" : "bg-background/50",
-                      task.urgente && !task.completato && "border-orange-200"
-                    )}>
+                      "border-border/30 transition-all duration-300 hover:shadow-lg hover-scale cursor-pointer animate-fade-in group",
+                      task.completato ? "bg-muted/30 opacity-70" : "bg-background/50",
+                      task.urgente && !task.completato && "border-orange-200 shadow-sm",
+                      "hover:bg-background/80"
+                    )}
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                    onClick={() => toggleTask(task.id)}
+                    >
                       <CardContent className="p-3">
                         <div className="flex items-start gap-3">
                           <div className={cn(
-                            "w-4 h-4 rounded border-2 flex-shrink-0 mt-0.5 cursor-pointer",
+                            "w-4 h-4 rounded border-2 flex-shrink-0 mt-0.5 cursor-pointer transition-all duration-200",
                             task.completato 
-                              ? "bg-success border-success" 
-                              : "border-muted-foreground hover:border-primary"
+                              ? "bg-success border-success scale-110" 
+                              : "border-muted-foreground hover:border-primary hover:scale-110"
                           )}>
                             {task.completato && (
-                              <CheckSquare className="w-3 h-3 text-white" />
+                              <CheckSquare className="w-3 h-3 text-white animate-scale-in" />
                             )}
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-start justify-between mb-1">
                               <h4 className={cn(
-                                "text-sm font-medium leading-tight",
+                                "text-sm font-medium leading-tight transition-all duration-200",
                                 task.completato && "line-through text-muted-foreground"
                               )}>
                                 {task.titolo}
                               </h4>
                               {task.urgente && !task.completato && (
-                                <AlertCircle className="h-3 w-3 text-orange-500 flex-shrink-0" />
+                                <AlertCircle className="h-3 w-3 text-orange-500 flex-shrink-0 animate-pulse" />
                               )}
                             </div>
-                            <p className="text-xs text-muted-foreground mb-2">{task.descrizione}</p>
+                            <p className="text-xs text-muted-foreground mb-2 group-hover:text-foreground transition-colors">
+                              {task.descrizione}
+                            </p>
                             <div className="flex items-center gap-2">
                               <Badge variant={
                                 task.priorita === 'Alta' ? 'destructive' : 
@@ -385,6 +484,9 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                                 <Clock className="h-3 w-3" />
                                 {task.scadenza}
                               </span>
+                              <Badge variant="outline" className="text-xs ml-auto">
+                                {task.categoria}
+                              </Badge>
                             </div>
                           </div>
                         </div>
@@ -442,11 +544,28 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                 </div>
                 
                 <div className="space-y-3">
-                  {eventiCalendario.map((evento) => (
-                    <Card key={evento.id} className="border-border/30 bg-background/50 hover:shadow-sm transition-all duration-200">
+                  {eventiCalendario.map((evento, index) => (
+                    <Card key={evento.id} className={cn(
+                      "border-border/30 bg-background/50 hover:shadow-lg transition-all duration-300 hover-scale cursor-pointer animate-fade-in group",
+                      `border-l-4`,
+                      evento.colore === 'blue' && "border-l-blue-500",
+                      evento.colore === 'purple' && "border-l-purple-500",
+                      evento.colore === 'green' && "border-l-green-500",
+                      evento.colore === 'orange' && "border-l-orange-500",
+                      evento.colore === 'red' && "border-l-red-500"
+                    )}
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                    >
                       <CardContent className="p-3">
                         <div className="flex items-start gap-3">
-                          <div className="w-10 h-10 bg-gradient-primary rounded-lg flex flex-col items-center justify-center text-white">
+                          <div className={cn(
+                            "w-10 h-10 rounded-lg flex flex-col items-center justify-center text-white transition-all duration-200 group-hover:scale-110",
+                            evento.colore === 'blue' && "bg-blue-500",
+                            evento.colore === 'purple' && "bg-purple-500", 
+                            evento.colore === 'green' && "bg-green-500",
+                            evento.colore === 'orange' && "bg-orange-500",
+                            evento.colore === 'red' && "bg-red-500"
+                          )}>
                             <span className="text-xs font-bold leading-none">
                               {evento.ora.split(':')[0]}
                             </span>
@@ -455,7 +574,7 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                             </span>
                           </div>
                           <div className="flex-1 min-w-0">
-                            <h4 className="text-sm font-medium leading-tight mb-1">{evento.titolo}</h4>
+                            <h4 className="text-sm font-medium leading-tight mb-1 group-hover:text-primary transition-colors">{evento.titolo}</h4>
                             <div className="space-y-1">
                               <p className="text-xs text-muted-foreground flex items-center gap-1">
                                 <Calendar className="h-3 w-3" />
@@ -465,12 +584,16 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                                 <User className="h-3 w-3" />
                                 {evento.partecipanti} partecipanti
                               </p>
-                              <p className="text-xs text-muted-foreground">{evento.location}</p>
+                              <p className="text-xs text-muted-foreground flex items-center gap-1">
+                                <MapPin className="h-3 w-3" />
+                                {evento.location}
+                              </p>
                             </div>
                             <Badge variant="outline" className="text-xs mt-2">
-                              {evento.tipo === 'meeting' ? 'Riunione' :
-                               evento.tipo === 'presentation' ? 'Presentazione' :
-                               evento.tipo === 'training' ? 'Formazione' : 'Cliente'}
+                              {evento.tipo === 'meeting' && '🤝 Riunione'}
+                              {evento.tipo === 'presentation' && '🎯 Presentazione'}
+                              {evento.tipo === 'training' && '📚 Formazione'}
+                              {evento.tipo === 'client' && '👥 Cliente'}
                             </Badge>
                           </div>
                         </div>
@@ -484,45 +607,69 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
               <TabsContent value="leads" className="space-y-4 mt-0">
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="text-sm font-medium">Comunicazioni Leads</h3>
-                  <Badge variant="destructive" className="text-xs">
-                    {notificheLeads.filter(n => !n.letto).length} nuove
+                  <Badge variant="destructive" className="text-xs animate-pulse">
+                    {leads.filter(n => !n.letto).length} nuove
                   </Badge>
                 </div>
                 
                 <div className="space-y-3">
-                  {notificheLeads.map((notifica) => (
-                    <Card key={notifica.id} className={cn(
-                      "border-border/30 transition-all duration-200 hover:shadow-sm cursor-pointer",
-                      !notifica.letto ? "bg-orange-50/50 border-orange-200" : "bg-background/50"
-                    )}>
+                  {leads.map((lead, index) => (
+                    <Card key={lead.id} className={cn(
+                      "border-border/30 transition-all duration-300 hover:shadow-lg hover-scale cursor-pointer animate-fade-in group",
+                      !lead.letto ? "bg-orange-50/50 border-orange-200 shadow-sm" : "bg-background/50",
+                      "hover:bg-background/80"
+                    )}
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                    onClick={() => markLeadAsRead(lead.id)}
+                    >
                       <CardContent className="p-3">
                         <div className="flex items-start gap-3">
                           <div className={cn(
-                            "w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0",
-                            notifica.tipo === 'nuovo_lead' ? "bg-blue-100 text-blue-600" :
-                            notifica.tipo === 'lead_qualificato' ? "bg-green-100 text-green-600" :
-                            notifica.tipo === 'appuntamento_fissato' ? "bg-purple-100 text-purple-600" :
+                            "w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-200 group-hover:scale-110",
+                            lead.tipo === 'nuovo_lead' ? "bg-blue-100 text-blue-600" :
+                            lead.tipo === 'lead_qualificato' ? "bg-green-100 text-green-600" :
+                            lead.tipo === 'appuntamento_fissato' ? "bg-purple-100 text-purple-600" :
+                            lead.tipo === 'contratto_in_chiusura' ? "bg-emerald-100 text-emerald-600" :
                             "bg-orange-100 text-orange-600"
                           )}>
-                            {notifica.tipo === 'nuovo_lead' ? '🆕' :
-                             notifica.tipo === 'lead_qualificato' ? '✅' :
-                             notifica.tipo === 'appuntamento_fissato' ? '📅' : '📞'}
+                            {lead.tipo === 'nuovo_lead' ? <Star className="h-4 w-4" /> :
+                             lead.tipo === 'lead_qualificato' ? <TrendingUp className="h-4 w-4" /> :
+                             lead.tipo === 'appuntamento_fissato' ? <Calendar className="h-4 w-4" /> :
+                             lead.tipo === 'contratto_in_chiusura' ? <Zap className="h-4 w-4" /> :
+                             <Phone className="h-4 w-4" />}
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-start justify-between mb-1">
-                              <h4 className="text-sm font-medium leading-tight">{notifica.messaggio}</h4>
-                              {!notifica.letto && (
-                                <div className="w-2 h-2 bg-orange-500 rounded-full flex-shrink-0 mt-1" />
+                              <h4 className="text-sm font-medium leading-tight group-hover:text-primary transition-colors">
+                                {lead.messaggio}
+                              </h4>
+                              {!lead.letto && (
+                                <div className="w-2 h-2 bg-orange-500 rounded-full flex-shrink-0 mt-1 animate-pulse" />
                               )}
                             </div>
-                            <p className="text-sm font-medium text-primary mb-1">{notifica.cliente}</p>
-                            <div className="flex items-center gap-2 mb-1">
-                              <Badge variant={notifica.priorita === 'Alta' ? 'destructive' : 'secondary'} className="text-xs">
-                                {notifica.priorita}
-                              </Badge>
-                              <span className="text-xs text-muted-foreground">{notifica.fonte}</span>
+                            <div className="space-y-1 mb-2">
+                              <p className="text-sm font-medium text-primary">{lead.cliente}</p>
+                              <p className="text-xs text-muted-foreground">{lead.azienda}</p>
                             </div>
-                            <p className="text-xs text-muted-foreground">{notifica.tempo}</p>
+                            <div className="flex items-center gap-2 mb-2">
+                              <Badge variant={lead.priorita === 'Alta' ? 'destructive' : 'secondary'} className="text-xs">
+                                {lead.priorita}
+                              </Badge>
+                              <span className="text-xs text-muted-foreground">{lead.fonte}</span>
+                              <Badge variant="outline" className="text-xs ml-auto text-green-600">
+                                {lead.potenziale}
+                              </Badge>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <span className="text-xs text-muted-foreground flex items-center gap-1">
+                                <Clock className="h-3 w-3" />
+                                {lead.tempo}
+                              </span>
+                              <Button variant="ghost" size="sm" className="h-6 text-xs px-2 hover:bg-primary hover:text-primary-foreground">
+                                <Phone className="h-3 w-3 mr-1" />
+                                Chiama
+                              </Button>
+                            </div>
                           </div>
                         </div>
                       </CardContent>
