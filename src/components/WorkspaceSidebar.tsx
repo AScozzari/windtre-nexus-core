@@ -439,7 +439,7 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                     <Card key={task.id} className={cn(
                       "border-border/30 bg-background/50 transition-all duration-300 cursor-pointer group",
                       "hover:bg-background/80 hover:scale-[1.02] hover:shadow-lg hover:-translate-y-1",
-                      task.completato && "opacity-60"
+                      task.completato ? "opacity-60" : "bg-blue-50/30"
                     )}
                     onClick={() => toggleTask(task.id)}
                     >
@@ -544,7 +544,12 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                   {eventiCalendario.map((evento, index) => (
                     <Card key={evento.id} className={cn(
                       "border-border/30 bg-background/50 transition-all duration-300 cursor-pointer group",
-                      "hover:bg-background/80 hover:scale-[1.02] hover:shadow-lg hover:-translate-y-1"
+                      "hover:bg-background/80 hover:scale-[1.02] hover:shadow-lg hover:-translate-y-1",
+                      evento.colore === 'blue' && "bg-blue-50/30",
+                      evento.colore === 'purple' && "bg-purple-50/30",
+                      evento.colore === 'green' && "bg-green-50/30",
+                      evento.colore === 'orange' && "bg-orange-50/30",
+                      evento.colore === 'red' && "bg-red-50/30"
                     )}
                     >
                       <CardContent className="p-3">
