@@ -574,14 +574,7 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
               </TabsTrigger>
             </TabsList>
 
-            <ScrollArea className="flex-1 relative">
-              {/* Gradient overlay top */}
-              <div className="absolute top-0 left-0 right-0 h-6 bg-gradient-to-b from-background/95 to-transparent pointer-events-none z-10" />
-              
-              {/* Custom scroll indicator */}
-              <div className="absolute right-1 top-6 bottom-6 w-1 bg-border/20 rounded-full">
-                <div className="absolute top-0 w-full h-8 bg-gradient-to-b from-primary/60 to-primary/20 rounded-full animate-pulse" />
-              </div>
+            <ScrollArea className="flex-1 pr-2">
               {/* TASKS TAB */}
               <TabsContent value="tasks" className="space-y-4 mt-0 px-1 pb-8">
                 <div className="flex items-center justify-between mb-3">
@@ -1060,8 +1053,6 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                 </div>
               </TabsContent>
               
-              {/* Gradient overlay bottom */}
-              <div className="absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-background/95 to-transparent pointer-events-none z-10" />
             </ScrollArea>
           </Tabs>
         </div>
