@@ -15,31 +15,41 @@ export const EnterpriseLayout = ({ children }: EnterpriseLayoutProps) => {
 
   return (
     <SidebarProvider>
-      <div className="h-screen w-full overflow-hidden">
-        {/* 1. Header fisso trasparente */}
+      {/* Professional Layout Container */}
+      <div className="layout-container">
+        
+        {/* 1. Fixed Header with Glassmorphism */}
         <EnterpriseHeader />
         
-        {/* Layout principale a 4 blocchi */}
-        <div className="flex w-full h-full pt-16">
-          {/* 2. Sidebar sinistra - fissa dinamica full height */}
-          <EnterpriseSidebar />
+        {/* 2. Main Layout Content Area */}
+        <div className="layout-content">
           
-          {/* 3. Div centrale con scroll proprio */}
+          {/* 3. Left Sidebar - Fixed height, no scroll interference */}
+          <div className="layout-sidebar-left">
+            <EnterpriseSidebar />
+          </div>
+          
+          {/* 4. Central Content - Independent scroll */}
           <main className={cn(
-            "flex-1 h-full overflow-y-auto bg-gradient-to-br from-background to-muted/30",
+            "layout-main bg-gradient-to-br from-background to-muted/30",
+            "transition-all duration-500 ease-in-out",
             isRightSidebarOpen ? "mr-96" : "mr-12"
           )}>
             <div className="p-6 min-h-full">
               {children}
             </div>
           </main>
+          
         </div>
 
-        {/* 4. Sidebar destra con scroll interno e bordi integrati */}
-        <RightSidebar 
-          isOpen={isRightSidebarOpen} 
-          onToggle={() => setIsRightSidebarOpen(!isRightSidebarOpen)} 
-        />
+        {/* 5. Right Sidebar - Fixed positioning */}
+        <div className="layout-sidebar-right">
+          <RightSidebar 
+            isOpen={isRightSidebarOpen} 
+            onToggle={() => setIsRightSidebarOpen(!isRightSidebarOpen)} 
+          />
+        </div>
+        
       </div>
     </SidebarProvider>
   );
