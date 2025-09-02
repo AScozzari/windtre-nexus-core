@@ -1,8 +1,10 @@
-import { Bell, Search, Settings, User, Globe } from 'lucide-react';
+import { useState } from 'react';
+import { Bell, Search, Settings, User, Globe, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,11 +13,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useNavigate } from 'react-router-dom';
+
 const windtreLogo = '/lovable-uploads/0729be2a-b1da-4ecc-a1d4-321013db32d6.png';
 
 export const EnterpriseHeader = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [showResults, setShowResults] = useState(false);
+  const navigate = useNavigate();
+
   return (
-    <header className="glass-strong border-b border-border/50 p-4">
+    <header className="glass-strong border-b border-border/50 p-4 relative">
       <div className="flex items-center justify-between">
         {/* Left Side - Logo and Navigation */}
         <div className="flex items-center gap-4">
@@ -36,12 +44,14 @@ export const EnterpriseHeader = () => {
           </div>
         </div>
 
-        {/* Center - Search */}
-        <div className="hidden md:flex flex-1 max-w-md mx-8">
+        {/* Center - Smart Search */}
+        <div className="hidden md:flex flex-1 max-w-md mx-8 relative">
           <div className="relative w-full">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Cerca clienti, contratti, servizi..."
+              placeholder="Cerca clienti, contratti, fatture..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
               className="pl-10 glass border-border/50 focus:border-windtre-orange/50"
             />
           </div>
