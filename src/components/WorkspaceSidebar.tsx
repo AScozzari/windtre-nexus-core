@@ -13,25 +13,35 @@ interface WorkspaceSidebarProps {
 }
 
 export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) => {
-  const [isCollapsed, setIsCollapsed] = useState(true); // Inizia chiuso per auto-collapse
+  const [isCollapsed, setIsCollapsed] = useState(true);
   const [activeTab, setActiveTab] = useState('tasks');
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
   const [autoCollapseTimeout, setAutoCollapseTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [manualToggle, setManualToggle] = useState(false); // Flag per distinguere toggle manuale
 
   const toggleCollapse = () => {
     const newCollapsed = !isCollapsed;
     setIsCollapsed(newCollapsed);
     onCollapseChange?.(newCollapsed);
     
-    // Resetta il timeout quando viene fatto toggle manuale
+    // Segna come toggle manuale e disabilita temporaneamente auto-collapse
+    setManualToggle(true);
+    
+    // Resetta il timeout
     if (autoCollapseTimeout) {
       clearTimeout(autoCollapseTimeout);
       setAutoCollapseTimeout(null);
     }
+    
+    // Riabilita auto-collapse dopo 5 secondi dal toggle manuale
+    setTimeout(() => {
+      setManualToggle(false);
+    }, 5000);
   };
 
   const handleMouseEnter = () => {
-    if (isCollapsed) {
+    // Non aprire automaticamente se è stato chiuso manualmente di recente
+    if (isCollapsed && !manualToggle) {
       setIsCollapsed(false);
       onCollapseChange?.(false);
     }
@@ -44,12 +54,17 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
   };
 
   const handleMouseLeave = () => {
+    // Non iniziare auto-collapse se è stato fatto toggle manuale di recente
+    if (manualToggle) return;
+    
     // Inizia countdown per auto-collapse quando mouse esce
     const timeout = setTimeout(() => {
-      setIsCollapsed(true);
-      onCollapseChange?.(true);
+      if (!manualToggle) { // Doppio controllo
+        setIsCollapsed(true);
+        onCollapseChange?.(true);
+      }
       setAutoCollapseTimeout(null);
-    }, 3000); // 3 secondi di delay
+    }, 3000);
     
     setAutoCollapseTimeout(timeout);
   };
