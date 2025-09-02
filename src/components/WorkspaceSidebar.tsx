@@ -216,6 +216,127 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
       location: 'Sala Magna',
       colore: 'green',
       descrizione: 'Esplorazione nuove tecnologie 5G e IoT per il business'
+    },
+    { 
+      id: 8,
+      titolo: 'Negoziazione Contratto Globale', 
+      ora: '09:30', 
+      dataCompleta: new Date(2024, 11, 6), // 6 dicembre
+      tipo: 'client',
+      partecipanti: 7,
+      location: 'Sala Contratti',
+      colore: 'orange',
+      descrizione: 'Finalizzazione accordo per servizi enterprise multinazionali'
+    },
+    { 
+      id: 9,
+      titolo: 'All Hands Meeting Dicembre', 
+      ora: '11:00', 
+      dataCompleta: new Date(2024, 11, 9), // 9 dicembre
+      tipo: 'meeting',
+      partecipanti: 45,
+      location: 'Auditorium Principale',
+      colore: 'purple',
+      descrizione: 'Riunione generale mensile con tutti i dipendenti'
+    },
+    { 
+      id: 10,
+      titolo: 'Formazione Cybersecurity', 
+      ora: '13:30', 
+      dataCompleta: new Date(2024, 11, 10), // 10 dicembre
+      tipo: 'training',
+      partecipanti: 20,
+      location: 'Lab Sicurezza IT',
+      colore: 'green',
+      descrizione: 'Training obbligatorio su sicurezza informatica e best practices'
+    },
+    { 
+      id: 11,
+      titolo: 'Pitch Nuovo Prodotto 5G+', 
+      ora: '16:30', 
+      dataCompleta: new Date(2024, 11, 11), // 11 dicembre
+      tipo: 'presentation',
+      partecipanti: 25,
+      location: 'Innovation Hub',
+      colore: 'purple',
+      descrizione: 'Presentazione lancio nuova gamma prodotti 5G avanzati'
+    },
+    { 
+      id: 12,
+      titolo: 'Onboarding Clienti Enterprise', 
+      ora: '10:30', 
+      dataCompleta: new Date(2024, 11, 12), // 12 dicembre
+      tipo: 'client',
+      partecipanti: 8,
+      location: 'Centro Assistenza Premium',
+      colore: 'blue',
+      descrizione: 'Sessione di onboarding per nuovi clienti corporate'
+    },
+    { 
+      id: 13,
+      titolo: 'Planning Strategico 2025', 
+      ora: '09:00', 
+      dataCompleta: new Date(2024, 11, 13), // 13 dicembre
+      tipo: 'meeting',
+      partecipanti: 12,
+      location: 'Sala Strategia',
+      colore: 'red',
+      descrizione: 'Definizione obiettivi e roadmap per il prossimo anno fiscale'
+    },
+    { 
+      id: 14,
+      titolo: 'Demo Soluzioni IoT Business', 
+      ora: '15:15', 
+      dataCompleta: new Date(2024, 11, 16), // 16 dicembre
+      tipo: 'client',
+      partecipanti: 6,
+      location: 'Showroom Tecnologie',
+      colore: 'orange',
+      descrizione: 'Dimostrazione pratica soluzioni IoT per settore manifatturiero'
+    },
+    { 
+      id: 15,
+      titolo: 'Team Building Fine Anno', 
+      ora: '18:00', 
+      dataCompleta: new Date(2024, 11, 18), // 18 dicembre
+      tipo: 'meeting',
+      partecipanti: 35,
+      location: 'Terrazza Aziendale',
+      colore: 'green',
+      descrizione: 'Evento sociale di fine anno con il team commerciale'
+    },
+    { 
+      id: 16,
+      titolo: 'Review Performance Q4', 
+      ora: '14:45', 
+      dataCompleta: new Date(2024, 11, 19), // 19 dicembre
+      tipo: 'meeting',
+      partecipanti: 10,
+      location: 'Sala Direzione',
+      colore: 'red',
+      descrizione: 'Valutazione risultati ultimo trimestre e bonus allocation'
+    },
+    { 
+      id: 17,
+      titolo: 'Webinar Cloud Solutions', 
+      ora: '11:45', 
+      dataCompleta: new Date(2024, 11, 20), // 20 dicembre
+      tipo: 'training',
+      partecipanti: 50,
+      location: 'Online - Webex',
+      colore: 'purple',
+      descrizione: 'Seminario su nuove soluzioni cloud per il business'
+    },
+    { 
+      id: 18,
+      titolo: 'Chiusura Deals Fine Anno', 
+      ora: '16:00', 
+      dataCompleta: new Date(2024, 11, 23), // 23 dicembre
+      tipo: 'client',
+      partecipanti: 4,
+      location: 'Ufficio Contratti',
+      colore: 'orange',
+      descrizione: 'Finalizzazione ultimi contratti prima delle festività'
     }
   ]);
 
