@@ -19,7 +19,7 @@ export const EnterpriseHeader = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   return (
-    <header className="h-16 glass-strong border-b border-border/50 shadow-lg relative z-30">
+    <header className="fixed top-0 left-0 right-0 z-50 h-16 glass-strong border-b border-border/50 shadow-lg w-full">
       <div className="h-full px-4 flex items-center justify-between">
         {/* Left Side - Logo integrato e Navigation */}
         <div className="flex items-center gap-4">

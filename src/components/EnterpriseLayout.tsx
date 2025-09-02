@@ -16,25 +16,29 @@ export const EnterpriseLayout = ({ children }: EnterpriseLayoutProps) => {
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full">
-        {/* Sidebar sinistra con z-index appropriato */}
-        <EnterpriseSidebar />
+        {/* Header sticky in alto per tutta la larghezza */}
+        <EnterpriseHeader />
         
-        {/* Header che si adatta sopra il contenuto centrale + sidebar destra */}
-        <div className="flex-1 flex flex-col min-w-0">
-          <EnterpriseHeader />
+        {/* Container per sidebar e contenuto sotto l'header */}
+        <div className="flex flex-1 pt-16">
+          {/* Sidebar sinistra con z-index appropriato */}
+          <EnterpriseSidebar />
           
-          <div className={cn("flex flex-1", isRightSidebarOpen ? "lg:pr-96" : "lg:pr-12")}>
-            <main className="flex-1 p-6 bg-gradient-to-br from-background to-muted/30 overflow-y-auto">
-              {children}
-            </main>
+          {/* Contenuto principale */}
+          <div className="flex-1 flex flex-col min-w-0">
+            <div className={cn("flex flex-1", isRightSidebarOpen ? "lg:pr-96" : "lg:pr-12")}>
+              <main className="flex-1 p-6 bg-gradient-to-br from-background to-muted/30 overflow-y-auto">
+                {children}
+              </main>
+            </div>
           </div>
-        </div>
 
-        {/* Sidebar destra con z-index appropriato */}
-        <RightSidebar 
-          isOpen={isRightSidebarOpen} 
-          onToggle={() => setIsRightSidebarOpen(!isRightSidebarOpen)} 
-        />
+          {/* Sidebar destra con z-index appropriato */}
+          <RightSidebar 
+            isOpen={isRightSidebarOpen} 
+            onToggle={() => setIsRightSidebarOpen(!isRightSidebarOpen)} 
+          />
+        </div>
       </div>
     </SidebarProvider>
   );
