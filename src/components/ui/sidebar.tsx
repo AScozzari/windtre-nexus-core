@@ -221,18 +221,20 @@ const Sidebar = React.forwardRef<
       >
         {/* Spacer to reserve width and prevent content shift */}
         <div
+          style={{ width: "var(--sidebar-width, 16rem)" }}
           className={cn(
-            "duration-200 relative h-[calc(100svh-4rem)] w-[--sidebar-width] bg-transparent transition-[width] ease-linear",
+            "duration-200 relative h-[calc(100svh-4rem)] bg-transparent transition-[width] ease-linear",
             "group-data-[collapsible=offcanvas]:w-0",
             "group-data-[side=right]:rotate-180",
             variant === "floating" || variant === "inset"
-              ? "group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4))]"
+              ? "group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon,_3rem)_+_theme(spacing.4))]"
               : "group-data-[collapsible=icon]:w-[--sidebar-width-icon]"
           )}
         />
         <div
+          style={{ width: "var(--sidebar-width, 16rem)" }}
           className={cn(
-            "duration-200 fixed top-16 bottom-0 z-40 hidden h-[calc(100svh-4rem)] w-[--sidebar-width] transition-[left,right,width] ease-linear md:flex",
+            "duration-200 fixed top-16 bottom-0 z-40 hidden h-[calc(100svh-4rem)] transition-[left,right,width] ease-linear md:flex",
             side === "left"
               ? "left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]"
               : "right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]",
