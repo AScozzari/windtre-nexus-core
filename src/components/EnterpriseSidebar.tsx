@@ -107,12 +107,10 @@ export function EnterpriseSidebar({ onCollapseChange }: EnterpriseSidebarProps) 
   const isActive = (path: string) => currentPath === path;
   const getNavClasses = (path: string) =>
     cn(
-      "transition-all duration-300 group relative overflow-hidden",
-      "before:absolute before:inset-0 before:bg-gradient-to-r before:from-windtre-orange/20 before:to-windtre-purple/20",
-      "before:translate-x-[-100%] hover:before:translate-x-0 before:transition-transform before:duration-300",
+      "transition-all duration-200",
       isActive(path) 
-        ? "bg-gradient-primary text-white shadow-glow-orange scale-105 z-10" 
-        : "hover:glass-strong hover:text-windtre-orange hover:scale-105 hover:shadow-lg"
+        ? "bg-gradient-primary text-white shadow-glow-orange" 
+        : "hover:glass-strong hover:text-windtre-orange"
     );
 
   return (
