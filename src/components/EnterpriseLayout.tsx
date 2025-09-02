@@ -10,7 +10,7 @@ interface EnterpriseLayoutProps {
 
 export const EnterpriseLayout = ({ children }: EnterpriseLayoutProps) => {
   const [workspaceCollapsed, setWorkspaceCollapsed] = useState(true);
-  const [leftSidebarCollapsed, setLeftSidebarCollapsed] = useState(false);
+  const [leftSidebarCollapsed, setLeftSidebarCollapsed] = useState(true);
 
   return (
     <SidebarProvider>
