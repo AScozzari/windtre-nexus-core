@@ -879,8 +879,8 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                       eventiFiltered.slice(0, 6).map((evento, index) => (
                         <Card key={evento.id} className={cn(
                           "w-full border-border/30 bg-background/50 transition-all duration-300 cursor-pointer group",
-                          "hover:bg-background/80 hover:scale-[1.01] hover:shadow-md",
-                          index < 2 && "ring-1 ring-primary/20"
+                          "hover:bg-background/80 hover:scale-[1.02] hover:shadow-lg hover:-translate-y-1",
+                          index < 2 && "bg-orange-50/30"
                         )}>
                           <CardContent className="p-2">
                             <div className="flex items-start gap-2">
