@@ -1,4 +1,4 @@
-import { EnterpriseLayout } from "@/components/EnterpriseLayout";
+import { ProfessionalLayout } from "@/components/ProfessionalLayout";
 import { DashboardStats } from "@/components/DashboardStats";
 import { DashboardCharts } from "@/components/DashboardCharts";
 import { Button } from "@/components/ui/button";
@@ -9,7 +9,7 @@ import heroImage from '@/assets/hero-dashboard.jpg';
 
 const Index = () => {
   return (
-    <EnterpriseLayout>
+    <ProfessionalLayout>
       {/* Hero Section */}
       <div className="relative mb-8 overflow-hidden rounded-2xl">
         <div 
@@ -133,7 +133,7 @@ const Index = () => {
           </CardContent>
         </Card>
       </div>
-    </EnterpriseLayout>
+    </ProfessionalLayout>
   );
 };
 
