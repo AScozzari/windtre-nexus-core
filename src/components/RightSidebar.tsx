@@ -63,7 +63,7 @@ export const RightSidebar = ({ isOpen, onToggle }: RightSidebarProps) => {
 
       {/* Sidebar */}
       <div className={cn(
-        "fixed right-0 top-0 h-full z-50 flex transition-transform duration-500 ease-out",
+        "fixed right-0 top-16 h-[calc(100vh-4rem)] z-50 flex transition-transform duration-500 ease-out",
         isOpen ? "translate-x-0" : "translate-x-full lg:translate-x-[calc(100%-3rem)]"
       )}>
         {/* Toggle Button */}
