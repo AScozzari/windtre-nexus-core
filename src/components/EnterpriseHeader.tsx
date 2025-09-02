@@ -14,14 +14,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useNavigate } from 'react-router-dom';
-import { NotificationsSidebar } from './NotificationsSidebar';
 
 const windtreLogo = '/lovable-uploads/0729be2a-b1da-4ecc-a1d4-321013db32d6.png';
 
 export const EnterpriseHeader = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showResults, setShowResults] = useState(false);
-  const [notificationsOpen, setNotificationsOpen] = useState(false);
   const navigate = useNavigate();
 
   return (
@@ -80,12 +78,7 @@ export const EnterpriseHeader = () => {
           </DropdownMenu>
 
           {/* Notifications */}
-          <Button 
-            variant="glass" 
-            size="icon" 
-            className="relative"
-            onClick={() => setNotificationsOpen(true)}
-          >
+          <Button variant="glass" size="icon" className="relative">
             <Bell className="h-4 w-4" />
             <Badge 
               variant="destructive" 
@@ -119,12 +112,6 @@ export const EnterpriseHeader = () => {
           </DropdownMenu>
         </div>
       </div>
-      
-      {/* Notifications Sidebar */}
-      <NotificationsSidebar 
-        isOpen={notificationsOpen}
-        onClose={() => setNotificationsOpen(false)}
-      />
     </header>
   );
 };
