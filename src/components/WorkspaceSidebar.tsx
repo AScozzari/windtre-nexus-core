@@ -710,23 +710,83 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                             .filter(evento => evento.dataCompleta.toDateString() === selectedDate.toDateString())
                             .sort((a, b) => a.ora.localeCompare(b.ora))
                             .map((evento) => (
-                              <div key={evento.id} className="flex items-center gap-2 p-2 rounded-md bg-background/50">
-                                <div className={cn(
-                                  "w-3 h-3 rounded-full",
-                                  evento.colore === 'blue' && "bg-blue-500",
-                                  evento.colore === 'purple' && "bg-purple-500",
-                                  evento.colore === 'green' && "bg-green-500",
-                                  evento.colore === 'orange' && "bg-orange-500",
-                                  evento.colore === 'red' && "bg-red-500"
-                                )} />
-                                <div className="flex-1">
-                                  <div className="flex items-center gap-2">
-                                    <span className="text-xs font-medium">{evento.ora}</span>
-                                    <span className="text-xs">{evento.titolo}</span>
-                                  </div>
-                                  <p className="text-xs text-muted-foreground">{evento.location}</p>
-                                </div>
-                              </div>
+                               <Card key={evento.id} className="border-border/30 bg-background/50 hover:bg-background/80 transition-all duration-200 cursor-pointer group">
+                                 <CardContent className="p-3">
+                                   <div className="flex items-start gap-3">
+                                     {/* Time & Type Icon */}
+                                     <div className={cn(
+                                       "w-12 h-12 rounded-lg flex flex-col items-center justify-center text-white transition-all duration-200 group-hover:scale-105",
+                                       evento.colore === 'blue' && "bg-blue-500",
+                                       evento.colore === 'purple' && "bg-purple-500",
+                                       evento.colore === 'green' && "bg-green-500",
+                                       evento.colore === 'orange' && "bg-orange-500",
+                                       evento.colore === 'red' && "bg-red-500"
+                                     )}>
+                                       <span className="text-xs font-bold leading-none">{evento.ora.split(':')[0]}</span>
+                                       <span className="text-xs leading-none">{evento.ora.split(':')[1]}</span>
+                                     </div>
+                                     
+                                     {/* Event Details */}
+                                     <div className="flex-1 min-w-0">
+                                       <div className="flex items-start justify-between mb-2">
+                                         <h4 className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
+                                           {evento.titolo}
+                                         </h4>
+                                         <Badge variant="outline" className="text-xs ml-2">
+                                           {evento.tipo === 'meeting' && '🤝 Riunione'}
+                                           {evento.tipo === 'presentation' && '🎯 Presentazione'}
+                                           {evento.tipo === 'training' && '📚 Formazione'}
+                                           {evento.tipo === 'client' && '👥 Cliente'}
+                                         </Badge>
+                                       </div>
+                                       
+                                       {/* Descrizione completa */}
+                                       <p className="text-xs text-muted-foreground mb-3 leading-relaxed">
+                                         {evento.descrizione}
+                                       </p>
+                                       
+                                       {/* Info dettagliate */}
+                                       <div className="space-y-2">
+                                         <div className="flex items-center gap-4">
+                                           <div className="flex items-center gap-1">
+                                             <MapPin className="h-3 w-3 text-muted-foreground" />
+                                             <span className="text-xs text-muted-foreground">{evento.location}</span>
+                                           </div>
+                                           <div className="flex items-center gap-1">
+                                             <User className="h-3 w-3 text-muted-foreground" />
+                                             <span className="text-xs text-muted-foreground">{evento.partecipanti} partecipanti</span>
+                                           </div>
+                                         </div>
+                                         
+                                         <div className="flex items-center gap-1">
+                                           <Clock className="h-3 w-3 text-muted-foreground" />
+                                           <span className="text-xs text-muted-foreground">
+                                             {evento.ora} - {(() => {
+                                               const [hours, minutes] = evento.ora.split(':').map(Number);
+                                               const endTime = new Date();
+                                               endTime.setHours(hours + 1, minutes);
+                                               return endTime.toTimeString().slice(0, 5);
+                                             })()}
+                                           </span>
+                                         </div>
+                                       </div>
+                                       
+                                       {/* Azioni */}
+                                       <div className="flex items-center gap-2 mt-3 pt-2 border-t border-border/30">
+                                         <Button variant="outline" size="sm" className="h-6 text-xs px-2 flex-1">
+                                           📅 Vai al dettaglio
+                                         </Button>
+                                         <Button variant="ghost" size="sm" className="h-6 text-xs px-2">
+                                           ✏️ Modifica
+                                         </Button>
+                                         <Button variant="ghost" size="sm" className="h-6 text-xs px-2">
+                                           📧 Invita
+                                         </Button>
+                                       </div>
+                                     </div>
+                                   </div>
+                                 </CardContent>
+                               </Card>
                             ))}
                         </div>
                       )}
