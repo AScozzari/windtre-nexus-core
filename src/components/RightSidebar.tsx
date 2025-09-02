@@ -63,7 +63,7 @@ export const RightSidebar = ({ isOpen, onToggle }: RightSidebarProps) => {
 
       {/* Sidebar con effetti glassmorfismo avanzati */}
       <div className={cn(
-        "fixed right-0 top-16 h-[calc(100vh-4rem)] z-50 flex transition-all duration-700 ease-out transform-gpu will-change-transform",
+        "fixed right-0 top-0 h-full z-40 flex transition-all duration-700 ease-out transform-gpu will-change-transform",
         isOpen ? "translate-x-0" : "translate-x-full lg:translate-x-[calc(100%-3rem)]"
       )}>
         {/* Toggle Button con effetti hover */}
