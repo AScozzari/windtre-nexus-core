@@ -93,7 +93,7 @@ export function EnterpriseSidebar({ onCollapseChange }: EnterpriseSidebarProps) 
   return (
     <Sidebar
       className={cn(
-        "transition-all duration-300"
+        "transition-all duration-300 mt-20 h-[calc(100vh-5rem)]"
       )}
       collapsible="icon"
       onMouseEnter={handleMouseEnter}
