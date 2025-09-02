@@ -13,7 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-const windtreLogo = '/lovable-uploads/0729be2a-b1da-4ecc-a1d4-321013db32d6.png';
+import w3Logo from '@/assets/w3-header-logo.png';
 
 export const EnterpriseHeader = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -29,9 +29,9 @@ export const EnterpriseHeader = () => {
             {/* Logo W3 integrato nell'header */}
             <div className="flex items-center gap-3">
               <img 
-                src={windtreLogo} 
+                src={w3Logo} 
                 alt="WindTre W3 Logo" 
-                className="h-7 w-auto object-contain"
+                className="h-7 w-auto object-contain opacity-90 mix-blend-multiply dark:opacity-95"
               />
               <div className="hidden sm:block">
                 <h1 className="text-base font-bold bg-gradient-primary bg-clip-text text-transparent leading-tight">
