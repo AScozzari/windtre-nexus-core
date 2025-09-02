@@ -64,15 +64,15 @@ export const EnterpriseHeader = () => {
             <DropdownMenuTrigger asChild>
               <Button variant="glass" size="sm" className="gap-2">
                 <Globe className="h-4 w-4" />
-                <span className="hidden sm:inline">Tenant: Corporate</span>
+                <span className="hidden sm:inline">Windtre Milano</span>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="glass border-border/50">
-              <DropdownMenuLabel>Seleziona Tenant</DropdownMenuLabel>
+              <DropdownMenuLabel>Seleziona Negozio</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Corporate (Attuale)</DropdownMenuItem>
-              <DropdownMenuItem>Branch Milano</DropdownMenuItem>
-              <DropdownMenuItem>Branch Roma</DropdownMenuItem>
+              <DropdownMenuItem>Windtre Milano (Attuale)</DropdownMenuItem>
+              <DropdownMenuItem>Windtre Napoli</DropdownMenuItem>
+              <DropdownMenuItem>Windtre Fiumicino</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
 
