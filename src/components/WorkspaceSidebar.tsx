@@ -333,15 +333,6 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {/* Toggle Button */}
-      <Button
-        variant="ghost"
-        size="sm"
-        onClick={toggleCollapse}
-        className="absolute -left-6 top-4 z-40 bg-background border border-border/50 rounded-full p-1 h-6 w-6"
-      >
-      </Button>
-
       {isCollapsed && (
         <div className="flex flex-col items-center gap-3 pt-4">
           {/* Icone dei tool quando collassato */}
