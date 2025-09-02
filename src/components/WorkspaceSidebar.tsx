@@ -13,15 +13,55 @@ interface WorkspaceSidebarProps {
 }
 
 export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true); // Inizia chiuso per auto-collapse
   const [activeTab, setActiveTab] = useState('tasks');
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
+  const [autoCollapseTimeout, setAutoCollapseTimeout] = useState<NodeJS.Timeout | null>(null);
 
   const toggleCollapse = () => {
     const newCollapsed = !isCollapsed;
     setIsCollapsed(newCollapsed);
     onCollapseChange?.(newCollapsed);
+    
+    // Resetta il timeout quando viene fatto toggle manuale
+    if (autoCollapseTimeout) {
+      clearTimeout(autoCollapseTimeout);
+      setAutoCollapseTimeout(null);
+    }
   };
+
+  const handleMouseEnter = () => {
+    if (isCollapsed) {
+      setIsCollapsed(false);
+      onCollapseChange?.(false);
+    }
+    
+    // Cancella timeout esistente quando mouse entra
+    if (autoCollapseTimeout) {
+      clearTimeout(autoCollapseTimeout);
+      setAutoCollapseTimeout(null);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    // Inizia countdown per auto-collapse quando mouse esce
+    const timeout = setTimeout(() => {
+      setIsCollapsed(true);
+      onCollapseChange?.(true);
+      setAutoCollapseTimeout(null);
+    }, 3000); // 3 secondi di delay
+    
+    setAutoCollapseTimeout(timeout);
+  };
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (autoCollapseTimeout) {
+        clearTimeout(autoCollapseTimeout);
+      }
+    };
+  }, [autoCollapseTimeout]);
 
   // Notifica il parent del stato iniziale
   useEffect(() => {
@@ -150,10 +190,14 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
   ];
 
   return (
-    <div className={cn(
-      "fixed right-0 top-16 h-[calc(100vh-4rem)] bg-background/95 backdrop-blur-sm border-l border-border/50 transition-all duration-300 z-30",
-      isCollapsed ? "w-12" : "w-80"
-    )}>
+    <div 
+      className={cn(
+        "fixed right-0 top-16 h-[calc(100vh-4rem)] bg-background/95 backdrop-blur-sm border-l border-border/50 transition-all duration-300 z-30",
+        isCollapsed ? "w-12" : "w-80"
+      )}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       {/* Toggle Button */}
       <Button
         variant="ghost"

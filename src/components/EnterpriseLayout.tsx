@@ -9,7 +9,7 @@ interface EnterpriseLayoutProps {
 }
 
 export const EnterpriseLayout = ({ children }: EnterpriseLayoutProps) => {
-  const [workspaceCollapsed, setWorkspaceCollapsed] = useState(false);
+  const [workspaceCollapsed, setWorkspaceCollapsed] = useState(true); // Inizia chiuso per auto-collapse
 
   return (
     <SidebarProvider>
