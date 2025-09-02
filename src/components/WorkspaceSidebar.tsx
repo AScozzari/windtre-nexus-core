@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ChevronLeft, ChevronRight, Users, Calendar, CheckSquare, TrendingUp, Clock, Bell } from 'lucide-react';
+import { ChevronLeft, ChevronRight, CheckSquare, Calendar, MessageCircle, Clock, Bell, AlertCircle, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -9,31 +9,127 @@ import { cn } from '@/lib/utils';
 
 export const WorkspaceSidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [activeTab, setActiveTab] = useState('activity');
+  const [activeTab, setActiveTab] = useState('tasks');
 
-  const attivitaRecenti = [
-    { id: 1, tipo: 'Nuovo cliente', descrizione: 'Mario Rossi - Milano Centro', tempo: '2 ore fa', colore: 'bg-orange-500' },
-    { id: 2, tipo: 'Contratto firmato', descrizione: 'Fibra Casa - Laura Bianchi', tempo: '3 ore fa', colore: 'bg-purple-500' },
-    { id: 3, tipo: 'Pagamento ricevuto', descrizione: 'Fattura #12345 - €89,99', tempo: '4 ore fa', colore: 'bg-green-500' },
-    { id: 4, tipo: 'Task completato', descrizione: 'Follow-up cliente Premium', tempo: '5 ore fa', colore: 'bg-blue-500' },
-  ];
-
-  const nuoviClienti = [
-    { nome: 'Giuseppe Verde', interesse: 'Piano Business', priorita: 'Alta', tempo: '15 min fa' },
-    { nome: 'Anna Neri', interesse: 'Fibra + Mobile', priorita: 'Media', tempo: '30 min fa' },
-    { nome: 'Paolo Rossi', interesse: 'Solo Mobile', priorita: 'Bassa', tempo: '1 ora fa' },
-  ];
-
-  const taskImportanti = [
-    { titolo: 'Chiamata follow-up', cliente: 'Mario Bianchi', scadenza: 'Oggi 15:00', urgente: true },
-    { titolo: 'Preparare contratto', cliente: 'Laura Verde', scadenza: 'Domani 10:00', urgente: false },
-    { titolo: 'Rinnovo servizi', cliente: 'Giuseppe Neri', scadenza: 'Venerdì', urgente: false },
+  const tasks = [
+    { 
+      id: 1, 
+      titolo: 'Follow-up cliente Premium', 
+      descrizione: 'Chiamare Mario Rossi per rinnovo contratto',
+      priorita: 'Alta', 
+      scadenza: 'Oggi 15:00',
+      completato: false,
+      urgente: true
+    },
+    { 
+      id: 2, 
+      titolo: 'Preparare documentazione', 
+      descrizione: 'Contratto fibra per Laura Bianchi',
+      priorita: 'Media', 
+      scadenza: 'Domani 10:00',
+      completato: false,
+      urgente: false
+    },
+    { 
+      id: 3, 
+      titolo: 'Verifica pagamento', 
+      descrizione: 'Controllo fattura cliente Giuseppe Verde',
+      priorita: 'Bassa', 
+      scadenza: 'Venerdì 16:00',
+      completato: true,
+      urgente: false
+    },
+    { 
+      id: 4, 
+      titolo: 'Attivazione servizi', 
+      descrizione: 'Nuovo contratto mobile + fibra',
+      priorita: 'Alta', 
+      scadenza: 'Oggi 17:30',
+      completato: false,
+      urgente: true
+    },
   ];
 
   const eventiCalendario = [
-    { titolo: 'Riunione Team', ora: '14:30', tipo: 'meeting' },
-    { titolo: 'Presentazione Q1', ora: '16:00', tipo: 'presentation' },
-    { titolo: 'Training nuovo staff', ora: '09:00 Dom', tipo: 'training' },
+    { 
+      id: 1,
+      titolo: 'Riunione Team Vendite', 
+      ora: '14:30', 
+      data: 'Oggi',
+      tipo: 'meeting',
+      partecipanti: 8,
+      location: 'Sala Conferenze A'
+    },
+    { 
+      id: 2,
+      titolo: 'Presentazione Q1 Results', 
+      ora: '16:00', 
+      data: 'Oggi',
+      tipo: 'presentation',
+      partecipanti: 15,
+      location: 'Auditorium'
+    },
+    { 
+      id: 3,
+      titolo: 'Training nuovo personale', 
+      ora: '09:00', 
+      data: 'Domani',
+      tipo: 'training',
+      partecipanti: 6,
+      location: 'Aula Formazione'
+    },
+    { 
+      id: 4,
+      titolo: 'Incontro con cliente Enterprise', 
+      ora: '11:30', 
+      data: 'Domani',
+      tipo: 'client',
+      partecipanti: 3,
+      location: 'Ufficio Direzione'
+    },
+  ];
+
+  const notificheLeads = [
+    {
+      id: 1,
+      tipo: 'nuovo_lead',
+      messaggio: 'Nuovo lead interessato a Piano Business',
+      cliente: 'Alessandro Martini',
+      fonte: 'Website Form',
+      priorita: 'Alta',
+      tempo: '5 min fa',
+      letto: false
+    },
+    {
+      id: 2,
+      tipo: 'lead_qualificato',
+      messaggio: 'Lead qualificato pronto per chiamata',
+      cliente: 'Francesca Lombardi',
+      fonte: 'Campagna Email',
+      priorita: 'Alta',
+      tempo: '15 min fa',
+      letto: false
+    },
+    {
+      id: 3,
+      tipo: 'appuntamento_fissato',
+      messaggio: 'Appuntamento confermato per demo',
+      cliente: 'Roberto Conti',
+      fonte: 'Chiamata diretta',
+      priorita: 'Media',
+      tempo: '1 ora fa',
+      letto: true
+    },
+    {
+      id: 4,
+      tipo: 'follow_up_richiesto',
+      messaggio: 'Cliente richiede informazioni aggiuntive',
+      cliente: 'Maria Ferretti',
+      fonte: 'Chat supporto',
+      priorita: 'Media',
+      tempo: '2 ore fa',
+      letto: true
+    },
   ];
 
   return (
@@ -69,125 +165,179 @@ export const WorkspaceSidebar = () => {
 
           {/* Tabs */}
           <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col">
-            <TabsList className="grid w-full grid-cols-2 mb-4 h-8">
-              <TabsTrigger value="activity" className="text-xs">
-                Attività
+            <TabsList className="grid w-full grid-cols-3 mb-4 h-8">
+              <TabsTrigger value="tasks" className="text-xs">
+                <CheckSquare className="h-3 w-3 mr-1" />
+                Tasks
               </TabsTrigger>
-              <TabsTrigger value="workspace" className="text-xs">
-                Dashboard
+              <TabsTrigger value="calendar" className="text-xs">
+                <Calendar className="h-3 w-3 mr-1" />
+                Calendario
+              </TabsTrigger>
+              <TabsTrigger value="leads" className="text-xs">
+                <MessageCircle className="h-3 w-3 mr-1" />
+                Leads
               </TabsTrigger>
             </TabsList>
 
             <ScrollArea className="flex-1">
-              <TabsContent value="activity" className="space-y-4 mt-0">
-                {/* Attività Recenti */}
-                <div>
-                  <h3 className="text-sm font-medium mb-2 flex items-center gap-2">
-                    <Clock className="h-4 w-4 text-orange-500" />
-                    Attività Recenti
-                  </h3>
-                  <div className="space-y-2">
-                    {attivitaRecenti.map((item) => (
-                      <div key={item.id} className="flex items-start gap-3 p-2 rounded-lg hover:bg-muted/50 transition-colors">
-                        <div className={cn("w-2 h-2 rounded-full mt-2 flex-shrink-0", item.colore)} />
-                        <div className="flex-1 min-w-0">
-                          <p className="text-xs font-medium leading-tight">{item.tipo}</p>
-                          <p className="text-xs text-muted-foreground truncate">{item.descrizione}</p>
-                          <p className="text-xs text-muted-foreground">{item.tempo}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
+              {/* TASKS TAB */}
+              <TabsContent value="tasks" className="space-y-4 mt-0">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-sm font-medium">Le mie attività</h3>
+                  <Badge variant="secondary" className="text-xs">
+                    {tasks.filter(t => !t.completato).length} attive
+                  </Badge>
                 </div>
-
-                {/* Nuovi Clienti */}
-                <div>
-                  <h3 className="text-sm font-medium mb-2 flex items-center gap-2">
-                    <Users className="h-4 w-4 text-purple-500" />
-                    Nuovi clienti aggiunti
-                  </h3>
-                  <div className="space-y-2">
-                    {nuoviClienti.map((cliente, index) => (
-                      <div key={index} className="p-2 rounded-lg border border-border/30 bg-muted/20">
-                        <div className="flex items-center justify-between mb-1">
-                          <p className="text-xs font-medium">{cliente.nome}</p>
-                          <Badge variant={cliente.priorita === 'Alta' ? 'destructive' : cliente.priorita === 'Media' ? 'secondary' : 'outline'} className="text-xs h-5">
-                            {cliente.priorita}
-                          </Badge>
+                
+                <div className="space-y-3">
+                  {tasks.map((task) => (
+                    <Card key={task.id} className={cn(
+                      "border-border/30 transition-all duration-200 hover:shadow-sm",
+                      task.completato ? "bg-muted/30" : "bg-background/50",
+                      task.urgente && !task.completato && "border-orange-200"
+                    )}>
+                      <CardContent className="p-3">
+                        <div className="flex items-start gap-3">
+                          <div className={cn(
+                            "w-4 h-4 rounded border-2 flex-shrink-0 mt-0.5 cursor-pointer",
+                            task.completato 
+                              ? "bg-success border-success" 
+                              : "border-muted-foreground hover:border-primary"
+                          )}>
+                            {task.completato && (
+                              <CheckSquare className="w-3 h-3 text-white" />
+                            )}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-start justify-between mb-1">
+                              <h4 className={cn(
+                                "text-sm font-medium leading-tight",
+                                task.completato && "line-through text-muted-foreground"
+                              )}>
+                                {task.titolo}
+                              </h4>
+                              {task.urgente && !task.completato && (
+                                <AlertCircle className="h-3 w-3 text-orange-500 flex-shrink-0" />
+                              )}
+                            </div>
+                            <p className="text-xs text-muted-foreground mb-2">{task.descrizione}</p>
+                            <div className="flex items-center gap-2">
+                              <Badge variant={
+                                task.priorita === 'Alta' ? 'destructive' : 
+                                task.priorita === 'Media' ? 'secondary' : 'outline'
+                              } className="text-xs">
+                                {task.priorita}
+                              </Badge>
+                              <span className="text-xs text-muted-foreground flex items-center gap-1">
+                                <Clock className="h-3 w-3" />
+                                {task.scadenza}
+                              </span>
+                            </div>
+                          </div>
                         </div>
-                        <p className="text-xs text-muted-foreground">{cliente.interesse}</p>
-                        <p className="text-xs text-muted-foreground">{cliente.tempo}</p>
-                      </div>
-                    ))}
-                  </div>
+                      </CardContent>
+                    </Card>
+                  ))}
                 </div>
               </TabsContent>
 
-              <TabsContent value="workspace" className="space-y-4 mt-0">
-                {/* Task Importanti */}
-                <div>
-                  <h3 className="text-sm font-medium mb-2 flex items-center gap-2">
-                    <CheckSquare className="h-4 w-4 text-green-500" />
-                    Task completati
-                  </h3>
-                  <div className="space-y-2">
-                    {taskImportanti.map((task, index) => (
-                      <div key={index} className="p-2 rounded-lg border border-border/30 bg-muted/20">
-                        <div className="flex items-center justify-between mb-1">
-                          <p className="text-xs font-medium">{task.titolo}</p>
-                          {task.urgente && (
-                            <div className="w-2 h-2 bg-red-500 rounded-full" />
-                          )}
-                        </div>
-                        <p className="text-xs text-muted-foreground">{task.cliente}</p>
-                        <p className="text-xs text-muted-foreground">{task.scadenza}</p>
-                      </div>
-                    ))}
-                  </div>
+              {/* CALENDAR TAB */}
+              <TabsContent value="calendar" className="space-y-4 mt-0">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-sm font-medium">Prossimi eventi</h3>
+                  <Badge variant="secondary" className="text-xs">
+                    {eventiCalendario.length} eventi
+                  </Badge>
                 </div>
-
-                {/* Eventi Calendario */}
-                <div>
-                  <h3 className="text-sm font-medium mb-2 flex items-center gap-2">
-                    <Calendar className="h-4 w-4 text-blue-500" />
-                    Prossimi eventi
-                  </h3>
-                  <div className="space-y-2">
-                    {eventiCalendario.map((evento, index) => (
-                      <div key={index} className="p-2 rounded-lg border border-border/30 bg-muted/20">
-                        <div className="flex items-center gap-2">
-                          <div className="w-8 h-8 bg-gradient-primary rounded flex items-center justify-center">
-                            <span className="text-white text-xs font-bold">
+                
+                <div className="space-y-3">
+                  {eventiCalendario.map((evento) => (
+                    <Card key={evento.id} className="border-border/30 bg-background/50 hover:shadow-sm transition-all duration-200">
+                      <CardContent className="p-3">
+                        <div className="flex items-start gap-3">
+                          <div className="w-10 h-10 bg-gradient-primary rounded-lg flex flex-col items-center justify-center text-white">
+                            <span className="text-xs font-bold leading-none">
                               {evento.ora.split(':')[0]}
                             </span>
+                            <span className="text-xs leading-none">
+                              {evento.ora.split(':')[1]}
+                            </span>
                           </div>
-                          <div className="flex-1">
-                            <p className="text-xs font-medium">{evento.titolo}</p>
-                            <p className="text-xs text-muted-foreground">{evento.ora}</p>
+                          <div className="flex-1 min-w-0">
+                            <h4 className="text-sm font-medium leading-tight mb-1">{evento.titolo}</h4>
+                            <div className="space-y-1">
+                              <p className="text-xs text-muted-foreground flex items-center gap-1">
+                                <Calendar className="h-3 w-3" />
+                                {evento.data} alle {evento.ora}
+                              </p>
+                              <p className="text-xs text-muted-foreground flex items-center gap-1">
+                                <User className="h-3 w-3" />
+                                {evento.partecipanti} partecipanti
+                              </p>
+                              <p className="text-xs text-muted-foreground">{evento.location}</p>
+                            </div>
+                            <Badge variant="outline" className="text-xs mt-2">
+                              {evento.tipo === 'meeting' ? 'Riunione' :
+                               evento.tipo === 'presentation' ? 'Presentazione' :
+                               evento.tipo === 'training' ? 'Formazione' : 'Cliente'}
+                            </Badge>
                           </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
+                      </CardContent>
+                    </Card>
+                  ))}
                 </div>
+              </TabsContent>
 
-                {/* Fattura generata */}
-                <div>
-                  <h3 className="text-sm font-medium mb-2 flex items-center gap-2">
-                    <TrendingUp className="h-4 w-4 text-yellow-500" />
-                    Fattura generata
-                  </h3>
-                  <Card className="border-border/30 bg-muted/20">
-                    <CardContent className="p-3">
-                      <div className="flex items-center justify-between mb-2">
-                        <p className="text-xs font-medium">Nuova fattura creata</p>
-                        <Badge variant="secondary" className="text-xs">NEW</Badge>
-                      </div>
-                      <p className="text-xs text-muted-foreground">Cliente: WindTre Business</p>
-                      <p className="text-xs text-muted-foreground">Importo: €1,250.00</p>
-                      <p className="text-xs text-muted-foreground">10 min fa</p>
-                    </CardContent>
-                  </Card>
+              {/* LEADS TAB */}
+              <TabsContent value="leads" className="space-y-4 mt-0">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-sm font-medium">Comunicazioni Leads</h3>
+                  <Badge variant="destructive" className="text-xs">
+                    {notificheLeads.filter(n => !n.letto).length} nuove
+                  </Badge>
+                </div>
+                
+                <div className="space-y-3">
+                  {notificheLeads.map((notifica) => (
+                    <Card key={notifica.id} className={cn(
+                      "border-border/30 transition-all duration-200 hover:shadow-sm cursor-pointer",
+                      !notifica.letto ? "bg-orange-50/50 border-orange-200" : "bg-background/50"
+                    )}>
+                      <CardContent className="p-3">
+                        <div className="flex items-start gap-3">
+                          <div className={cn(
+                            "w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0",
+                            notifica.tipo === 'nuovo_lead' ? "bg-blue-100 text-blue-600" :
+                            notifica.tipo === 'lead_qualificato' ? "bg-green-100 text-green-600" :
+                            notifica.tipo === 'appuntamento_fissato' ? "bg-purple-100 text-purple-600" :
+                            "bg-orange-100 text-orange-600"
+                          )}>
+                            {notifica.tipo === 'nuovo_lead' ? '🆕' :
+                             notifica.tipo === 'lead_qualificato' ? '✅' :
+                             notifica.tipo === 'appuntamento_fissato' ? '📅' : '📞'}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-start justify-between mb-1">
+                              <h4 className="text-sm font-medium leading-tight">{notifica.messaggio}</h4>
+                              {!notifica.letto && (
+                                <div className="w-2 h-2 bg-orange-500 rounded-full flex-shrink-0 mt-1" />
+                              )}
+                            </div>
+                            <p className="text-sm font-medium text-primary mb-1">{notifica.cliente}</p>
+                            <div className="flex items-center gap-2 mb-1">
+                              <Badge variant={notifica.priorita === 'Alta' ? 'destructive' : 'secondary'} className="text-xs">
+                                {notifica.priorita}
+                              </Badge>
+                              <span className="text-xs text-muted-foreground">{notifica.fonte}</span>
+                            </div>
+                            <p className="text-xs text-muted-foreground">{notifica.tempo}</p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
                 </div>
               </TabsContent>
             </ScrollArea>
