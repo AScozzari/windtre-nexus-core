@@ -26,7 +26,7 @@ export const EnterpriseLayout = ({ children }: EnterpriseLayoutProps) => {
           
           <main className={`flex-1 p-6 bg-gradient-to-br from-background to-muted/30 transition-all duration-300 ${
             workspaceCollapsed ? 'pr-16' : 'pr-96'
-          }`}>
+          } ${leftSidebarCollapsed ? 'pl-16' : 'pl-64'}`}>
             {children}
           </main>
           
