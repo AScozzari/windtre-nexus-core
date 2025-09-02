@@ -9,7 +9,7 @@ import heroImage from '@/assets/hero-dashboard.jpg';
 
 const Index = () => {
   return (
-    <EnterpriseLayout>
+    <div>
       {/* Hero Section */}
       <div className="relative mb-8 overflow-hidden rounded-2xl">
         <div 
@@ -133,7 +133,7 @@ const Index = () => {
           </CardContent>
         </Card>
       </div>
-    </EnterpriseLayout>
+    </div>
   );
 };
 

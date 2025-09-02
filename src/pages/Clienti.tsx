@@ -130,7 +130,7 @@ const Clienti = () => {
   };
 
   return (
-    <EnterpriseLayout>
+    <div>
       {/* Header Section */}
       <div className="mb-8">
         <div className="flex items-center justify-between mb-6">
@@ -332,7 +332,7 @@ const Clienti = () => {
           </CardContent>
         </Card>
       )}
-    </EnterpriseLayout>
+    </div>
   );
 };
 

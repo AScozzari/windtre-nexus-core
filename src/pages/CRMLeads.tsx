@@ -108,8 +108,7 @@ const CRMLeads = () => {
   });
 
   return (
-    <EnterpriseLayout>
-      <div className="space-y-6">
+    <div className="space-y-6">
         {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div>
@@ -350,7 +349,7 @@ const CRMLeads = () => {
           </TabsContent>
         </Tabs>
       </div>
-    </EnterpriseLayout>
+    </div>
   );
 };
 

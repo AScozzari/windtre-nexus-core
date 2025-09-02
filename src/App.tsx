@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { EnterpriseLayout } from "./components/EnterpriseLayout";
 import Index from "./pages/Index";
 import Clienti from "./pages/Clienti";
 import Contratti from "./pages/Contratti";
@@ -22,19 +23,21 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/clienti" element={<Clienti />} />
-          <Route path="/contratti" element={<Contratti />} />
-          <Route path="/fatturazione" element={<Fatturazione />} />
-          <Route path="/servizi/mobile" element={<ServiziMobile />} />
-          <Route path="/hr/dipendenti" element={<HRDipendenti />} />
-          <Route path="/cassa/pos" element={<CassaPOS />} />
-          <Route path="/crm/leads" element={<CRMLeads />} />
-          <Route path="/crm/comunicazione" element={<CRMComunicazione />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <EnterpriseLayout>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/clienti" element={<Clienti />} />
+            <Route path="/contratti" element={<Contratti />} />
+            <Route path="/fatturazione" element={<Fatturazione />} />
+            <Route path="/servizi/mobile" element={<ServiziMobile />} />
+            <Route path="/hr/dipendenti" element={<HRDipendenti />} />
+            <Route path="/cassa/pos" element={<CassaPOS />} />
+            <Route path="/crm/leads" element={<CRMLeads />} />
+            <Route path="/crm/comunicazione" element={<CRMComunicazione />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </EnterpriseLayout>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
