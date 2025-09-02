@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import {
   Home,
@@ -20,7 +20,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { Badge } from "@/components/ui/badge";
+
 import { cn } from "@/lib/utils";
 
 interface EnterpriseSidebarProps {
@@ -39,50 +39,45 @@ const navigation = [
 ];
 
 export function EnterpriseSidebar({ onCollapseChange }: EnterpriseSidebarProps) {
-  const { state } = useSidebar();
+  const { state, setOpen } = useSidebar();
   const location = useLocation();
   const currentPath = location.pathname;
   
-  // Auto-collapse logic semplificato
-  const [isCollapsed, setIsCollapsed] = useState(true);
-  const [manualToggle, setManualToggle] = useState(false);
-  const [autoCollapseTimeout, setAutoCollapseTimeout] = useState<NodeJS.Timeout | null>(null);
+  // Usa lo stato del provider per la larghezza
+  const collapsed = state === "collapsed";
+  const autoCollapseTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const handleMouseEnter = () => {
-    if (isCollapsed) {
-      setIsCollapsed(false);
+    if (collapsed) {
+      setOpen(true);
     }
-    
-    if (autoCollapseTimeout) {
-      clearTimeout(autoCollapseTimeout);
-      setAutoCollapseTimeout(null);
+    if (autoCollapseTimeout.current) {
+      clearTimeout(autoCollapseTimeout.current);
+      autoCollapseTimeout.current = null;
     }
   };
 
   const handleMouseLeave = () => {
-    if (!manualToggle) {
-      const timeout = setTimeout(() => {
-        setIsCollapsed(true);
-        setAutoCollapseTimeout(null);
-      }, 2000);
-      
-      setAutoCollapseTimeout(timeout);
-    }
+    const timeout = setTimeout(() => {
+      setOpen(false);
+      autoCollapseTimeout.current = null;
+    }, 2000);
+    autoCollapseTimeout.current = timeout;
   };
 
   // Cleanup timeout on unmount
   useEffect(() => {
     return () => {
-      if (autoCollapseTimeout) {
-        clearTimeout(autoCollapseTimeout);
+      if (autoCollapseTimeout.current) {
+        clearTimeout(autoCollapseTimeout.current);
       }
     };
-  }, [autoCollapseTimeout]);
+  }, []);
 
   // Notifica il parent del cambio stato
   useEffect(() => {
-    onCollapseChange?.(isCollapsed);
-  }, [isCollapsed, onCollapseChange]);
+    onCollapseChange?.(collapsed);
+  }, [collapsed, onCollapseChange]);
   
   const isActive = (path: string) => currentPath === path;
   
@@ -98,8 +93,7 @@ export function EnterpriseSidebar({ onCollapseChange }: EnterpriseSidebarProps) 
   return (
     <Sidebar
       className={cn(
-        "bg-background/95 backdrop-blur-sm border-r border-border/50 transition-all duration-300 mt-20 h-[calc(100vh-5rem)]",
-        isCollapsed ? "w-14" : "w-64"
+        "transition-all duration-300"
       )}
       collapsible="icon"
       onMouseEnter={handleMouseEnter}
@@ -118,7 +112,7 @@ export function EnterpriseSidebar({ onCollapseChange }: EnterpriseSidebarProps) 
                       className="flex items-center gap-3 px-3 py-2"
                     >
                       <item.icon className="h-5 w-5 flex-shrink-0" />
-                      {!isCollapsed && (
+                      {!collapsed && (
                         <div className="flex items-center justify-between flex-1">
                           <span className="font-medium text-sm">{item.title}</span>
                         </div>
