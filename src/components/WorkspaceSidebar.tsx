@@ -654,16 +654,6 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                       selected={selectedDate}
                       onSelect={setSelectedDate}
                       className={cn("p-0 pointer-events-auto")}
-                      modifiers={{
-                        hasEvents: eventiCalendario.map(evento => evento.dataCompleta)
-                      }}
-                      modifiersStyles={{
-                        hasEvents: { 
-                          backgroundColor: 'hsl(var(--primary))', 
-                          color: 'hsl(var(--primary-foreground))',
-                          fontWeight: 'bold'
-                        }
-                      }}
                       classNames={{
                         months: "space-y-0",
                         month: "space-y-2",
