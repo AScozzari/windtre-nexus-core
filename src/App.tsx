@@ -11,7 +11,6 @@ import ServiziMobile from "./pages/ServiziMobile";
 import HRDipendenti from "./pages/HRDipendenti";
 import CassaPOS from "./pages/CassaPOS";
 import AIAssistant from "./pages/AIAssistant";
-import WorkspaceTasks from "./pages/WorkspaceTasks";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -37,9 +36,6 @@ const App = () => (
           
           {/* AI Tools Routes */}
           <Route path="/ai/assistant" element={<AIAssistant />} />
-          
-          {/* Workspace Routes */}
-          <Route path="/workspace/tasks" element={<WorkspaceTasks />} />
           
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

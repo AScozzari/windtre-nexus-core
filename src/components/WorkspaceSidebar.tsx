@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, CheckSquare, Calendar, MessageCircle } from 'lucide-react';
+import { ChevronLeft, ChevronRight, CheckSquare, Calendar, MessageCircle, Clock, Bell, AlertCircle, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { useNavigate } from 'react-router-dom';
+import { Calendar as CalendarComponent } from '@/components/ui/calendar';
 import { cn } from '@/lib/utils';
 
 interface WorkspaceSidebarProps {
@@ -13,36 +14,10 @@ interface WorkspaceSidebarProps {
 
 export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) => {
   const [isCollapsed, setIsCollapsed] = useState(true);
+  const [activeTab, setActiveTab] = useState('tasks');
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
   const [autoCollapseTimeout, setAutoCollapseTimeout] = useState<NodeJS.Timeout | null>(null);
-  const [manualToggle, setManualToggle] = useState(false);
-  const navigate = useNavigate();
-
-  const workspaceItems = [
-    {
-      id: 'tasks',
-      title: 'Tasks',
-      icon: CheckSquare,
-      route: '/workspace/tasks',
-      description: 'Gestione attività',
-      badge: '8'
-    },
-    {
-      id: 'calendar', 
-      title: 'Calendario',
-      icon: Calendar,
-      route: '/workspace/calendar',
-      description: 'Eventi e appuntamenti',
-      badge: '4'
-    },
-    {
-      id: 'leads',
-      title: 'Leads',
-      icon: MessageCircle, 
-      route: '/workspace/leads',
-      description: 'Comunicazioni clienti',
-      badge: '12'
-    }
-  ];
+  const [manualToggle, setManualToggle] = useState(false); // Flag per distinguere toggle manuale
 
   const toggleCollapse = () => {
     const newCollapsed = !isCollapsed;
@@ -251,39 +226,85 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
       {isCollapsed && (
         <div className="flex flex-col items-center gap-3 pt-4">
           {/* Icone dei tool quando collassato */}
-          {workspaceItems.map((item) => {
-            const IconComponent = item.icon;
-            return (
-              <Button
-                key={item.id}
-                variant="ghost"
-                size="sm"
-                onClick={() => {
-                  navigate(item.route);
-                  // Apri sempre il pannello quando clicco un'icona
-                  setIsCollapsed(false);
-                  onCollapseChange?.(false);
-                  setManualToggle(false);
-                  if (autoCollapseTimeout) {
-                    clearTimeout(autoCollapseTimeout);
-                    setAutoCollapseTimeout(null);
-                  }
-                }}
-                className="w-8 h-8 p-0 transition-colors hover:bg-muted relative"
-                title={item.title}
-              >
-                <IconComponent className="h-4 w-4" />
-                {item.badge && (
-                  <Badge 
-                    variant="destructive" 
-                    className="absolute -top-1 -right-1 h-4 w-4 p-0 flex items-center justify-center text-xs"
-                  >
-                    {item.badge}
-                  </Badge>
-                )}
-              </Button>
-            );
-          })}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => {
+              setActiveTab('tasks');
+              // Apri sempre il pannello quando clicco un'icona
+              setIsCollapsed(false);
+              onCollapseChange?.(false);
+              // Resetta il flag manualToggle per permettere auto-collapse successivo
+              setManualToggle(false);
+              // Cancella eventuali timeout
+              if (autoCollapseTimeout) {
+                clearTimeout(autoCollapseTimeout);
+                setAutoCollapseTimeout(null);
+              }
+            }}
+            className={cn(
+              "w-8 h-8 p-0 transition-colors",
+              activeTab === 'tasks' ? "bg-primary text-primary-foreground" : "hover:bg-muted"
+            )}
+            title="Tasks"
+          >
+            <CheckSquare className="h-4 w-4" />
+          </Button>
+          
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => {
+              setActiveTab('calendar');
+              // Apri sempre il pannello quando clicco un'icona
+              setIsCollapsed(false);
+              onCollapseChange?.(false);
+              // Resetta il flag manualToggle per permettere auto-collapse successivo
+              setManualToggle(false);
+              // Cancella eventuali timeout
+              if (autoCollapseTimeout) {
+                clearTimeout(autoCollapseTimeout);
+                setAutoCollapseTimeout(null);
+              }
+            }}
+            className={cn(
+              "w-8 h-8 p-0 transition-colors",
+              activeTab === 'calendar' ? "bg-primary text-primary-foreground" : "hover:bg-muted"
+            )}
+            title="Calendario"
+          >
+            <Calendar className="h-4 w-4" />
+          </Button>
+          
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => {
+              setActiveTab('leads');
+              // Apri sempre il pannello quando clicco un'icona
+              setIsCollapsed(false);
+              onCollapseChange?.(false);
+              // Resetta il flag manualToggle per permettere auto-collapse successivo
+              setManualToggle(false);
+              // Cancella eventuali timeout
+              if (autoCollapseTimeout) {
+                clearTimeout(autoCollapseTimeout);
+                setAutoCollapseTimeout(null);
+              }
+            }}
+            className={cn(
+              "w-8 h-8 p-0 transition-colors",
+              activeTab === 'leads' ? "bg-primary text-primary-foreground" : "hover:bg-muted"
+            )}
+            title="Leads"
+          >
+            <MessageCircle className="h-4 w-4" />
+          </Button>
+          
+          {/* Badge notifiche quando collassato */}
+          {notificheLeads.filter(n => !n.letto).length > 0 && (
+            <div className="w-2 h-2 bg-destructive rounded-full animate-pulse" />
+          )}
         </div>
       )}
 
@@ -294,38 +315,223 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
             <h2 className="text-lg font-semibold text-purple-600">Workspace</h2>
           </div>
 
-          {/* Workspace Items */}
-          <ScrollArea className="flex-1">
-            <div className="space-y-3">
-              {workspaceItems.map((item) => {
-                const IconComponent = item.icon;
-                return (
-                  <Card 
-                    key={item.id}
-                    className="border-border/30 bg-background/50 hover:shadow-sm transition-all duration-200 cursor-pointer hover:border-primary/50"
-                    onClick={() => navigate(item.route)}
-                  >
-                    <CardContent className="p-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center">
-                          <IconComponent className="h-5 w-5 text-white" />
+          {/* Tabs */}
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col">
+            <TabsList className="grid w-full grid-cols-3 mb-4 h-8">
+              <TabsTrigger value="tasks" className="text-xs">
+                <CheckSquare className="h-3 w-3 mr-1" />
+                Tasks
+              </TabsTrigger>
+              <TabsTrigger value="calendar" className="text-xs">
+                <Calendar className="h-3 w-3 mr-1" />
+                Calendario
+              </TabsTrigger>
+              <TabsTrigger value="leads" className="text-xs">
+                <MessageCircle className="h-3 w-3 mr-1" />
+                Leads
+              </TabsTrigger>
+            </TabsList>
+
+            <ScrollArea className="flex-1">
+              {/* TASKS TAB */}
+              <TabsContent value="tasks" className="space-y-4 mt-0">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-sm font-medium">Le mie attività</h3>
+                  <Badge variant="secondary" className="text-xs">
+                    {tasks.filter(t => !t.completato).length} attive
+                  </Badge>
+                </div>
+                
+                <div className="space-y-3">
+                  {tasks.map((task) => (
+                    <Card key={task.id} className={cn(
+                      "border-border/30 transition-all duration-200 hover:shadow-sm",
+                      task.completato ? "bg-muted/30" : "bg-background/50",
+                      task.urgente && !task.completato && "border-orange-200"
+                    )}>
+                      <CardContent className="p-3">
+                        <div className="flex items-start gap-3">
+                          <div className={cn(
+                            "w-4 h-4 rounded border-2 flex-shrink-0 mt-0.5 cursor-pointer",
+                            task.completato 
+                              ? "bg-success border-success" 
+                              : "border-muted-foreground hover:border-primary"
+                          )}>
+                            {task.completato && (
+                              <CheckSquare className="w-3 h-3 text-white" />
+                            )}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-start justify-between mb-1">
+                              <h4 className={cn(
+                                "text-sm font-medium leading-tight",
+                                task.completato && "line-through text-muted-foreground"
+                              )}>
+                                {task.titolo}
+                              </h4>
+                              {task.urgente && !task.completato && (
+                                <AlertCircle className="h-3 w-3 text-orange-500 flex-shrink-0" />
+                              )}
+                            </div>
+                            <p className="text-xs text-muted-foreground mb-2">{task.descrizione}</p>
+                            <div className="flex items-center gap-2">
+                              <Badge variant={
+                                task.priorita === 'Alta' ? 'destructive' : 
+                                task.priorita === 'Media' ? 'secondary' : 'outline'
+                              } className="text-xs">
+                                {task.priorita}
+                              </Badge>
+                              <span className="text-xs text-muted-foreground flex items-center gap-1">
+                                <Clock className="h-3 w-3" />
+                                {task.scadenza}
+                              </span>
+                            </div>
+                          </div>
                         </div>
-                        <div className="flex-1">
-                          <div className="flex items-center justify-between mb-1">
-                            <h3 className="text-sm font-semibold">{item.title}</h3>
-                            <Badge variant="secondary" className="text-xs">
-                              {item.badge}
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </TabsContent>
+
+              {/* CALENDAR TAB */}
+              <TabsContent value="calendar" className="space-y-4 mt-0">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-sm font-medium">Calendario</h3>
+                  <Badge variant="secondary" className="text-xs">
+                    {eventiCalendario.length} eventi
+                  </Badge>
+                </div>
+                
+                {/* Calendario interattivo */}
+                <Card className="border-border/30 bg-background/50 mb-4">
+                  <CardContent className="p-2">
+                    <CalendarComponent
+                      mode="single"
+                      selected={selectedDate}
+                      onSelect={setSelectedDate}
+                      className={cn("p-0 pointer-events-auto")}
+                      classNames={{
+                        months: "space-y-0",
+                        month: "space-y-2",
+                        caption: "flex justify-center pt-1 relative items-center text-sm",
+                        caption_label: "font-medium",
+                        nav: "space-x-1 flex items-center",
+                        nav_button: "h-6 w-6 bg-transparent p-0 opacity-50 hover:opacity-100",
+                        nav_button_previous: "absolute left-1",
+                        nav_button_next: "absolute right-1",
+                        table: "w-full border-collapse space-y-1",
+                        head_row: "flex",
+                        head_cell: "text-muted-foreground rounded-md w-8 font-normal text-xs",
+                        row: "flex w-full mt-0.5",
+                        cell: "text-center text-xs p-0 relative [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
+                        day: "h-8 w-8 p-0 font-normal text-xs aria-selected:opacity-100 hover:bg-accent hover:text-accent-foreground rounded-md",
+                        day_selected: "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
+                        day_today: "bg-accent text-accent-foreground",
+                        day_outside: "text-muted-foreground opacity-50",
+                        day_disabled: "text-muted-foreground opacity-50",
+                        day_range_middle: "aria-selected:bg-accent aria-selected:text-accent-foreground",
+                        day_hidden: "invisible",
+                      }}
+                    />
+                  </CardContent>
+                </Card>
+                
+                <div className="mb-3">
+                  <h4 className="text-sm font-medium">Prossimi eventi</h4>
+                </div>
+                
+                <div className="space-y-3">
+                  {eventiCalendario.map((evento) => (
+                    <Card key={evento.id} className="border-border/30 bg-background/50 hover:shadow-sm transition-all duration-200">
+                      <CardContent className="p-3">
+                        <div className="flex items-start gap-3">
+                          <div className="w-10 h-10 bg-gradient-primary rounded-lg flex flex-col items-center justify-center text-white">
+                            <span className="text-xs font-bold leading-none">
+                              {evento.ora.split(':')[0]}
+                            </span>
+                            <span className="text-xs leading-none">
+                              {evento.ora.split(':')[1]}
+                            </span>
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <h4 className="text-sm font-medium leading-tight mb-1">{evento.titolo}</h4>
+                            <div className="space-y-1">
+                              <p className="text-xs text-muted-foreground flex items-center gap-1">
+                                <Calendar className="h-3 w-3" />
+                                {evento.data} alle {evento.ora}
+                              </p>
+                              <p className="text-xs text-muted-foreground flex items-center gap-1">
+                                <User className="h-3 w-3" />
+                                {evento.partecipanti} partecipanti
+                              </p>
+                              <p className="text-xs text-muted-foreground">{evento.location}</p>
+                            </div>
+                            <Badge variant="outline" className="text-xs mt-2">
+                              {evento.tipo === 'meeting' ? 'Riunione' :
+                               evento.tipo === 'presentation' ? 'Presentazione' :
+                               evento.tipo === 'training' ? 'Formazione' : 'Cliente'}
                             </Badge>
                           </div>
-                          <p className="text-xs text-muted-foreground">{item.description}</p>
                         </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                );
-              })}
-            </div>
-          </ScrollArea>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </TabsContent>
+
+              {/* LEADS TAB */}
+              <TabsContent value="leads" className="space-y-4 mt-0">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-sm font-medium">Comunicazioni Leads</h3>
+                  <Badge variant="destructive" className="text-xs">
+                    {notificheLeads.filter(n => !n.letto).length} nuove
+                  </Badge>
+                </div>
+                
+                <div className="space-y-3">
+                  {notificheLeads.map((notifica) => (
+                    <Card key={notifica.id} className={cn(
+                      "border-border/30 transition-all duration-200 hover:shadow-sm cursor-pointer",
+                      !notifica.letto ? "bg-orange-50/50 border-orange-200" : "bg-background/50"
+                    )}>
+                      <CardContent className="p-3">
+                        <div className="flex items-start gap-3">
+                          <div className={cn(
+                            "w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0",
+                            notifica.tipo === 'nuovo_lead' ? "bg-blue-100 text-blue-600" :
+                            notifica.tipo === 'lead_qualificato' ? "bg-green-100 text-green-600" :
+                            notifica.tipo === 'appuntamento_fissato' ? "bg-purple-100 text-purple-600" :
+                            "bg-orange-100 text-orange-600"
+                          )}>
+                            {notifica.tipo === 'nuovo_lead' ? '🆕' :
+                             notifica.tipo === 'lead_qualificato' ? '✅' :
+                             notifica.tipo === 'appuntamento_fissato' ? '📅' : '📞'}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-start justify-between mb-1">
+                              <h4 className="text-sm font-medium leading-tight">{notifica.messaggio}</h4>
+                              {!notifica.letto && (
+                                <div className="w-2 h-2 bg-orange-500 rounded-full flex-shrink-0 mt-1" />
+                              )}
+                            </div>
+                            <p className="text-sm font-medium text-primary mb-1">{notifica.cliente}</p>
+                            <div className="flex items-center gap-2 mb-1">
+                              <Badge variant={notifica.priorita === 'Alta' ? 'destructive' : 'secondary'} className="text-xs">
+                                {notifica.priorita}
+                              </Badge>
+                              <span className="text-xs text-muted-foreground">{notifica.fonte}</span>
+                            </div>
+                            <p className="text-xs text-muted-foreground">{notifica.tempo}</p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </TabsContent>
+            </ScrollArea>
+          </Tabs>
         </div>
       )}
     </div>
