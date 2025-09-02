@@ -121,11 +121,6 @@ export function EnterpriseSidebar({ onCollapseChange }: EnterpriseSidebarProps) 
                       {!isCollapsed && (
                         <div className="flex items-center justify-between flex-1">
                           <span className="font-medium text-sm">{item.title}</span>
-                          {item.badge && (
-                            <Badge variant="secondary" className="text-xs ml-auto">
-                              {item.badge}
-                            </Badge>
-                          )}
                         </div>
                       )}
                     </NavLink>
