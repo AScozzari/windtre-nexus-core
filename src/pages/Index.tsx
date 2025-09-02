@@ -17,7 +17,7 @@ const Index = () => {
           style={{ backgroundImage: `url(${heroImage})` }}
         >
           <div className="absolute inset-0 bg-gradient-to-r from-windtre-orange/90 to-windtre-purple/90" />
-          <div className="relative z-10 flex items-center justify-between p-8 h-full">
+          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 p-4 md:p-8 h-full">
             <div className="text-white">
               <h1 className="text-3xl font-bold mb-2">
                 Dashboard Enterprise
@@ -34,12 +34,12 @@ const Index = () => {
                 </Badge>
               </div>
             </div>
-            <div className="flex gap-3">
-              <Button variant="glass" className="bg-white/20 text-white border-white/30 hover:bg-white/30">
+            <div className="flex gap-3 w-full md:w-auto md:justify-end">
+              <Button variant="glass" className="bg-white/20 text-white border-white/30 hover:bg-white/30 w-full md:w-auto">
                 <Download className="h-4 w-4 mr-2" />
                 Report
               </Button>
-              <Button variant="enterprise">
+              <Button variant="enterprise" className="w-full md:w-auto">
                 <Plus className="h-4 w-4 mr-2" />
                 Nuovo Cliente
               </Button>

@@ -102,8 +102,8 @@ export function EnterpriseSidebar({ onCollapseChange }: EnterpriseSidebarProps) 
       className={cn(
         "transition-all duration-300 border-r",
         isMobile 
-          ? "h-[calc(100vh-3rem)] mt-12 z-50 bg-sidebar-background shadow-lg" 
-          : "mt-20 h-[calc(100vh-5rem)] bg-sidebar-background/50 backdrop-blur-md border-sidebar-border"
+          ? "h-[calc(100vh-3rem)] mt-12 z-50 bg-sidebar shadow-lg" 
+          : "mt-20 h-[calc(100vh-5rem)] bg-sidebar/50 backdrop-blur-md border-sidebar-border"
       )}
       collapsible={isMobile ? "offcanvas" : "icon"}
       onMouseEnter={!isMobile ? handleMouseEnter : undefined}
