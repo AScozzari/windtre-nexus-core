@@ -8,9 +8,7 @@ import {
   UserCheck,
   Settings,
   Calculator,
-  Bot,
-  Pin,
-  PinOff
+  Bot
 } from "lucide-react";
 import {
   Sidebar,
@@ -23,7 +21,6 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 interface EnterpriseSidebarProps {
@@ -46,30 +43,17 @@ export function EnterpriseSidebar({ onCollapseChange }: EnterpriseSidebarProps) 
   const location = useLocation();
   const currentPath = location.pathname;
   
-  // Auto-collapse logic
-  const [isPinned, setIsPinned] = useState(false);
+  // Auto-collapse logic simile a WorkspaceSidebar
+  const [isCollapsed, setIsCollapsed] = useState(true);
+  const [manualToggle, setManualToggle] = useState(false);
   const [autoCollapseTimeout, setAutoCollapseTimeout] = useState<NodeJS.Timeout | null>(null);
 
-  const isCollapsed = state === "collapsed" && !isPinned;
-  
-  const togglePin = () => {
-    setIsPinned(!isPinned);
-    if (autoCollapseTimeout) {
-      clearTimeout(autoCollapseTimeout);
-      setAutoCollapseTimeout(null);
-    }
-  };
-
   const handleMouseEnter = () => {
-    if (!isPinned && isCollapsed) {
-      // Forza l'apertura della sidebar
-      const sidebarTrigger = document.querySelector('[data-sidebar="trigger"]') as HTMLButtonElement;
-      if (sidebarTrigger) {
-        sidebarTrigger.click();
-      }
+    if (isCollapsed) {
+      setIsCollapsed(false);
     }
     
-    // Cancella timeout esistente
+    // Cancella il timeout se esiste
     if (autoCollapseTimeout) {
       clearTimeout(autoCollapseTimeout);
       setAutoCollapseTimeout(null);
@@ -77,15 +61,12 @@ export function EnterpriseSidebar({ onCollapseChange }: EnterpriseSidebarProps) 
   };
 
   const handleMouseLeave = () => {
-    if (!isPinned) {
-      // Inizia countdown per auto-collapse
+    if (!manualToggle) {
+      // Auto-collapse dopo 2 secondi
       const timeout = setTimeout(() => {
-        const sidebarTrigger = document.querySelector('[data-sidebar="trigger"]') as HTMLButtonElement;
-        if (sidebarTrigger && !isPinned) {
-          sidebarTrigger.click();
-        }
+        setIsCollapsed(true);
         setAutoCollapseTimeout(null);
-      }, 2000); // 2 secondi di delay
+      }, 2000);
       
       setAutoCollapseTimeout(timeout);
     }
@@ -123,25 +104,6 @@ export function EnterpriseSidebar({ onCollapseChange }: EnterpriseSidebarProps) 
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {/* Pin Button */}
-      {!isCollapsed && (
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={togglePin}
-          className={cn(
-            "absolute top-3 right-3 z-50 h-8 w-8 rounded-md transition-all duration-200",
-            "hover:bg-windtre-orange/10 hover:scale-110",
-            isPinned 
-              ? "bg-windtre-orange/20 text-windtre-orange shadow-sm" 
-              : "text-muted-foreground hover:text-windtre-orange"
-          )}
-          title={isPinned ? "Sblocca sidebar" : "Blocca sidebar"}
-        >
-          {isPinned ? <Pin className="h-4 w-4" /> : <PinOff className="h-4 w-4" />}
-        </Button>
-      )}
-
       <SidebarContent className="pt-4">
         <SidebarGroup>
           <SidebarGroupContent>
