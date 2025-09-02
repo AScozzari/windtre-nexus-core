@@ -574,9 +574,16 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
               </TabsTrigger>
             </TabsList>
 
-            <ScrollArea className="flex-1">
+            <ScrollArea className="flex-1 relative">
+              {/* Gradient overlay top */}
+              <div className="absolute top-0 left-0 right-0 h-6 bg-gradient-to-b from-background/95 to-transparent pointer-events-none z-10" />
+              
+              {/* Custom scroll indicator */}
+              <div className="absolute right-1 top-6 bottom-6 w-1 bg-border/20 rounded-full">
+                <div className="absolute top-0 w-full h-8 bg-gradient-to-b from-primary/60 to-primary/20 rounded-full animate-pulse" />
+              </div>
               {/* TASKS TAB */}
-              <TabsContent value="tasks" className="space-y-4 mt-0">
+              <TabsContent value="tasks" className="space-y-4 mt-0 px-1 pb-8">
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="text-sm font-medium">Le mie attività</h3>
                   <Badge variant="secondary" className="text-xs">
@@ -584,7 +591,7 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                   </Badge>
                 </div>
                 
-                <div className="space-y-3">
+                <div className="space-y-3 min-h-[600px]">
                   {tasks.map((task, index) => (
                     <Card key={task.id} className={cn(
                       "border-border/30 bg-background/50 transition-all duration-300 cursor-pointer group",
@@ -645,7 +652,7 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
               </TabsContent>
 
               {/* CALENDAR TAB */}
-              <TabsContent value="calendar" className="space-y-4 mt-0">
+              <TabsContent value="calendar" className="space-y-4 mt-0 px-1 pb-8">
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="text-sm font-medium">Calendario</h3>
                   <Badge variant="secondary" className="text-xs">
@@ -995,7 +1002,7 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                   </Badge>
                 </div>
                 
-                <div className="space-y-3">
+                <div className="space-y-3 min-h-[400px]">
                   {leads.map((lead, index) => (
                     <Card key={lead.id} className={cn(
                       "border-border/30 bg-background/50 transition-all duration-300 cursor-pointer group",
@@ -1055,6 +1062,9 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                   ))}
                 </div>
               </TabsContent>
+              
+              {/* Gradient overlay bottom */}
+              <div className="absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-background/95 to-transparent pointer-events-none z-10" />
             </ScrollArea>
           </Tabs>
         </div>
