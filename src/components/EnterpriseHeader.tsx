@@ -11,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import windtreLogo from '@/assets/windtre-logo.png';
+const windtreLogo = '/lovable-uploads/0729be2a-b1da-4ecc-a1d4-321013db32d6.png';
 
 export const EnterpriseHeader = () => {
   return (
@@ -24,8 +24,8 @@ export const EnterpriseHeader = () => {
           <div className="flex items-center gap-3">
             <img 
               src={windtreLogo} 
-              alt="WindTre Logo" 
-              className="h-8 w-8 object-contain"
+              alt="WindTre W3 Logo" 
+              className="h-10 w-auto object-contain"
             />
             <div className="hidden sm:block">
               <h1 className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent">
