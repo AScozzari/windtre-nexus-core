@@ -14,12 +14,12 @@ export const EnterpriseLayout = ({ children }: EnterpriseLayoutProps) => {
   const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(true);
 
   return (
-    <div className="min-h-screen w-full">
-      {/* Header fisso in alto */}
-      <EnterpriseHeader />
-      
-      {/* Layout principale sotto l'header */}
-      <SidebarProvider>
+    <SidebarProvider>
+      <div className="min-h-screen w-full">
+        {/* Header fisso in alto */}
+        <EnterpriseHeader />
+        
+        {/* Layout principale sotto l'header */}
         <div className="flex w-full min-h-[calc(100vh-4rem)] mt-16">
           {/* Sidebar sinistra */}
           <EnterpriseSidebar />
@@ -34,13 +34,13 @@ export const EnterpriseLayout = ({ children }: EnterpriseLayoutProps) => {
             </div>
           </main>
         </div>
-      </SidebarProvider>
 
-      {/* Sidebar destra */}
-      <RightSidebar 
-        isOpen={isRightSidebarOpen} 
-        onToggle={() => setIsRightSidebarOpen(!isRightSidebarOpen)} 
-      />
-    </div>
+        {/* Sidebar destra */}
+        <RightSidebar 
+          isOpen={isRightSidebarOpen} 
+          onToggle={() => setIsRightSidebarOpen(!isRightSidebarOpen)} 
+        />
+      </div>
+    </SidebarProvider>
   );
 };
