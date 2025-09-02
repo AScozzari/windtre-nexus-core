@@ -44,7 +44,7 @@ export const EnterpriseHeader = () => {
             />
             <div className="hidden sm:block">
               <h1 className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-                WindTre Enterprise
+                Windtre Suite
               </h1>
               <p className="text-xs text-muted-foreground">Multitenant Dashboard</p>
             </div>
