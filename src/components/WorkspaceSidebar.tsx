@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, CheckSquare, Calendar, MessageCircle, Clock, Bell, AlertCircle, User, Phone, Mail, MapPin, TrendingUp, Zap, Star } from 'lucide-react';
+import { ChevronLeft, ChevronRight, CheckSquare, Calendar, MessageCircle, Clock, Bell, AlertCircle, User, Phone, Mail, MapPin, TrendingUp, Zap, Star, CalendarIcon, CalendarDays } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Calendar as CalendarComponent } from '@/components/ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { format, isWithinInterval, addDays } from 'date-fns';
+import { DateRange } from 'react-day-picker';
 import { cn } from '@/lib/utils';
 
 interface WorkspaceSidebarProps {
@@ -16,6 +19,10 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
   const [isCollapsed, setIsCollapsed] = useState(true);
   const [activeTab, setActiveTab] = useState('tasks');
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
+  const [dateRange, setDateRange] = useState<DateRange | undefined>({
+    from: new Date(),
+    to: addDays(new Date(), 7)
+  });
   const [autoCollapseTimeout, setAutoCollapseTimeout] = useState<NodeJS.Timeout | null>(null);
   const [manualToggle, setManualToggle] = useState(false);
   const [eventDaysFilter, setEventDaysFilter] = useState(7); // 7 o 15 giorni
@@ -796,106 +803,186 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                 
                 <div className="flex items-center justify-between mb-3">
                   <h4 className="text-sm font-medium">Prossimi eventi</h4>
-                  <div className="flex items-center gap-2">
-                    <Button
-                      variant={eventDaysFilter === 7 ? "default" : "outline"}
-                      size="sm"
-                      className="h-6 text-xs px-2"
-                      onClick={() => setEventDaysFilter(7)}
-                    >
-                      7gg
-                    </Button>
-                    <Button
-                      variant={eventDaysFilter === 15 ? "default" : "outline"}
-                      size="sm"
-                      className="h-6 text-xs px-2"
-                      onClick={() => setEventDaysFilter(15)}
-                    >
-                      15gg
-                    </Button>
-                  </div>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button variant="outline" size="sm" className="h-6 text-xs px-2 gap-1">
+                        <CalendarDays className="h-3 w-3" />
+                        {dateRange?.from && dateRange?.to ? (
+                          `${format(dateRange.from, "dd/MM")} - ${format(dateRange.to, "dd/MM")}`
+                        ) : (
+                          "Seleziona periodo"
+                        )}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="end">
+                      <CalendarComponent
+                        initialFocus
+                        mode="range"
+                        defaultMonth={dateRange?.from}
+                        selected={dateRange}
+                        onSelect={setDateRange}
+                        numberOfMonths={2}
+                        className={cn("p-3 pointer-events-auto")}
+                      />
+                      <div className="flex items-center gap-2 p-3 border-t">
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          className="h-6 text-xs px-2 flex-1"
+                          onClick={() => setDateRange({
+                            from: new Date(),
+                            to: addDays(new Date(), 7)
+                          })}
+                        >
+                          7 giorni
+                        </Button>
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          className="h-6 text-xs px-2 flex-1"
+                          onClick={() => setDateRange({
+                            from: new Date(),
+                            to: addDays(new Date(), 15)
+                          })}
+                        >
+                          15 giorni
+                        </Button>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
                 </div>
                 
                 <div className="space-y-3">
                   {(() => {
-                    const oggi = new Date();
-                    const dataLimite = new Date(oggi.getTime() + eventDaysFilter * 24 * 60 * 60 * 1000);
-                    
-                    return eventiCalendario
+                    const eventiFiltered = eventiCalendario
                       .filter(evento => {
                         const eventoDate = new Date(evento.dataCompleta);
-                        return eventoDate >= oggi && eventoDate <= dataLimite;
+                        if (dateRange?.from && dateRange?.to) {
+                          return isWithinInterval(eventoDate, { 
+                            start: dateRange.from, 
+                            end: dateRange.to 
+                          });
+                        }
+                        return true;
                       })
-                      .sort((a, b) => a.dataCompleta.getTime() - b.dataCompleta.getTime())
-                      .map((evento, index) => (
-                    <Card key={evento.id} className={cn(
-                      "border-border/30 bg-background/50 transition-all duration-300 cursor-pointer group",
-                      "hover:bg-background/80 hover:scale-[1.02] hover:shadow-lg hover:-translate-y-1",
-                      evento.colore === 'blue' && "bg-blue-50/30",
-                      evento.colore === 'purple' && "bg-purple-50/30",
-                      evento.colore === 'green' && "bg-green-50/30",
-                      evento.colore === 'orange' && "bg-orange-50/30",
-                      evento.colore === 'red' && "bg-red-50/30"
-                    )}
-                    onClick={() => setSelectedDate(evento.dataCompleta)}
-                    >
-                      <CardContent className="p-3">
-                        <div className="flex items-start gap-3">
-                          {/* Date Icon */}
-                          <div className={cn(
-                            "w-10 h-10 rounded-lg flex flex-col items-center justify-center flex-shrink-0 transition-all duration-300 border text-xs font-bold",
-                            "group-hover:scale-110 group-hover:rotate-3",
-                            evento.colore === 'blue' && "bg-blue-500 text-white border-blue-600",
-                            evento.colore === 'purple' && "bg-purple-500 text-white border-purple-600", 
-                            evento.colore === 'green' && "bg-green-500 text-white border-green-600",
-                            evento.colore === 'orange' && "bg-orange-500 text-white border-orange-600",
-                            evento.colore === 'red' && "bg-red-500 text-white border-red-600"
-                          )}>
-                            <span className="leading-none">{evento.dataCompleta.getDate()}</span>
-                            <span className="leading-none text-xs opacity-90">
-                              {evento.dataCompleta.toLocaleDateString('it-IT', { month: 'short' }).toUpperCase()}
-                            </span>
-                          </div>
-                          
-                          {/* Content */}
-                          <div className="flex-1 min-w-0">
-                            <h4 className="text-sm font-medium mb-1 transition-all duration-300 group-hover:text-primary group-hover:translate-x-1">
-                              {evento.titolo}
-                            </h4>
-                            
-                            <p className="text-xs text-muted-foreground mb-2 line-clamp-1 transition-colors duration-300 group-hover:text-foreground/80">
-                              {evento.descrizione}
-                            </p>
-                            
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-2">
-                                <Badge variant="outline" className="text-xs transition-all duration-300 group-hover:scale-105">
-                                  {evento.tipo === 'meeting' && '🤝 Riunione'}
-                                  {evento.tipo === 'presentation' && '🎯 Presentazione'}
-                                  {evento.tipo === 'training' && '📚 Formazione'}
-                                  {evento.tipo === 'client' && '👥 Cliente'}
-                                </Badge>
-                                <span className="text-xs text-muted-foreground">{evento.partecipanti}p</span>
-                              </div>
-                              
-                              <div className="flex items-center gap-1">
-                                <Clock className="h-3 w-3 text-muted-foreground transition-transform duration-300 group-hover:rotate-12" />
-                                <span className="text-xs text-muted-foreground transition-all duration-300 group-hover:text-primary">
-                                  {evento.ora}
+                      .sort((a, b) => a.dataCompleta.getTime() - b.dataCompleta.getTime());
+                      
+                    return eventiFiltered.length === 0 ? (
+                      <Card className="border-border/30 bg-muted/20">
+                        <CardContent className="p-4 text-center">
+                          <CalendarIcon className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
+                          <p className="text-xs text-muted-foreground">
+                            Nessun evento nel periodo selezionato
+                          </p>
+                        </CardContent>
+                      </Card>
+                    ) : (
+                      eventiFiltered.slice(0, 6).map((evento, index) => (
+                        <Card key={evento.id} className={cn(
+                          "border-border/30 bg-background/50 transition-all duration-300 cursor-pointer group",
+                          "hover:bg-background/80 hover:scale-[1.02] hover:shadow-lg hover:-translate-y-1",
+                          index < 2 && "ring-1 ring-primary/20" // Evidenzia i primi 2 eventi
+                        )}>
+                          <CardContent className="p-3">
+                            <div className="flex items-start gap-3">
+                              {/* Enhanced Time Badge with Date */}
+                              <div className="flex flex-col items-center gap-1">
+                                <div className={cn(
+                                  "w-12 h-12 rounded-lg flex flex-col items-center justify-center text-white transition-all duration-200 group-hover:scale-105",
+                                  evento.colore === 'blue' && "bg-blue-500",
+                                  evento.colore === 'purple' && "bg-purple-500", 
+                                  evento.colore === 'green' && "bg-green-500",
+                                  evento.colore === 'orange' && "bg-orange-500",
+                                  evento.colore === 'red' && "bg-red-500"
+                                )}>
+                                  <span className="text-xs font-bold leading-none">{evento.ora.split(':')[0]}</span>
+                                  <span className="text-xs leading-none">{evento.ora.split(':')[1]}</span>
+                                </div>
+                                <span className="text-xs font-medium text-center text-muted-foreground">
+                                  {evento.dataCompleta.toLocaleDateString('it-IT', { 
+                                    day: 'numeric',
+                                    month: 'short'
+                                  })}
                                 </span>
                               </div>
+                              
+                              {/* Event Details Enhanced */}
+                              <div className="flex-1 min-w-0">
+                                <div className="flex items-start justify-between mb-2">
+                                  <h4 className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2">
+                                    {evento.titolo}
+                                  </h4>
+                                  {index < 2 && (
+                                    <Badge variant="default" className="text-xs ml-2 bg-primary/10 text-primary border-primary/20">
+                                      ⭐ Priorità
+                                    </Badge>
+                                  )}
+                                </div>
+                                
+                                {/* Descrizione breve */}
+                                <p className="text-xs text-muted-foreground mb-2 line-clamp-2 leading-relaxed">
+                                  {evento.descrizione}
+                                </p>
+                                
+                                {/* Metadata row */}
+                                <div className="flex items-center justify-between">
+                                  <div className="flex items-center gap-3">
+                                    <Badge variant="outline" className="text-xs">
+                                      {evento.tipo === 'meeting' && '🤝 Riunione'}
+                                      {evento.tipo === 'presentation' && '🎯 Presentazione'}
+                                      {evento.tipo === 'training' && '📚 Formazione'}
+                                      {evento.tipo === 'client' && '👥 Cliente'}
+                                    </Badge>
+                                  </div>
+                                  
+                                  <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                                    <div className="flex items-center gap-1">
+                                      <User className="h-3 w-3" />
+                                      <span>{evento.partecipanti}</span>
+                                    </div>
+                                  </div>
+                                </div>
+                                
+                                {/* Location row */}
+                                <div className="flex items-center gap-1 mt-1">
+                                  <MapPin className="h-3 w-3 text-muted-foreground flex-shrink-0" />
+                                  <span className="text-xs text-muted-foreground truncate" title={evento.location}>
+                                    {evento.location}
+                                  </span>
+                                </div>
+                              </div>
                             </div>
-                            
-                            <div className="flex items-center gap-1 mt-1">
-                              <MapPin className="h-3 w-3 text-muted-foreground" />
-                              <span className="text-xs text-muted-foreground">{evento.location}</span>
-                            </div>
+                          </CardContent>
+                        </Card>
+                      ))
+                    );
+                  })()}
+                  
+                  {/* Statistiche eventi nel periodo selezionato */}
+                  {dateRange?.from && dateRange?.to && (
+                    <Card className="border-border/30 bg-gradient-to-r from-blue-50/50 to-purple-50/50 mt-4">
+                      <CardContent className="p-3">
+                        <div className="flex items-center justify-between">
+                          <div className="text-xs">
+                            <span className="font-medium text-foreground">
+                              {eventiCalendario.filter(evento => {
+                                const eventoDate = new Date(evento.dataCompleta);
+                                return isWithinInterval(eventoDate, { 
+                                  start: dateRange.from!, 
+                                  end: dateRange.to! 
+                                });
+                              }).length}
+                            </span>
+                            <span className="text-muted-foreground ml-1">eventi nel periodo</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <TrendingUp className="h-3 w-3 text-green-500" />
+                            <span className="text-xs text-green-600 font-medium">+12%</span>
                           </div>
                         </div>
                       </CardContent>
                     </Card>
-                  ));
-                  })()}
+                  )}
                 </div>
               </TabsContent>
 
