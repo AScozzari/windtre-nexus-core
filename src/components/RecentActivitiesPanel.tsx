@@ -2,6 +2,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 import { 
   Activity,
   Phone,
@@ -148,19 +149,21 @@ export const RecentActivitiesPanel = () => {
 
   return (
     <div className="h-full flex flex-col">
-      <div className="p-4 border-b border-border/50">
+      <div className="p-4 border-b border-border/30 flex-shrink-0 bg-gradient-to-r from-windtre-orange/5 to-transparent">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <Activity className="h-4 w-4 text-windtre-orange" />
+            <div className="p-1.5 rounded-lg bg-windtre-orange/20 backdrop-blur-sm">
+              <Activity className="h-4 w-4 text-windtre-orange" />
+            </div>
             <h3 className="font-semibold text-sm">Attività Recenti</h3>
           </div>
-          <Button variant="ghost" size="icon" className="h-6 w-6">
-            <RefreshCw className="h-3 w-3" />
+          <Button variant="ghost" size="icon" className="h-6 w-6 hover:bg-windtre-orange/10 transition-all duration-300 hover:scale-110 hover:rotate-180 group">
+            <RefreshCw className="h-3 w-3 transition-all duration-300" />
           </Button>
         </div>
         
         <div className="flex items-center gap-2">
-          <Badge variant="outline" className="h-5 text-xs bg-windtre-orange/10 text-windtre-orange border-windtre-orange/30">
+          <Badge variant="outline" className="h-5 text-xs bg-windtre-orange/10 text-windtre-orange border-windtre-orange/30 animate-pulse">
             Live
           </Badge>
           <span className="text-xs text-muted-foreground">
@@ -169,22 +172,35 @@ export const RecentActivitiesPanel = () => {
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-2 max-h-96">
+      <div className="flex-1 overflow-y-auto p-2 scrollbar-thin scrollbar-thumb-windtre-orange/30 scrollbar-track-transparent hover:scrollbar-thumb-windtre-orange/50">
         <div className="space-y-2">
           {recentActivities.map((activity, index) => (
             <Card 
               key={activity.id} 
-              className="glass-strong border-border/30 hover:glass transition-all duration-200"
+              className={cn(
+                "glass border-border/30 transition-all duration-300 group cursor-pointer",
+                "hover:shadow-lg hover:border-windtre-orange/20 hover:-translate-y-0.5",
+                "hover:bg-gradient-to-r hover:from-windtre-orange/5 hover:to-transparent"
+              )}
+              style={{ 
+                animationDelay: `${index * 50}ms`,
+                animation: "fade-in 0.3s ease-out forwards"
+              }}
             >
               <CardContent className="p-3">
                 <div className="flex items-start gap-3">
-                  <div className={`p-1.5 rounded-full ${getActivityColor(activity.type)}`}>
+                  <div className={cn(
+                    "p-1.5 rounded-full transition-all duration-300 group-hover:scale-110",
+                    getActivityColor(activity.type)
+                  )}>
                     <activity.icon className="h-3 w-3" />
                   </div>
                   
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between mb-1">
-                      <h4 className="text-xs font-medium truncate">{activity.title}</h4>
+                      <h4 className="text-xs font-medium truncate group-hover:text-windtre-orange transition-colors">
+                        {activity.title}
+                      </h4>
                       {getPriorityBadge(activity.priority)}
                     </div>
                     
@@ -194,7 +210,7 @@ export const RecentActivitiesPanel = () => {
                     
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-1">
-                        <Avatar className="h-4 w-4">
+                        <Avatar className="h-4 w-4 ring-1 ring-windtre-orange/20">
                           <AvatarFallback className="text-xs bg-gradient-primary text-white">
                             {activity.user.charAt(0)}
                           </AvatarFallback>
@@ -210,14 +226,14 @@ export const RecentActivitiesPanel = () => {
                       </div>
                     </div>
                     
-                    {/* Metadata */}
+                    {/* Metadata con glassmorfismo */}
                     {activity.metadata && (
-                      <div className="mt-2 pt-2 border-t border-border/30">
+                      <div className="mt-2 pt-2 border-t border-border/20">
                         <div className="grid grid-cols-2 gap-2 text-xs">
                           {Object.entries(activity.metadata).map(([key, value]) => (
                             <div key={key} className="truncate">
                               <span className="text-muted-foreground">{key}:</span>
-                              <span className="ml-1 font-medium">{value as string}</span>
+                              <span className="ml-1 font-medium text-windtre-orange/80">{value as string}</span>
                             </div>
                           ))}
                         </div>
@@ -231,14 +247,14 @@ export const RecentActivitiesPanel = () => {
         </div>
       </div>
 
-      <div className="p-3 border-t border-border/50">
+      <div className="p-3 border-t border-border/30 flex-shrink-0 bg-gradient-to-r from-transparent to-windtre-orange/5">
         <div className="grid grid-cols-2 gap-2">
-          <Button variant="secondary" size="sm" className="text-xs h-7">
-            <Activity className="h-3 w-3 mr-1" />
+          <Button variant="secondary" size="sm" className="text-xs h-7 hover:bg-windtre-orange/10 transition-all duration-300 hover:scale-105 group">
+            <Activity className="h-3 w-3 mr-1 group-hover:rotate-12 transition-transform" />
             Log Completo
           </Button>
-          <Button variant="glass-orange" size="sm" className="text-xs h-7">
-            <RefreshCw className="h-3 w-3 mr-1" />
+          <Button variant="glass-orange" size="sm" className="text-xs h-7 hover:shadow-glow-orange transition-all duration-300 hover:scale-105 group">
+            <RefreshCw className="h-3 w-3 mr-1 group-hover:rotate-180 transition-transform duration-500" />
             Aggiorna
           </Button>
         </div>
