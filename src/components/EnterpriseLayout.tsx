@@ -1,25 +1,34 @@
+import { useState } from 'react';
 import { ReactNode } from 'react';
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { EnterpriseSidebar } from './EnterpriseSidebar';
 import { EnterpriseHeader } from './EnterpriseHeader';
+import { RightSidebar } from './RightSidebar';
 
 interface EnterpriseLayoutProps {
   children: ReactNode;
 }
 
 export const EnterpriseLayout = ({ children }: EnterpriseLayoutProps) => {
+  const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(true);
+
   return (
     <SidebarProvider>
-      <div className="min-h-screen flex w-full">
+      <div className="min-h-screen flex w-full relative">
         <EnterpriseSidebar />
         
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col min-w-0">
           <EnterpriseHeader />
           
           <main className="flex-1 p-6 bg-gradient-to-br from-background to-muted/30">
             {children}
           </main>
         </div>
+
+        <RightSidebar 
+          isOpen={isRightSidebarOpen} 
+          onToggle={() => setIsRightSidebarOpen(!isRightSidebarOpen)} 
+        />
       </div>
     </SidebarProvider>
   );

@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,14 +12,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useNavigate } from 'react-router-dom';
 
 const windtreLogo = '/lovable-uploads/0729be2a-b1da-4ecc-a1d4-321013db32d6.png';
 
 export const EnterpriseHeader = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [showResults, setShowResults] = useState(false);
-  const navigate = useNavigate();
 
   return (
     <header className="glass-strong border-b border-border/50 p-4 relative">
@@ -29,17 +25,19 @@ export const EnterpriseHeader = () => {
         <div className="flex items-center gap-4">
           <SidebarTrigger className="lg:hidden" />
           
-          <div className="flex items-center gap-3">
-            <img 
-              src={windtreLogo} 
-              alt="WindTre W3 Logo" 
-              className="h-10 w-auto object-contain"
-            />
-            <div className="hidden sm:block">
-              <h1 className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-                WindTre Enterprise
-              </h1>
-              <p className="text-xs text-muted-foreground">Multitenant Dashboard</p>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/20">
+              <img 
+                src={windtreLogo} 
+                alt="WindTre W3 Logo" 
+                className="h-8 w-auto object-contain"
+              />
+              <div className="hidden sm:block border-l border-white/20 pl-3">
+                <h1 className="text-lg font-bold bg-gradient-primary bg-clip-text text-transparent">
+                  WindTre Enterprise
+                </h1>
+                <p className="text-xs text-muted-foreground">Multitenant Dashboard</p>
+              </div>
             </div>
           </div>
         </div>
