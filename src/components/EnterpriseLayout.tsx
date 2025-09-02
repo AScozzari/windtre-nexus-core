@@ -25,9 +25,7 @@ export const EnterpriseLayout = ({ children }: EnterpriseLayoutProps) => {
         <div className="layout-content">
           
           {/* 3. Left Sidebar - Fixed height, no scroll interference */}
-          <div className="layout-sidebar-left">
-            <EnterpriseSidebar />
-          </div>
+          <EnterpriseSidebar />
           
           {/* 4. Central Content - Independent scroll */}
           <main className={cn(
