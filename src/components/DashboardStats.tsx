@@ -51,15 +51,15 @@ const StatCard = ({ title, value, description, trend, trendValue, icon: Icon, va
   };
 
   return (
-    <Card className={cn('transition-all duration-300 animate-float', getCardClasses())}>
+    <Card className={cn('transition-all duration-300 animate-float hover-scale hover:shadow-2xl cursor-pointer group', getCardClasses())}>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium">{title}</CardTitle>
-        <div className={cn('p-2 rounded-lg', getIconClasses())}>
+        <CardTitle className="text-sm font-medium group-hover:scale-105 transition-transform duration-200">{title}</CardTitle>
+        <div className={cn('p-2 rounded-lg group-hover:scale-110 group-hover:rotate-12 transition-all duration-300', getIconClasses())}>
           <Icon className="h-4 w-4" />
         </div>
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold mb-1">{value}</div>
+        <div className="text-2xl font-bold mb-1 group-hover:scale-110 transition-transform duration-200 pulse">{value}</div>
         <div className="flex items-center gap-2">
           <CardDescription className="text-xs">{description}</CardDescription>
           {getTrendIcon()}
