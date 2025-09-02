@@ -18,6 +18,7 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
   const [autoCollapseTimeout, setAutoCollapseTimeout] = useState<NodeJS.Timeout | null>(null);
   const [manualToggle, setManualToggle] = useState(false);
+  const [eventDaysFilter, setEventDaysFilter] = useState(7); // 7 o 15 giorni
   const [tasks, setTasks] = useState([
     { 
       id: 1, 
@@ -139,206 +140,209 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
     }
   ]);
 
-  const [eventiCalendario, setEventiCalendario] = useState([
-    { 
-      id: 1,
-      titolo: 'Riunione Team Vendite Q1', 
-      ora: '14:30', 
-      dataCompleta: new Date(2024, 11, 2), // 2 dicembre 2024
-      tipo: 'meeting',
-      partecipanti: 8,
-      location: 'Sala Conferenze A',
-      colore: 'blue',
-      descrizione: 'Revisione obiettivi Q1 e pianificazione strategie commerciali'
-    },
-    { 
-      id: 2,
-      titolo: 'Presentazione Risultati Trimestrali', 
-      ora: '16:00', 
-      dataCompleta: new Date(2024, 11, 2), // Oggi
-      tipo: 'presentation',
-      partecipanti: 15,
-      location: 'Auditorium Principale',
-      colore: 'purple',
-      descrizione: 'Presentazione KPI e risultati del trimestre agli stakeholder'
-    },
-    { 
-      id: 3,
-      titolo: 'Training Nuovo Personale Vendite', 
-      ora: '09:00', 
-      dataCompleta: new Date(2024, 11, 3), // Domani
-      tipo: 'training',
-      partecipanti: 6,
-      location: 'Aula Formazione B',
-      colore: 'green',
-      descrizione: 'Formazione su prodotti WindTre Business e tecniche di vendita'
-    },
-    { 
-      id: 4,
-      titolo: 'Demo Enterprise per Fortune 500', 
-      ora: '11:30', 
-      dataCompleta: new Date(2024, 11, 3), // Domani
-      tipo: 'client',
-      partecipanti: 5,
-      location: 'Ufficio Direzione',
-      colore: 'orange',
-      descrizione: 'Presentazione soluzioni enterprise per cliente multinazionale'
-    },
-    { 
-      id: 5,
-      titolo: 'Revisione Budget Marketing', 
-      ora: '15:00', 
-      dataCompleta: new Date(2024, 11, 4), // Dopodomani
-      tipo: 'meeting',
-      partecipanti: 4,
-      location: 'Sala Riunioni C',
-      colore: 'red',
-      descrizione: 'Analisi ROI campagne pubblicitarie e allocazione budget 2025'
-    },
-    { 
-      id: 6,
-      titolo: 'Call con Cliente Premium', 
-      ora: '10:00', 
-      dataCompleta: new Date(2024, 11, 5), // 5 dicembre
-      tipo: 'client',
-      partecipanti: 3,
-      location: 'Online - Teams',
-      colore: 'blue',
-      descrizione: 'Follow-up contratto renewal e upselling servizi aggiuntivi'
-    },
-    { 
-      id: 7,
-      titolo: 'Workshop Innovazione Digitale', 
-      ora: '14:00', 
-      dataCompleta: new Date(2024, 11, 6), // 6 dicembre
-      tipo: 'training',
-      partecipanti: 12,
-      location: 'Sala Magna',
-      colore: 'green',
-      descrizione: 'Esplorazione nuove tecnologie 5G e IoT per il business'
-    },
-    { 
-      id: 8,
-      titolo: 'Negoziazione Contratto Globale', 
-      ora: '09:30', 
-      dataCompleta: new Date(2024, 11, 6), // 6 dicembre
-      tipo: 'client',
-      partecipanti: 7,
-      location: 'Sala Contratti',
-      colore: 'orange',
-      descrizione: 'Finalizzazione accordo per servizi enterprise multinazionali'
-    },
-    { 
-      id: 9,
-      titolo: 'All Hands Meeting Dicembre', 
-      ora: '11:00', 
-      dataCompleta: new Date(2024, 11, 9), // 9 dicembre
-      tipo: 'meeting',
-      partecipanti: 45,
-      location: 'Auditorium Principale',
-      colore: 'purple',
-      descrizione: 'Riunione generale mensile con tutti i dipendenti'
-    },
-    { 
-      id: 10,
-      titolo: 'Formazione Cybersecurity', 
-      ora: '13:30', 
-      dataCompleta: new Date(2024, 11, 10), // 10 dicembre
-      tipo: 'training',
-      partecipanti: 20,
-      location: 'Lab Sicurezza IT',
-      colore: 'green',
-      descrizione: 'Training obbligatorio su sicurezza informatica e best practices'
-    },
-    { 
-      id: 11,
-      titolo: 'Pitch Nuovo Prodotto 5G+', 
-      ora: '16:30', 
-      dataCompleta: new Date(2024, 11, 11), // 11 dicembre
-      tipo: 'presentation',
-      partecipanti: 25,
-      location: 'Innovation Hub',
-      colore: 'purple',
-      descrizione: 'Presentazione lancio nuova gamma prodotti 5G avanzati'
-    },
-    { 
-      id: 12,
-      titolo: 'Onboarding Clienti Enterprise', 
-      ora: '10:30', 
-      dataCompleta: new Date(2024, 11, 12), // 12 dicembre
-      tipo: 'client',
-      partecipanti: 8,
-      location: 'Centro Assistenza Premium',
-      colore: 'blue',
-      descrizione: 'Sessione di onboarding per nuovi clienti corporate'
-    },
-    { 
-      id: 13,
-      titolo: 'Planning Strategico 2025', 
-      ora: '09:00', 
-      dataCompleta: new Date(2024, 11, 13), // 13 dicembre
-      tipo: 'meeting',
-      partecipanti: 12,
-      location: 'Sala Strategia',
-      colore: 'red',
-      descrizione: 'Definizione obiettivi e roadmap per il prossimo anno fiscale'
-    },
-    { 
-      id: 14,
-      titolo: 'Demo Soluzioni IoT Business', 
-      ora: '15:15', 
-      dataCompleta: new Date(2024, 11, 16), // 16 dicembre
-      tipo: 'client',
-      partecipanti: 6,
-      location: 'Showroom Tecnologie',
-      colore: 'orange',
-      descrizione: 'Dimostrazione pratica soluzioni IoT per settore manifatturiero'
-    },
-    { 
-      id: 15,
-      titolo: 'Team Building Fine Anno', 
-      ora: '18:00', 
-      dataCompleta: new Date(2024, 11, 18), // 18 dicembre
-      tipo: 'meeting',
-      partecipanti: 35,
-      location: 'Terrazza Aziendale',
-      colore: 'green',
-      descrizione: 'Evento sociale di fine anno con il team commerciale'
-    },
-    { 
-      id: 16,
-      titolo: 'Review Performance Q4', 
-      ora: '14:45', 
-      dataCompleta: new Date(2024, 11, 19), // 19 dicembre
-      tipo: 'meeting',
-      partecipanti: 10,
-      location: 'Sala Direzione',
-      colore: 'red',
-      descrizione: 'Valutazione risultati ultimo trimestre e bonus allocation'
-    },
-    { 
-      id: 17,
-      titolo: 'Webinar Cloud Solutions', 
-      ora: '11:45', 
-      dataCompleta: new Date(2024, 11, 20), // 20 dicembre
-      tipo: 'training',
-      partecipanti: 50,
-      location: 'Online - Webex',
-      colore: 'purple',
-      descrizione: 'Seminario su nuove soluzioni cloud per il business'
-    },
-    { 
-      id: 18,
-      titolo: 'Chiusura Deals Fine Anno', 
-      ora: '16:00', 
-      dataCompleta: new Date(2024, 11, 23), // 23 dicembre
-      tipo: 'client',
-      partecipanti: 4,
-      location: 'Ufficio Contratti',
-      colore: 'orange',
-      descrizione: 'Finalizzazione ultimi contratti prima delle festività'
-    }
-  ]);
+  const [eventiCalendario, setEventiCalendario] = useState(() => {
+    const oggi = new Date();
+    return [
+      { 
+        id: 1,
+        titolo: 'Riunione Team Vendite Q1', 
+        ora: '14:30', 
+        dataCompleta: new Date(oggi.getTime() + 1 * 24 * 60 * 60 * 1000), // Domani
+        tipo: 'meeting',
+        partecipanti: 8,
+        location: 'Sala Conferenze A',
+        colore: 'blue',
+        descrizione: 'Revisione obiettivi Q1 e pianificazione strategie commerciali'
+      },
+      { 
+        id: 2,
+        titolo: 'Presentazione Risultati Trimestrali', 
+        ora: '16:00', 
+        dataCompleta: new Date(oggi.getTime() + 1 * 24 * 60 * 60 * 1000), // Domani
+        tipo: 'presentation',
+        partecipanti: 15,
+        location: 'Auditorium Principale',
+        colore: 'purple',
+        descrizione: 'Presentazione KPI e risultati del trimestre agli stakeholder'
+      },
+      { 
+        id: 3,
+        titolo: 'Training Nuovo Personale Vendite', 
+        ora: '09:00', 
+        dataCompleta: new Date(oggi.getTime() + 2 * 24 * 60 * 60 * 1000), // Dopodomani
+        tipo: 'training',
+        partecipanti: 6,
+        location: 'Aula Formazione B',
+        colore: 'green',
+        descrizione: 'Formazione su prodotti WindTre Business e tecniche di vendita'
+      },
+      { 
+        id: 4,
+        titolo: 'Demo Enterprise per Fortune 500', 
+        ora: '11:30', 
+        dataCompleta: new Date(oggi.getTime() + 2 * 24 * 60 * 60 * 1000), // Dopodomani
+        tipo: 'client',
+        partecipanti: 5,
+        location: 'Ufficio Direzione',
+        colore: 'orange',
+        descrizione: 'Presentazione soluzioni enterprise per cliente multinazionale'
+      },
+      { 
+        id: 5,
+        titolo: 'Revisione Budget Marketing', 
+        ora: '15:00', 
+        dataCompleta: new Date(oggi.getTime() + 3 * 24 * 60 * 60 * 1000), // Tra 3 giorni
+        tipo: 'meeting',
+        partecipanti: 4,
+        location: 'Sala Riunioni C',
+        colore: 'red',
+        descrizione: 'Analisi ROI campagne pubblicitarie e allocazione budget 2025'
+      },
+      { 
+        id: 6,
+        titolo: 'Call con Cliente Premium', 
+        ora: '10:00', 
+        dataCompleta: new Date(oggi.getTime() + 4 * 24 * 60 * 60 * 1000), // Tra 4 giorni
+        tipo: 'client',
+        partecipanti: 3,
+        location: 'Online - Teams',
+        colore: 'blue',
+        descrizione: 'Follow-up contratto renewal e upselling servizi aggiuntivi'
+      },
+      { 
+        id: 7,
+        titolo: 'Workshop Innovazione Digitale', 
+        ora: '14:00', 
+        dataCompleta: new Date(oggi.getTime() + 5 * 24 * 60 * 60 * 1000), // Tra 5 giorni
+        tipo: 'training',
+        partecipanti: 12,
+        location: 'Sala Magna',
+        colore: 'green',
+        descrizione: 'Esplorazione nuove tecnologie 5G e IoT per il business'
+      },
+      { 
+        id: 8,
+        titolo: 'Negoziazione Contratto Globale', 
+        ora: '09:30', 
+        dataCompleta: new Date(oggi.getTime() + 6 * 24 * 60 * 60 * 1000), // Tra 6 giorni
+        tipo: 'client',
+        partecipanti: 7,
+        location: 'Sala Contratti',
+        colore: 'orange',
+        descrizione: 'Finalizzazione accordo per servizi enterprise multinazionali'
+      },
+      { 
+        id: 9,
+        titolo: 'All Hands Meeting Dicembre', 
+        ora: '11:00', 
+        dataCompleta: new Date(oggi.getTime() + 8 * 24 * 60 * 60 * 1000), // Tra 8 giorni
+        tipo: 'meeting',
+        partecipanti: 45,
+        location: 'Auditorium Principale',
+        colore: 'purple',
+        descrizione: 'Riunione generale mensile con tutti i dipendenti'
+      },
+      { 
+        id: 10,
+        titolo: 'Formazione Cybersecurity', 
+        ora: '13:30', 
+        dataCompleta: new Date(oggi.getTime() + 9 * 24 * 60 * 60 * 1000), // Tra 9 giorni
+        tipo: 'training',
+        partecipanti: 20,
+        location: 'Lab Sicurezza IT',
+        colore: 'green',
+        descrizione: 'Training obbligatorio su sicurezza informatica e best practices'
+      },
+      { 
+        id: 11,
+        titolo: 'Pitch Nuovo Prodotto 5G+', 
+        ora: '16:30', 
+        dataCompleta: new Date(oggi.getTime() + 10 * 24 * 60 * 60 * 1000), // Tra 10 giorni
+        tipo: 'presentation',
+        partecipanti: 25,
+        location: 'Innovation Hub',
+        colore: 'purple',
+        descrizione: 'Presentazione lancio nuova gamma prodotti 5G avanzati'
+      },
+      { 
+        id: 12,
+        titolo: 'Onboarding Clienti Enterprise', 
+        ora: '10:30', 
+        dataCompleta: new Date(oggi.getTime() + 11 * 24 * 60 * 60 * 1000), // Tra 11 giorni
+        tipo: 'client',
+        partecipanti: 8,
+        location: 'Centro Assistenza Premium',
+        colore: 'blue',
+        descrizione: 'Sessione di onboarding per nuovi clienti corporate'
+      },
+      { 
+        id: 13,
+        titolo: 'Planning Strategico 2025', 
+        ora: '09:00', 
+        dataCompleta: new Date(oggi.getTime() + 12 * 24 * 60 * 60 * 1000), // Tra 12 giorni
+        tipo: 'meeting',
+        partecipanti: 12,
+        location: 'Sala Strategia',
+        colore: 'red',
+        descrizione: 'Definizione obiettivi e roadmap per il prossimo anno fiscale'
+      },
+      { 
+        id: 14,
+        titolo: 'Demo Soluzioni IoT Business', 
+        ora: '15:15', 
+        dataCompleta: new Date(oggi.getTime() + 14 * 24 * 60 * 60 * 1000), // Tra 14 giorni
+        tipo: 'client',
+        partecipanti: 6,
+        location: 'Showroom Tecnologie',
+        colore: 'orange',
+        descrizione: 'Dimostrazione pratica soluzioni IoT per settore manifatturiero'
+      },
+      { 
+        id: 15,
+        titolo: 'Team Building Fine Anno', 
+        ora: '18:00', 
+        dataCompleta: new Date(oggi.getTime() + 16 * 24 * 60 * 60 * 1000), // Tra 16 giorni
+        tipo: 'meeting',
+        partecipanti: 35,
+        location: 'Terrazza Aziendale',
+        colore: 'green',
+        descrizione: 'Evento sociale di fine anno con il team commerciale'
+      },
+      { 
+        id: 16,
+        titolo: 'Review Performance Q4', 
+        ora: '14:45', 
+        dataCompleta: new Date(oggi.getTime() + 17 * 24 * 60 * 60 * 1000), // Tra 17 giorni
+        tipo: 'meeting',
+        partecipanti: 10,
+        location: 'Sala Direzione',
+        colore: 'red',
+        descrizione: 'Valutazione risultati ultimo trimestre e bonus allocation'
+      },
+      { 
+        id: 17,
+        titolo: 'Webinar Cloud Solutions', 
+        ora: '11:45', 
+        dataCompleta: new Date(oggi.getTime() + 18 * 24 * 60 * 60 * 1000), // Tra 18 giorni
+        tipo: 'training',
+        partecipanti: 50,
+        location: 'Online - Webex',
+        colore: 'purple',
+        descrizione: 'Seminario su nuove soluzioni cloud per il business'
+      },
+      { 
+        id: 18,
+        titolo: 'Chiusura Deals Fine Anno', 
+        ora: '16:00', 
+        dataCompleta: new Date(oggi.getTime() + 20 * 24 * 60 * 60 * 1000), // Tra 20 giorni
+        tipo: 'client',
+        partecipanti: 4,
+        location: 'Ufficio Contratti',
+        colore: 'orange',
+        descrizione: 'Finalizzazione ultimi contratti prima delle festività'
+      }
+    ];
+  });
 
   // Simula notifiche in tempo reale
   useEffect(() => {
@@ -742,17 +746,38 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                 
                 <div className="flex items-center justify-between mb-3">
                   <h4 className="text-sm font-medium">Prossimi eventi</h4>
-                  <Badge variant="outline" className="text-xs">
-                    Prossimi 7 giorni
-                  </Badge>
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant={eventDaysFilter === 7 ? "default" : "outline"}
+                      size="sm"
+                      className="h-6 text-xs px-2"
+                      onClick={() => setEventDaysFilter(7)}
+                    >
+                      7gg
+                    </Button>
+                    <Button
+                      variant={eventDaysFilter === 15 ? "default" : "outline"}
+                      size="sm"
+                      className="h-6 text-xs px-2"
+                      onClick={() => setEventDaysFilter(15)}
+                    >
+                      15gg
+                    </Button>
+                  </div>
                 </div>
                 
                 <div className="space-y-3">
-                  {eventiCalendario
-                    .filter(evento => evento.dataCompleta >= new Date())
-                    .sort((a, b) => a.dataCompleta.getTime() - b.dataCompleta.getTime())
-                    .slice(0, 5)
-                    .map((evento, index) => (
+                  {(() => {
+                    const oggi = new Date();
+                    const dataLimite = new Date(oggi.getTime() + eventDaysFilter * 24 * 60 * 60 * 1000);
+                    
+                    return eventiCalendario
+                      .filter(evento => {
+                        const eventoDate = new Date(evento.dataCompleta);
+                        return eventoDate >= oggi && eventoDate <= dataLimite;
+                      })
+                      .sort((a, b) => a.dataCompleta.getTime() - b.dataCompleta.getTime())
+                      .map((evento, index) => (
                     <Card key={evento.id} className={cn(
                       "border-border/30 bg-background/50 transition-all duration-300 cursor-pointer group",
                       "hover:bg-background/80 hover:scale-[1.02] hover:shadow-lg hover:-translate-y-1",
@@ -819,7 +844,8 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                         </div>
                       </CardContent>
                     </Card>
-                  ))}
+                  ));
+                  })()}
                 </div>
               </TabsContent>
 
