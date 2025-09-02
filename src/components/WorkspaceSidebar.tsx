@@ -38,7 +38,7 @@ export const WorkspaceSidebar = () => {
 
   return (
     <div className={cn(
-      "fixed right-0 top-0 h-full bg-background/95 backdrop-blur-sm border-l border-border/50 transition-all duration-300 z-30",
+      "fixed right-0 top-16 h-[calc(100vh-4rem)] bg-background/95 backdrop-blur-sm border-l border-border/50 transition-all duration-300 z-30",
       isCollapsed ? "w-12" : "w-80"
     )}>
       {/* Toggle Button */}
@@ -46,7 +46,7 @@ export const WorkspaceSidebar = () => {
         variant="ghost"
         size="sm"
         onClick={() => setIsCollapsed(!isCollapsed)}
-        className="absolute -left-6 top-20 z-40 bg-background border border-border/50 rounded-full p-1 h-6 w-6"
+        className="absolute -left-6 top-4 z-40 bg-background border border-border/50 rounded-full p-1 h-6 w-6"
       >
         {isCollapsed ? <ChevronLeft className="h-3 w-3" /> : <ChevronRight className="h-3 w-3" />}
       </Button>
