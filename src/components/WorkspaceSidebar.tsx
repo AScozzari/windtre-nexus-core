@@ -207,7 +207,7 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
   return (
     <div 
       className={cn(
-        "fixed right-0 top-16 h-[calc(100vh-4rem)] bg-background/95 backdrop-blur-sm border-l border-border/50 transition-all duration-300 z-30",
+        "fixed right-0 top-20 h-[calc(100vh-5rem)] bg-background/95 backdrop-blur-sm border-l border-border/50 transition-all duration-300 z-30",
         isCollapsed ? "w-12" : "w-80"
       )}
       onMouseEnter={handleMouseEnter}
