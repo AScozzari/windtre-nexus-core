@@ -36,6 +36,7 @@ const navigation = [
   { title: "Amministrazione", url: "/amministrazione", icon: Settings },
   { title: "Cassa", url: "/cassa", icon: Calculator },
   { title: "AI Tools", url: "/ai", icon: Bot, badge: "NEW" },
+  { title: "Impostazioni", url: "/settings", icon: Settings },
 ];
 
 export function EnterpriseSidebar({ onCollapseChange }: EnterpriseSidebarProps) {

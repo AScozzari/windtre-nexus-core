@@ -100,10 +100,7 @@ export const EnterpriseHeader = () => {
             </Badge>
           </Button>
 
-          {/* Settings */}
-          <Button variant="glass" size="icon">
-            <Settings className="h-4 w-4" />
-          </Button>
+          {/* Settings - REMOVED */}
 
           {/* User Menu */}
           <DropdownMenu>
