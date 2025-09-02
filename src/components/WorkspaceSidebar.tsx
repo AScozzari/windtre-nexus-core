@@ -5,11 +5,13 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Calendar as CalendarComponent } from '@/components/ui/calendar';
 import { cn } from '@/lib/utils';
 
 export const WorkspaceSidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [activeTab, setActiveTab] = useState('tasks');
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
 
   const tasks = [
     { 
@@ -245,10 +247,48 @@ export const WorkspaceSidebar = () => {
               {/* CALENDAR TAB */}
               <TabsContent value="calendar" className="space-y-4 mt-0">
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-sm font-medium">Prossimi eventi</h3>
+                  <h3 className="text-sm font-medium">Calendario</h3>
                   <Badge variant="secondary" className="text-xs">
                     {eventiCalendario.length} eventi
                   </Badge>
+                </div>
+                
+                {/* Calendario interattivo */}
+                <Card className="border-border/30 bg-background/50 mb-4">
+                  <CardContent className="p-2">
+                    <CalendarComponent
+                      mode="single"
+                      selected={selectedDate}
+                      onSelect={setSelectedDate}
+                      className={cn("p-0 pointer-events-auto")}
+                      classNames={{
+                        months: "space-y-0",
+                        month: "space-y-2",
+                        caption: "flex justify-center pt-1 relative items-center text-sm",
+                        caption_label: "font-medium",
+                        nav: "space-x-1 flex items-center",
+                        nav_button: "h-6 w-6 bg-transparent p-0 opacity-50 hover:opacity-100",
+                        nav_button_previous: "absolute left-1",
+                        nav_button_next: "absolute right-1",
+                        table: "w-full border-collapse space-y-1",
+                        head_row: "flex",
+                        head_cell: "text-muted-foreground rounded-md w-8 font-normal text-xs",
+                        row: "flex w-full mt-0.5",
+                        cell: "text-center text-xs p-0 relative [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
+                        day: "h-8 w-8 p-0 font-normal text-xs aria-selected:opacity-100 hover:bg-accent hover:text-accent-foreground rounded-md",
+                        day_selected: "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
+                        day_today: "bg-accent text-accent-foreground",
+                        day_outside: "text-muted-foreground opacity-50",
+                        day_disabled: "text-muted-foreground opacity-50",
+                        day_range_middle: "aria-selected:bg-accent aria-selected:text-accent-foreground",
+                        day_hidden: "invisible",
+                      }}
+                    />
+                  </CardContent>
+                </Card>
+                
+                <div className="mb-3">
+                  <h4 className="text-sm font-medium">Prossimi eventi</h4>
                 </div>
                 
                 <div className="space-y-3">
