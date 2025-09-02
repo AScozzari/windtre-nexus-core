@@ -14,22 +14,22 @@ export const EnterpriseLayout = ({ children }: EnterpriseLayoutProps) => {
   const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(true);
 
   return (
-    <div className="min-h-screen w-full relative">
+    <div className="min-h-screen w-full">
       {/* Header fisso in alto */}
       <EnterpriseHeader />
       
       {/* Layout principale sotto l'header */}
       <SidebarProvider>
-        <div className="flex w-full h-[calc(100vh-4rem)] pt-16">
+        <div className="flex w-full min-h-[calc(100vh-4rem)] mt-16">
           {/* Sidebar sinistra */}
           <EnterpriseSidebar />
           
-          {/* Contenuto principale */}
+          {/* Contenuto principale con margine per sidebar destra */}
           <main className={cn(
             "flex-1 overflow-y-auto bg-gradient-to-br from-background to-muted/30 p-6",
             isRightSidebarOpen ? "mr-96" : "mr-12"
           )}>
-            <div className="max-w-full h-full">
+            <div className="w-full min-h-full">
               {children}
             </div>
           </main>
