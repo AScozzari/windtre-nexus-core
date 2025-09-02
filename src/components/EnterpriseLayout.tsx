@@ -25,8 +25,6 @@ export const EnterpriseLayout = ({ children }: EnterpriseLayoutProps) => {
           <EnterpriseSidebar onCollapseChange={setLeftSidebarCollapsed} />
           
           <main className={`flex-1 p-6 bg-gradient-to-br from-background to-muted/30 transition-all duration-300 ${
-            leftSidebarCollapsed ? 'pl-20' : 'pl-70'
-          } ${
             workspaceCollapsed ? 'pr-16' : 'pr-96'
           }`}>
             {children}
