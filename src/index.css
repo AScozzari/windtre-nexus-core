@@ -176,6 +176,16 @@ All colors based on official WindTre brand palette - HSL format only
     to { box-shadow: 0 0 30px hsl(var(--windtre-orange) / 0.4); }
   }
 
+/* Custom Mobile Sidebar Fix */
+[data-sidebar="sidebar"][data-mobile="true"] {
+  background: hsl(var(--sidebar-background)) !important;
+  backdrop-filter: none !important;
+}
+
+.dark [data-sidebar="sidebar"][data-mobile="true"] {
+  background: hsl(210 25% 15%) !important;
+}
+
   /* Enterprise Professional Scrollbars */
   ::-webkit-scrollbar {
     width: 8px;
