@@ -27,7 +27,7 @@ export const EnterpriseHeader = () => {
           
           <div className="flex items-center gap-3">
             {/* Logo W3 integrato nell'header */}
-            <div className="flex items-center gap-3 px-3 py-2 rounded-lg bg-gradient-to-r from-windtre-orange/10 to-windtre-purple/10 border border-windtre-orange/20">
+            <div className="flex items-center gap-3">
               <img 
                 src={windtreLogo} 
                 alt="WindTre W3 Logo" 
