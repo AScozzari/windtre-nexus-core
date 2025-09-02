@@ -448,45 +448,58 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                     >
                       <CardContent className="p-3">
                         <div className="flex items-start gap-3">
+                          {/* Status Icon */}
                           <div className={cn(
-                            "w-4 h-4 rounded border-2 flex-shrink-0 mt-0.5 cursor-pointer transition-all duration-200",
+                            "w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-200 group-hover:scale-110",
                             task.completato 
-                              ? "bg-success border-success scale-110" 
-                              : "border-muted-foreground hover:border-primary hover:scale-110"
+                              ? "bg-success/20 text-success border-2 border-success/30" 
+                              : "bg-muted/30 border-2 border-muted-foreground/30 hover:border-primary/50"
                           )}>
-                            {task.completato && (
-                              <CheckSquare className="w-3 h-3 text-white animate-scale-in" />
+                            {task.completato ? (
+                              <CheckSquare className="w-5 h-5 animate-scale-in" />
+                            ) : (
+                              <CheckSquare className="w-5 h-5 opacity-50" />
                             )}
                           </div>
+                          
+                          {/* Content */}
                           <div className="flex-1 min-w-0">
                             <div className="flex items-start justify-between mb-1">
                               <h4 className={cn(
-                                "text-sm font-medium leading-tight transition-all duration-200",
+                                "text-sm font-medium leading-tight transition-all duration-200 group-hover:text-primary",
                                 task.completato && "line-through text-muted-foreground"
                               )}>
                                 {task.titolo}
                               </h4>
                               {task.urgente && !task.completato && (
-                                <AlertCircle className="h-3 w-3 text-orange-500 flex-shrink-0 animate-pulse" />
+                                <AlertCircle className="h-4 w-4 text-orange-500 flex-shrink-0 animate-pulse" />
                               )}
                             </div>
-                            <p className="text-xs text-muted-foreground mb-2 group-hover:text-foreground transition-colors">
+                            
+                            {/* Subtitle */}
+                            <p className="text-xs text-muted-foreground mb-3 line-clamp-2 group-hover:text-foreground/80 transition-colors">
                               {task.descrizione}
                             </p>
-                            <div className="flex items-center gap-2">
+                            
+                            {/* Metadata */}
+                            <div className="flex items-center gap-2 mb-2">
                               <Badge variant={
                                 task.priorita === 'Alta' ? 'destructive' : 
                                 task.priorita === 'Media' ? 'secondary' : 'outline'
                               } className="text-xs">
                                 {task.priorita}
                               </Badge>
+                              <Badge variant="outline" className="text-xs">
+                                {task.categoria}
+                              </Badge>
+                            </div>
+                            
+                            {/* Footer info */}
+                            <div className="flex items-center justify-between">
                               <span className="text-xs text-muted-foreground flex items-center gap-1">
                                 <Clock className="h-3 w-3" />
                                 {task.scadenza}
                               </span>
-                              <Badge variant="outline" className="text-xs ml-auto">
-                                {task.categoria}
-                              </Badge>
                             </div>
                           </div>
                         </div>
@@ -547,17 +560,13 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                   {eventiCalendario.map((evento, index) => (
                     <Card key={evento.id} className={cn(
                       "border-border/30 bg-background/50 hover:shadow-lg transition-all duration-300 hover-scale cursor-pointer animate-fade-in group",
-                      `border-l-4`,
-                      evento.colore === 'blue' && "border-l-blue-500",
-                      evento.colore === 'purple' && "border-l-purple-500",
-                      evento.colore === 'green' && "border-l-green-500",
-                      evento.colore === 'orange' && "border-l-orange-500",
-                      evento.colore === 'red' && "border-l-red-500"
+                      "hover:bg-background/80"
                     )}
                     style={{ animationDelay: `${index * 0.1}s` }}
                     >
                       <CardContent className="p-3">
                         <div className="flex items-start gap-3">
+                          {/* Time Icon */}
                           <div className={cn(
                             "w-10 h-10 rounded-lg flex flex-col items-center justify-center text-white transition-all duration-200 group-hover:scale-110",
                             evento.colore === 'blue' && "bg-blue-500",
@@ -573,28 +582,44 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                               {evento.ora.split(':')[1]}
                             </span>
                           </div>
+                          
+                          {/* Content */}
                           <div className="flex-1 min-w-0">
-                            <h4 className="text-sm font-medium leading-tight mb-1 group-hover:text-primary transition-colors">{evento.titolo}</h4>
-                            <div className="space-y-1">
-                              <p className="text-xs text-muted-foreground flex items-center gap-1">
-                                <Calendar className="h-3 w-3" />
-                                {evento.data} alle {evento.ora}
-                              </p>
-                              <p className="text-xs text-muted-foreground flex items-center gap-1">
-                                <User className="h-3 w-3" />
-                                {evento.partecipanti} partecipanti
-                              </p>
-                              <p className="text-xs text-muted-foreground flex items-center gap-1">
-                                <MapPin className="h-3 w-3" />
-                                {evento.location}
-                              </p>
+                            <div className="flex items-start justify-between mb-1">
+                              <h4 className="text-sm font-medium leading-tight group-hover:text-primary transition-colors">
+                                {evento.titolo}
+                              </h4>
                             </div>
-                            <Badge variant="outline" className="text-xs mt-2">
-                              {evento.tipo === 'meeting' && '🤝 Riunione'}
-                              {evento.tipo === 'presentation' && '🎯 Presentazione'}
-                              {evento.tipo === 'training' && '📚 Formazione'}
-                              {evento.tipo === 'client' && '👥 Cliente'}
-                            </Badge>
+                            
+                            {/* Subtitle */}
+                            <p className="text-xs text-muted-foreground mb-3 group-hover:text-foreground/80 transition-colors">
+                              {evento.data} • {evento.location}
+                            </p>
+                            
+                            {/* Metadata */}
+                            <div className="flex items-center gap-2 mb-2">
+                              <Badge variant="outline" className="text-xs">
+                                {evento.tipo === 'meeting' && '🤝 Riunione'}
+                                {evento.tipo === 'presentation' && '🎯 Presentazione'}
+                                {evento.tipo === 'training' && '📚 Formazione'}
+                                {evento.tipo === 'client' && '👥 Cliente'}
+                              </Badge>
+                              <Badge variant="secondary" className="text-xs">
+                                {evento.partecipanti} persone
+                              </Badge>
+                            </div>
+                            
+                            {/* Footer info */}
+                            <div className="flex items-center justify-between">
+                              <span className="text-xs text-muted-foreground flex items-center gap-1">
+                                <Clock className="h-3 w-3" />
+                                {evento.ora}
+                              </span>
+                              <span className="text-xs text-muted-foreground flex items-center gap-1">
+                                <MapPin className="h-3 w-3" />
+                                Sala riunioni
+                              </span>
+                            </div>
                           </div>
                         </div>
                       </CardContent>
@@ -624,46 +649,53 @@ export const WorkspaceSidebar = ({ onCollapseChange }: WorkspaceSidebarProps) =>
                     >
                       <CardContent className="p-3">
                         <div className="flex items-start gap-3">
+                          {/* Status Icon */}
                           <div className={cn(
-                            "w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-200 group-hover:scale-110",
-                            lead.tipo === 'nuovo_lead' ? "bg-blue-100 text-blue-600" :
-                            lead.tipo === 'lead_qualificato' ? "bg-green-100 text-green-600" :
-                            lead.tipo === 'appuntamento_fissato' ? "bg-purple-100 text-purple-600" :
-                            lead.tipo === 'contratto_in_chiusura' ? "bg-emerald-100 text-emerald-600" :
-                            "bg-orange-100 text-orange-600"
+                            "w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-200 group-hover:scale-110",
+                            lead.tipo === 'nuovo_lead' ? "bg-blue-500/20 text-blue-600 border-2 border-blue-500/30" :
+                            lead.tipo === 'lead_qualificato' ? "bg-green-500/20 text-green-600 border-2 border-green-500/30" :
+                            lead.tipo === 'appuntamento_fissato' ? "bg-purple-500/20 text-purple-600 border-2 border-purple-500/30" :
+                            lead.tipo === 'contratto_in_chiusura' ? "bg-emerald-500/20 text-emerald-600 border-2 border-emerald-500/30" :
+                            "bg-orange-500/20 text-orange-600 border-2 border-orange-500/30"
                           )}>
-                            {lead.tipo === 'nuovo_lead' ? <Star className="h-4 w-4" /> :
-                             lead.tipo === 'lead_qualificato' ? <TrendingUp className="h-4 w-4" /> :
-                             lead.tipo === 'appuntamento_fissato' ? <Calendar className="h-4 w-4" /> :
-                             lead.tipo === 'contratto_in_chiusura' ? <Zap className="h-4 w-4" /> :
-                             <Phone className="h-4 w-4" />}
+                            {lead.tipo === 'nuovo_lead' ? <Star className="h-5 w-5" /> :
+                             lead.tipo === 'lead_qualificato' ? <TrendingUp className="h-5 w-5" /> :
+                             lead.tipo === 'appuntamento_fissato' ? <Calendar className="h-5 w-5" /> :
+                             lead.tipo === 'contratto_in_chiusura' ? <Zap className="h-5 w-5" /> :
+                             <Phone className="h-5 w-5" />}
+                            {!lead.letto && (
+                              <div className="absolute -top-1 -right-1 w-3 h-3 bg-orange-500 rounded-full animate-pulse" />
+                            )}
                           </div>
+                          
+                          {/* Content */}
                           <div className="flex-1 min-w-0">
                             <div className="flex items-start justify-between mb-1">
                               <h4 className="text-sm font-medium leading-tight group-hover:text-primary transition-colors">
                                 {lead.messaggio}
                               </h4>
-                              {!lead.letto && (
-                                <div className="w-2 h-2 bg-orange-500 rounded-full flex-shrink-0 mt-1 animate-pulse" />
-                              )}
                             </div>
-                            <div className="space-y-1 mb-2">
-                              <p className="text-sm font-medium text-primary">{lead.cliente}</p>
-                              <p className="text-xs text-muted-foreground">{lead.azienda}</p>
-                            </div>
+                            
+                            {/* Subtitle */}
+                            <p className="text-xs text-muted-foreground mb-3 group-hover:text-foreground/80 transition-colors">
+                              {lead.cliente} • {lead.azienda}
+                            </p>
+                            
+                            {/* Metadata */}
                             <div className="flex items-center gap-2 mb-2">
                               <Badge variant={lead.priorita === 'Alta' ? 'destructive' : 'secondary'} className="text-xs">
                                 {lead.priorita}
                               </Badge>
-                              <span className="text-xs text-muted-foreground">{lead.fonte}</span>
-                              <Badge variant="outline" className="text-xs ml-auto text-green-600">
+                              <Badge variant="outline" className="text-xs text-green-600">
                                 {lead.potenziale}
                               </Badge>
                             </div>
+                            
+                            {/* Footer info */}
                             <div className="flex items-center justify-between">
                               <span className="text-xs text-muted-foreground flex items-center gap-1">
                                 <Clock className="h-3 w-3" />
-                                {lead.tempo}
+                                {lead.tempo} • {lead.fonte}
                               </span>
                               <Button variant="ghost" size="sm" className="h-6 text-xs px-2 hover:bg-primary hover:text-primary-foreground">
                                 <Phone className="h-3 w-3 mr-1" />
