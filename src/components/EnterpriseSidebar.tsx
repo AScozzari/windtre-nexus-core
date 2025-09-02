@@ -129,10 +129,16 @@ export function EnterpriseSidebar({ onCollapseChange }: EnterpriseSidebarProps) 
           variant="ghost"
           size="sm"
           onClick={togglePin}
-          className="absolute top-4 right-2 z-50 p-1 h-6 w-6"
+          className={cn(
+            "absolute top-3 right-3 z-50 h-8 w-8 rounded-md transition-all duration-200",
+            "hover:bg-windtre-orange/10 hover:scale-110",
+            isPinned 
+              ? "bg-windtre-orange/20 text-windtre-orange shadow-sm" 
+              : "text-muted-foreground hover:text-windtre-orange"
+          )}
           title={isPinned ? "Sblocca sidebar" : "Blocca sidebar"}
         >
-          {isPinned ? <Pin className="h-3 w-3" /> : <PinOff className="h-3 w-3" />}
+          {isPinned ? <Pin className="h-4 w-4" /> : <PinOff className="h-4 w-4" />}
         </Button>
       )}
 
