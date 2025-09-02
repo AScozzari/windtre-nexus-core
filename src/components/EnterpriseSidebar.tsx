@@ -156,9 +156,8 @@ export function EnterpriseSidebar() {
   return (
     <Sidebar
       className={cn(
-        "glass-strong border-r border-border/50 transition-all duration-500 relative z-20",
-        isCollapsed ? "w-16" : "w-72",
-        "hover:shadow-xl"
+        "glass-strong border-r border-border/50 transition-all duration-500 relative z-30",
+        isCollapsed ? "w-16" : "w-72"
       )}
       collapsible="icon"
       onMouseEnter={() => setIsHovered(true)}

@@ -14,34 +14,33 @@ export const EnterpriseLayout = ({ children }: EnterpriseLayoutProps) => {
   const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(true);
 
   return (
-    <SidebarProvider>
-      <div className="min-h-screen flex w-full">
-        {/* Header sticky in alto per tutta la larghezza */}
-        <EnterpriseHeader />
-        
-        {/* Container per sidebar e contenuto sotto l'header */}
-        <div className="flex flex-1 pt-16">
-          {/* Sidebar sinistra con z-index appropriato */}
+    <div className="min-h-screen w-full relative">
+      {/* Header fisso in alto */}
+      <EnterpriseHeader />
+      
+      {/* Layout principale sotto l'header */}
+      <SidebarProvider>
+        <div className="flex w-full h-[calc(100vh-4rem)] pt-16">
+          {/* Sidebar sinistra */}
           <EnterpriseSidebar />
           
           {/* Contenuto principale */}
-          <div className="flex-1 flex flex-col min-w-0">
-            <div className={cn("flex flex-1", isRightSidebarOpen ? "lg:pr-96" : "lg:pr-12")}>
-              <main className="flex-1 p-6 bg-gradient-to-br from-background to-muted/30 overflow-y-auto overflow-x-hidden max-w-full">
-                <div className="max-w-full">
-                  {children}
-                </div>
-              </main>
+          <main className={cn(
+            "flex-1 overflow-y-auto bg-gradient-to-br from-background to-muted/30 p-6",
+            isRightSidebarOpen ? "mr-96" : "mr-12"
+          )}>
+            <div className="max-w-full h-full">
+              {children}
             </div>
-          </div>
-
-          {/* Sidebar destra con z-index appropriato */}
-          <RightSidebar 
-            isOpen={isRightSidebarOpen} 
-            onToggle={() => setIsRightSidebarOpen(!isRightSidebarOpen)} 
-          />
+          </main>
         </div>
-      </div>
-    </SidebarProvider>
+      </SidebarProvider>
+
+      {/* Sidebar destra */}
+      <RightSidebar 
+        isOpen={isRightSidebarOpen} 
+        onToggle={() => setIsRightSidebarOpen(!isRightSidebarOpen)} 
+      />
+    </div>
   );
 };

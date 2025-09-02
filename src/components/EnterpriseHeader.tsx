@@ -19,8 +19,8 @@ export const EnterpriseHeader = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 h-16 glass-strong border-b border-border/50 shadow-lg w-full">
-      <div className="h-full px-4 flex items-center justify-between">
+    <header className="fixed top-0 left-0 right-0 z-50 h-16 glass-strong border-b border-border/50">
+      <div className="h-full px-4 flex items-center justify-between w-full">
         {/* Left Side - Logo integrato e Navigation */}
         <div className="flex items-center gap-4">
           <SidebarTrigger className="lg:hidden" />

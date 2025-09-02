@@ -195,13 +195,3 @@ All colors based on official WindTre brand palette - HSL format only
     background: hsl(var(--windtre-orange) / 0.5);
   }
 }
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-
-  body {
-    @apply bg-background text-foreground;
-  }
-}
