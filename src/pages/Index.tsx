@@ -20,7 +20,7 @@ const Index = () => {
           <div className="relative z-10 flex items-center justify-between p-8 h-full">
             <div className="text-white">
               <h1 className="text-3xl font-bold mb-2">
-                Benvenuto nel Dashboard Enterprise
+                Dashboard Enterprise
               </h1>
               <p className="text-white/90 text-lg">
                 Gestisci tutti i tuoi servizi WindTre da un'unica piattaforma
