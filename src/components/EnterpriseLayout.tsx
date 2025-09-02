@@ -16,26 +16,26 @@ export const EnterpriseLayout = ({ children }: EnterpriseLayoutProps) => {
   return (
     <SidebarProvider>
       <div className="min-h-screen w-full">
-        {/* Header fisso in alto */}
+        {/* 1. Header fisso trasparente */}
         <EnterpriseHeader />
         
-        {/* Layout principale sotto l'header */}
-        <div className="flex w-full min-h-[calc(100vh-4rem)] mt-16">
-          {/* Sidebar sinistra */}
+        {/* Layout principale a 4 blocchi */}
+        <div className="flex w-full h-screen pt-16">
+          {/* 2. Sidebar sinistra - fissa dinamica full height */}
           <EnterpriseSidebar />
           
-          {/* Contenuto principale con margine per sidebar destra */}
+          {/* 3. Div centrale con scroll proprio */}
           <main className={cn(
-            "flex-1 overflow-y-auto bg-gradient-to-br from-background to-muted/30 p-6",
+            "flex-1 h-full overflow-y-auto bg-gradient-to-br from-background to-muted/30",
             isRightSidebarOpen ? "mr-96" : "mr-12"
           )}>
-            <div className="w-full min-h-full">
+            <div className="p-6 min-h-full">
               {children}
             </div>
           </main>
         </div>
 
-        {/* Sidebar destra */}
+        {/* 4. Sidebar destra con scroll interno e bordi integrati */}
         <RightSidebar 
           isOpen={isRightSidebarOpen} 
           onToggle={() => setIsRightSidebarOpen(!isRightSidebarOpen)} 

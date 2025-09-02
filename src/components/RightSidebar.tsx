@@ -61,12 +61,12 @@ export const RightSidebar = ({ isOpen, onToggle }: RightSidebarProps) => {
         />
       )}
 
-      {/* Sidebar con effetti glassmorfismo */}
+      {/* Sidebar con scroll interno e bordi integrati */}
       <div className={cn(
         "fixed right-0 top-16 bottom-0 z-40 flex transition-all duration-500",
         isOpen ? "translate-x-0" : "translate-x-full lg:translate-x-[calc(100%-3rem)]"
       )}>
-        {/* Toggle Button con effetti hover */}
+        {/* Toggle Button */}
         <div className="flex flex-col justify-center">
           <Button
             variant="secondary"
@@ -87,19 +87,18 @@ export const RightSidebar = ({ isOpen, onToggle }: RightSidebarProps) => {
           </Button>
         </div>
 
-        {/* Sidebar Content con glassmorfismo avanzato */}
+        {/* Sidebar Content integrato con bordi */}
         <div className={cn(
           "relative h-full flex flex-col shadow-2xl transition-all duration-700",
           "w-80 lg:w-96 backdrop-blur-2xl",
-          "bg-gradient-to-b from-background/80 via-background/60 to-background/80",
-          "border-l border-t border-b border-border/40",
-          "before:absolute before:inset-0 before:rounded-l-xl before:bg-gradient-to-b before:from-white/10 before:to-transparent before:pointer-events-none",
-          "after:absolute after:inset-0 after:rounded-l-xl after:bg-noise after:opacity-[0.02] after:pointer-events-none"
+          "bg-gradient-to-b from-background/90 via-background/80 to-background/90",
+          "border-l border-border/50 rounded-tl-xl",
+          "before:absolute before:inset-0 before:rounded-tl-xl before:bg-gradient-to-b before:from-white/5 before:to-transparent before:pointer-events-none"
         )}>
-          {/* Header with Tabs - Glassmorfismo */}
-          <div className="border-b border-border/40 p-4 flex-shrink-0 bg-gradient-to-r from-windtre-orange/5 to-windtre-purple/5 backdrop-blur-xl">
+          {/* Header integrato */}
+          <div className="border-b border-border/30 p-4 flex-shrink-0 bg-gradient-to-r from-windtre-orange/5 to-windtre-purple/5 backdrop-blur-xl rounded-tl-xl">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-bold bg-gradient-primary bg-clip-text text-transparent drop-shadow-sm">
+              <h2 className="text-lg font-bold bg-gradient-primary bg-clip-text text-transparent">
                 Workspace
               </h2>
               <Button 
@@ -156,11 +155,8 @@ export const RightSidebar = ({ isOpen, onToggle }: RightSidebarProps) => {
             </div>
           </div>
 
-          {/* Panel Content con scroll condizionale */}
-          <div className={cn(
-            "flex-1 transition-all duration-500",
-            isOpen ? "overflow-y-auto" : "overflow-hidden"
-          )}>
+          {/* Panel Content con scroll interno proprio */}
+          <div className="flex-1 overflow-y-auto">
             <div className={cn(
               "h-full transition-all duration-500",
               isOpen ? "opacity-100" : "opacity-0"
@@ -169,8 +165,8 @@ export const RightSidebar = ({ isOpen, onToggle }: RightSidebarProps) => {
             </div>
           </div>
 
-          {/* Decorative gradient overlay */}
-          <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-background/80 to-transparent pointer-events-none" />
+          {/* Gradient overlay per smooth scroll */}
+          <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-background/90 to-transparent pointer-events-none" />
         </div>
       </div>
     </>
