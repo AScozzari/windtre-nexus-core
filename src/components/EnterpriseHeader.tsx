@@ -20,7 +20,14 @@ const windtreLogo = '/lovable-uploads/0729be2a-b1da-4ecc-a1d4-321013db32d6.png';
 export const EnterpriseHeader = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showResults, setShowResults] = useState(false);
+  const [selectedStore, setSelectedStore] = useState('Windtre Milano');
   const navigate = useNavigate();
+
+  const stores = [
+    'Windtre Milano',
+    'Windtre Napoli', 
+    'Windtre Fiumicino'
+  ];
 
   return (
     <header className="glass-strong border-b border-border/50 p-4 relative">
@@ -64,15 +71,21 @@ export const EnterpriseHeader = () => {
             <DropdownMenuTrigger asChild>
               <Button variant="glass" size="sm" className="gap-2">
                 <Globe className="h-4 w-4" />
-                <span className="hidden sm:inline">Windtre Milano</span>
+                <span className="hidden sm:inline">{selectedStore}</span>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="glass border-border/50">
               <DropdownMenuLabel>Seleziona Negozio</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Windtre Milano (Attuale)</DropdownMenuItem>
-              <DropdownMenuItem>Windtre Napoli</DropdownMenuItem>
-              <DropdownMenuItem>Windtre Fiumicino</DropdownMenuItem>
+              {stores.map((store) => (
+                <DropdownMenuItem 
+                  key={store}
+                  onClick={() => setSelectedStore(store)}
+                  className={selectedStore === store ? "bg-accent" : ""}
+                >
+                  {store} {selectedStore === store && "(Attuale)"}
+                </DropdownMenuItem>
+              ))}
             </DropdownMenuContent>
           </DropdownMenu>
 
