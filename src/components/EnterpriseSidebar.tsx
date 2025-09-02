@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { NavLink, useLocation } from "react-router-dom";
+import { useIsMobile } from "@/hooks/use-mobile";
 import {
   Home,
   Users,
@@ -43,13 +44,15 @@ export function EnterpriseSidebar({ onCollapseChange }: EnterpriseSidebarProps) 
   const { state, setOpen } = useSidebar();
   const location = useLocation();
   const currentPath = location.pathname;
+  const isMobile = useIsMobile();
   
   // Usa lo stato del provider per la larghezza
   const collapsed = state === "collapsed";
   const autoCollapseTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const handleMouseEnter = () => {
-    if (collapsed) {
+    // Solo su desktop, non su mobile
+    if (!isMobile && collapsed) {
       setOpen(true);
     }
     if (autoCollapseTimeout.current) {
@@ -59,11 +62,14 @@ export function EnterpriseSidebar({ onCollapseChange }: EnterpriseSidebarProps) 
   };
 
   const handleMouseLeave = () => {
-    const timeout = setTimeout(() => {
-      setOpen(false);
-      autoCollapseTimeout.current = null;
-    }, 2000);
-    autoCollapseTimeout.current = timeout;
+    // Solo su desktop, non su mobile
+    if (!isMobile) {
+      const timeout = setTimeout(() => {
+        setOpen(false);
+        autoCollapseTimeout.current = null;
+      }, 2000);
+      autoCollapseTimeout.current = timeout;
+    }
   };
 
   // Cleanup timeout on unmount
@@ -94,11 +100,14 @@ export function EnterpriseSidebar({ onCollapseChange }: EnterpriseSidebarProps) 
   return (
     <Sidebar
       className={cn(
-        "transition-all duration-300 mt-20 h-[calc(100vh-5rem)]"
+        "transition-all duration-300",
+        isMobile 
+          ? "h-[calc(100vh-4rem)] mt-16" 
+          : "mt-20 h-[calc(100vh-5rem)]"
       )}
-      collapsible="icon"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      collapsible={isMobile ? "offcanvas" : "icon"}
+      onMouseEnter={!isMobile ? handleMouseEnter : undefined}
+      onMouseLeave={!isMobile ? handleMouseLeave : undefined}
     >
       <SidebarContent className="pt-4">
         <SidebarGroup>

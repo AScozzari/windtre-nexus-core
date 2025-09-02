@@ -3,6 +3,7 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { EnterpriseSidebar } from './EnterpriseSidebar';
 import { EnterpriseHeader } from './EnterpriseHeader';
 import { WorkspaceSidebar } from './WorkspaceSidebar';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface EnterpriseLayoutProps {
   children: ReactNode;
@@ -11,6 +12,7 @@ interface EnterpriseLayoutProps {
 export const EnterpriseLayout = ({ children }: EnterpriseLayoutProps) => {
   const [workspaceCollapsed, setWorkspaceCollapsed] = useState(true);
   const [leftSidebarCollapsed, setLeftSidebarCollapsed] = useState(true);
+  const isMobile = useIsMobile();
 
   return (
     <SidebarProvider>
@@ -21,18 +23,22 @@ export const EnterpriseLayout = ({ children }: EnterpriseLayoutProps) => {
         </div>
         
         {/* Contenuto sotto l'header */}
-        <div className="flex flex-1">
+        <div className="flex flex-1 relative">
           <EnterpriseSidebar onCollapseChange={setLeftSidebarCollapsed} />
           
-          <main className={`flex-1 p-6 bg-gradient-to-br from-background to-muted/30 transition-all duration-300 ${
-            workspaceCollapsed ? 'pr-16' : 'pr-96'
+          <main className={`flex-1 transition-all duration-300 bg-gradient-to-br from-background to-muted/30 ${
+            isMobile 
+              ? 'p-4' 
+              : `p-6 ${workspaceCollapsed ? 'pr-16' : 'pr-96'}`
           }`}>
             {children}
           </main>
           
-          <WorkspaceSidebar 
-            onCollapseChange={setWorkspaceCollapsed}
-          />
+          {!isMobile && (
+            <WorkspaceSidebar 
+              onCollapseChange={setWorkspaceCollapsed}
+            />
+          )}
         </div>
       </div>
     </SidebarProvider>
