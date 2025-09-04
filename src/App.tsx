@@ -3,6 +3,9 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "@/contexts/AuthContext";
+import ProtectedRoute from "@/components/ProtectedRoute";
+import Login from "./pages/Login";
 import Index from "./pages/Index";
 import Clienti from "./pages/Clienti";
 import Contratti from "./pages/Contratti";
@@ -21,37 +24,40 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/clienti" element={<Clienti />} />
-          <Route path="/contratti" element={<Contratti />} />
-          <Route path="/fatturazione" element={<Fatturazione />} />
-          <Route path="/servizi/mobile" element={<ServiziMobile />} />
-          
-          {/* Main Section Routes */}
-          <Route path="/hr" element={<HRSection />} />
-          <Route path="/amministrazione" element={<AmministrazioneSection />} />
-          <Route path="/cassa" element={<CassaSection />} />
-          <Route path="/ai" element={<AISection />} />
-          
-          {/* Legacy HR Routes */}
-          <Route path="/hr/dipendenti" element={<HRDipendenti />} />
-          
-          {/* Legacy Cassa Routes */}
-          <Route path="/cassa/pos" element={<CassaPOS />} />
-          
-          {/* Legacy AI Tools Routes */}
-          <Route path="/ai/assistant" element={<AIAssistant />} />
-          
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
+    <AuthProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
+            <Route path="/clienti" element={<ProtectedRoute><Clienti /></ProtectedRoute>} />
+            <Route path="/contratti" element={<ProtectedRoute><Contratti /></ProtectedRoute>} />
+            <Route path="/fatturazione" element={<ProtectedRoute><Fatturazione /></ProtectedRoute>} />
+            <Route path="/servizi/mobile" element={<ProtectedRoute><ServiziMobile /></ProtectedRoute>} />
+            
+            {/* Main Section Routes */}
+            <Route path="/hr" element={<ProtectedRoute><HRSection /></ProtectedRoute>} />
+            <Route path="/amministrazione" element={<ProtectedRoute><AmministrazioneSection /></ProtectedRoute>} />
+            <Route path="/cassa" element={<ProtectedRoute><CassaSection /></ProtectedRoute>} />
+            <Route path="/ai" element={<ProtectedRoute><AISection /></ProtectedRoute>} />
+            
+            {/* Legacy HR Routes */}
+            <Route path="/hr/dipendenti" element={<ProtectedRoute><HRDipendenti /></ProtectedRoute>} />
+            
+            {/* Legacy Cassa Routes */}
+            <Route path="/cassa/pos" element={<ProtectedRoute><CassaPOS /></ProtectedRoute>} />
+            
+            {/* Legacy AI Tools Routes */}
+            <Route path="/ai/assistant" element={<ProtectedRoute><AIAssistant /></ProtectedRoute>} />
+            
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </AuthProvider>
   </QueryClientProvider>
 );
 

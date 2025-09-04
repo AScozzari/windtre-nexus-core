@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Bell, Search, Settings, User, Store, X } from 'lucide-react';
+import { Bell, Search, Settings, User, Store, X, LogOut } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { SidebarTrigger } from '@/components/ui/sidebar';
@@ -15,6 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useNavigate } from 'react-router-dom';
+import { useToast } from '@/hooks/use-toast';
 
 const windtreLogo = '/lovable-uploads/0729be2a-b1da-4ecc-a1d4-321013db32d6.png';
 
@@ -22,8 +24,19 @@ export const EnterpriseHeader = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showResults, setShowResults] = useState(false);
   const [selectedStore, setSelectedStore] = useState('Windtre Milano');
+  const { user, logout } = useAuth();
+  const { toast } = useToast();
   const navigate = useNavigate();
   const isMobile = useIsMobile();
+
+  const handleLogout = () => {
+    logout();
+    toast({
+      title: "Logout eseguito",
+      description: "Sei stato disconnesso dal sistema",
+    });
+    navigate('/login');
+  };
 
   const stores = [
     'Windtre Milano',
@@ -114,13 +127,28 @@ export const EnterpriseHeader = () => {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="glass border-border/50">
-              <DropdownMenuLabel>Il mio Account</DropdownMenuLabel>
+              <DropdownMenuLabel className="font-normal">
+                <div className="flex flex-col space-y-1">
+                  <p className="text-sm font-medium leading-none">{user?.name}</p>
+                  <p className="text-xs leading-none text-muted-foreground">
+                    {user?.email}
+                  </p>
+                </div>
+              </DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Profilo</DropdownMenuItem>
-              <DropdownMenuItem>Impostazioni</DropdownMenuItem>
-              <DropdownMenuItem>Team</DropdownMenuItem>
+              <DropdownMenuItem>
+                <User className="mr-2 h-4 w-4" />
+                Profilo
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Settings className="mr-2 h-4 w-4" />
+                Impostazioni
+              </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
+              <DropdownMenuItem onClick={handleLogout} className="text-destructive">
+                <LogOut className="mr-2 h-4 w-4" />
+                Logout
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
