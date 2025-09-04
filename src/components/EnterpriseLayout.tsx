@@ -17,13 +17,13 @@ export const EnterpriseLayout = ({ children }: EnterpriseLayoutProps) => {
   return (
     <SidebarProvider>
       <div className="min-h-screen flex flex-col w-full relative">
-        {/* Header sopra tutto */}
-        <div className="sticky top-0 z-40 w-full">
+        {/* Header fisso sopra tutto */}
+        <div className="fixed top-0 left-0 right-0 z-50 w-full">
           <EnterpriseHeader />
         </div>
         
-        {/* Contenuto sotto l'header */}
-        <div className="flex flex-1 relative">
+        {/* Contenuto sotto l'header con padding-top per compensare l'header fisso */}
+        <div className="flex flex-1 relative pt-16">
           <EnterpriseSidebar onCollapseChange={setLeftSidebarCollapsed} />
           
           <main className={`flex-1 transition-all duration-300 bg-gradient-to-br from-background to-muted/30 ${
