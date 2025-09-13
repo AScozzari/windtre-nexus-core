@@ -5,11 +5,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Eye, EyeOff, Building2, Shield } from "lucide-react";
+import { Eye, EyeOff, Building2, Shield, Zap } from "lucide-react";
 import { useAuth } from '@/core/providers/AuthProvider';
 import { useToast } from "@/hooks/use-toast";
-import w3Logo from "@/assets/w3c-logo.png";
-import windtreLogo from "@/assets/windtre-logo.png";
 
 export const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -65,33 +63,39 @@ export const LoginPage = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-primary/20 via-background to-secondary/20">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-windtre-orange/20 via-background to-windtre-purple/20">
       <div className="w-full max-w-md">
-        <Card className="glass-subtle border-white/20">
+        <Card className="glass-strong border-border/50">
           <CardHeader className="text-center space-y-4">
-            <div className="flex items-center justify-center space-x-4">
-              <img src={w3Logo} alt="W3" className="h-12 w-12" />
-              <img src={windtreLogo} alt="WindTre" className="h-12 w-auto" />
+            <div className="flex items-center justify-center space-x-2">
+              <div className="p-3 rounded-xl bg-gradient-primary">
+                <Building2 className="h-8 w-8 text-white" />
+              </div>
+              <div className="p-3 rounded-xl bg-gradient-secondary">
+                <Zap className="h-8 w-8 text-white" />
+              </div>
             </div>
-            <CardTitle className="text-2xl text-white">W3 Suite</CardTitle>
-            <CardDescription className="text-white/70">
-              Accedi alla piattaforma gestionale enterprise
+            <CardTitle className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+              W3 Suite Enterprise
+            </CardTitle>
+            <CardDescription>
+              Piattaforma gestionale WindTre Partner
             </CardDescription>
           </CardHeader>
           
           <form onSubmit={handleSubmit}>
             <CardContent className="space-y-4">
               {error && (
-                <Alert className="border-red-500/50 bg-red-500/10">
-                  <Shield className="h-4 w-4 text-red-500" />
-                  <AlertDescription className="text-red-300">
+                <Alert variant="destructive" className="border-destructive/50 bg-destructive/10">
+                  <Shield className="h-4 w-4" />
+                  <AlertDescription>
                     {error}
                   </AlertDescription>
                 </Alert>
               )}
               
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-white">Email</Label>
+                <Label htmlFor="email">Email Aziendale</Label>
                 <Input
                   id="email"
                   type="email"
@@ -99,12 +103,12 @@ export const LoginPage = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="admin@w3.org"
                   required
-                  className="bg-white/5 border-white/20 text-white placeholder:text-white/50"
+                  className="glass border-border/50"
                 />
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-white">Password</Label>
+                <Label htmlFor="password">Password</Label>
                 <div className="relative">
                   <Input
                     id="password"
@@ -113,7 +117,7 @@ export const LoginPage = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
                     required
-                    className="bg-white/5 border-white/20 text-white placeholder:text-white/50 pr-10"
+                    className="glass border-border/50 pr-10"
                   />
                   <Button
                     type="button"
@@ -123,9 +127,9 @@ export const LoginPage = () => {
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? (
-                      <EyeOff className="h-4 w-4 text-white/70" />
+                      <EyeOff className="h-4 w-4 text-muted-foreground" />
                     ) : (
-                      <Eye className="h-4 w-4 text-white/70" />
+                      <Eye className="h-4 w-4 text-muted-foreground" />
                     )}
                   </Button>
                 </div>
@@ -135,25 +139,38 @@ export const LoginPage = () => {
             <CardFooter className="flex flex-col space-y-4">
               <Button 
                 type="submit" 
-                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
+                variant="enterprise"
+                className="w-full"
                 disabled={isLoading}
               >
                 {isLoading ? (
                   <div className="flex items-center space-x-2">
                     <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
-                    <span>Accesso...</span>
+                    <span>Accesso in corso...</span>
                   </div>
                 ) : (
-                  'Accedi'
+                  'Accedi alla Piattaforma'
                 )}
               </Button>
               
-              <div className="text-center space-y-2">
-                <p className="text-sm text-white/70">Credenziali di test:</p>
-                <div className="text-xs text-white/60 space-y-1">
-                  <div>👑 Admin: admin@w3.org / admin123</div>
-                  <div>🏪 Manager: manager@store1.w3.org / manager123</div>
-                  <div>💰 Cassiere: cashier@store1.w3.org / cashier123</div>
+              <div className="text-center space-y-3">
+                <p className="text-sm text-muted-foreground font-medium">Credenziali Demo:</p>
+                <div className="glass p-3 rounded-lg space-y-2 text-xs">
+                  <div className="flex items-center justify-between">
+                    <span className="text-muted-foreground">👑 Super Admin:</span>
+                    <code className="text-primary">admin@w3.org</code>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-muted-foreground">🏪 Store Manager:</span>
+                    <code className="text-primary">manager@store1.w3.org</code>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-muted-foreground">💰 Cassiere:</span>
+                    <code className="text-primary">cashier@store1.w3.org</code>
+                  </div>
+                  <div className="border-t border-border/50 pt-2 mt-2">
+                    <p className="text-muted-foreground">Password per tutti: <code className="text-primary">admin123</code> / <code className="text-primary">manager123</code> / <code className="text-primary">cashier123</code></p>
+                  </div>
                 </div>
               </div>
             </CardFooter>
