@@ -13,10 +13,19 @@ import {
   AlertCircle,
   CheckCircle,
   Clock,
-  BarChart3
+  BarChart3,
+  Plus,
+  Download,
+  Filter,
+  Search,
+  ArrowUpRight,
+  Smartphone,
+  Wifi,
+  Globe
 } from "lucide-react";
 import { useAuth } from '@/core/providers/AuthProvider';
 import { useRBAC } from '@/core/providers/RBACProvider';
+import heroImage from '@/assets/hero-dashboard.jpg';
 
 export const DashboardPage = () => {
   const { user, tenant } = useAuth();
@@ -25,138 +34,179 @@ export const DashboardPage = () => {
   const currentHour = new Date().getHours();
   const greeting = currentHour < 12 ? 'Buongiorno' : currentHour < 18 ? 'Buon pomeriggio' : 'Buonasera';
   
-  // Mock KPI data
+  // WindTre Enterprise KPIs
   const kpis = [
     {
-      title: "Vendite Oggi",
-      value: "€12.450",
-      change: "+8.2%",
+      title: "Fatturato Mensile",
+      value: "€1.2M",
+      change: "+15.3%",
       trend: "up",
       icon: Euro,
-      color: "text-green-500"
+      description: "vs mese precedente"
     },
     {
-      title: "Ordini Attivi", 
-      value: "47",
-      change: "+12",
+      title: "Nuove Attivazioni", 
+      value: "2.847",
+      change: "+22%",
       trend: "up",
-      icon: ShoppingCart,
-      color: "text-blue-500"
+      icon: Smartphone,
+      description: "linee attivate"
     },
     {
-      title: "Lead CRM",
-      value: "156",
-      change: "+24",
+      title: "Copertura 5G",
+      value: "94.2%",
+      change: "+2.1%",
       trend: "up", 
-      icon: Users,
-      color: "text-purple-500"
+      icon: Wifi,
+      description: "territorio coperto"
     },
     {
-      title: "Stock Items",
-      value: "1.249",
-      change: "-15",
-      trend: "down",
-      icon: Package,
-      color: "text-orange-500"
+      title: "Clienti Enterprise",
+      value: "156",
+      change: "+8",
+      trend: "up",
+      icon: Globe,
+      description: "aziende attive"
     }
+  ];
+
+  const quickActions = [
+    { 
+      title: 'Ricerca Cliente', 
+      desc: 'Trova per telefono o codice fiscale', 
+      icon: Search, 
+      action: 'Cerca',
+      variant: 'glass-orange' 
+    },
+    { 
+      title: 'Nuovo Contratto', 
+      desc: 'Attiva nuova linea o servizio', 
+      icon: Plus, 
+      action: 'Attiva',
+      variant: 'glass-purple' 
+    },
+    { 
+      title: 'Report Vendite', 
+      desc: 'Visualizza performance e analytics', 
+      icon: BarChart3, 
+      action: 'Apri',
+      variant: 'glass' 
+    },
+    { 
+      title: 'Gestione Gare', 
+      desc: 'Partecipa a nuove gare pubbliche', 
+      icon: Target, 
+      action: 'Gestisci',
+      variant: 'glass' 
+    },
   ];
 
   const activities = [
     {
       id: 1,
-      type: "order",
-      message: "Nuovo ordine #ORD-2024-001 creato",
-      time: "2 minuti fa",
-      status: "success"
+      type: "Attivazione",
+      message: "Nuova linea Business attivata",
+      client: "Acme Corp S.r.l.",
+      time: "5 min fa",
+      status: "success",
+      value: "€850/mese"
     },
     {
       id: 2,
-      type: "stock",
-      message: "Giacenza bassa per iPhone 15 Pro",
-      time: "15 minuti fa",
-      status: "warning"
+      type: "Gara",
+      message: "Proposta inviata per gara CONSIP",
+      client: "Ministero della Salute",
+      time: "1 ora fa", 
+      status: "info",
+      value: "€2.4M"
     },
     {
       id: 3,
-      type: "lead",
-      message: "Nuovo lead da campagna WindTre",
-      time: "32 minuti fa",
-      status: "info"
+      type: "Contratto",
+      message: "Rinnovo contratto fibra aziendale",
+      client: "TechStart S.p.A.",
+      time: "2 ore fa",
+      status: "success",
+      value: "€1.200/mese"
     },
     {
       id: 4,
-      type: "payment",
-      message: "Pagamento €850 elaborato",
-      time: "1 ora fa",
-      status: "success"
+      type: "Alert",
+      message: "Scadenza contratto in 30 giorni",
+      client: "Global Solutions Ltd",
+      time: "4 ore fa",
+      status: "warning",
+      value: "€3.500/mese"
     }
   ];
 
-  const getActivityIcon = (type: string) => {
-    switch (type) {
-      case 'order': return ShoppingCart;
-      case 'stock': return Package;
-      case 'lead': return Users;
-      case 'payment': return Euro;
-      default: return Activity;
-    }
-  };
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'success': return 'text-green-500';
-      case 'warning': return 'text-yellow-500';
-      case 'info': return 'text-blue-500';
-      default: return 'text-gray-500';
-    }
-  };
-
   return (
     <div className="space-y-6">
-      {/* Welcome Header */}
-      <div className="glass-subtle rounded-lg p-6 border border-white/10">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-bold text-white mb-2">
-              {greeting}, {user?.name}! 👋
-            </h1>
-            <p className="text-white/70">
-              Ecco una panoramica delle tue attività su <span className="font-semibold">{tenant}</span>
-            </p>
-          </div>
-          <div className="hidden md:flex items-center space-x-2">
-            <Badge variant="outline" className="border-green-500/50 text-green-400">
-              <CheckCircle className="w-3 h-3 mr-1" />
-              Tutto OK
-            </Badge>
-            <Badge variant="outline" className="border-blue-500/50 text-blue-400">
-              <Clock className="w-3 h-3 mr-1" />
-              Live
-            </Badge>
+      {/* Hero Section with WindTre Branding */}
+      <div className="relative mb-8 overflow-hidden rounded-2xl">
+        <div 
+          className="h-48 bg-cover bg-center relative"
+          style={{ backgroundImage: `url(${heroImage})` }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-windtre-orange/90 to-windtre-purple/90" />
+          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 p-4 md:p-8 h-full">
+            <div className="text-white">
+              <h1 className="text-3xl font-bold mb-2">
+                {greeting}, {user?.name}! 
+              </h1>
+              <p className="text-white/90 text-lg mb-3">
+                Dashboard Executive - {tenant}
+              </p>
+              <div className="flex gap-2">
+                <Badge variant="secondary" className="bg-white/20 text-white border-white/30">
+                  <CheckCircle className="w-3 h-3 mr-1" />
+                  Sistema Operativo
+                </Badge>
+                <Badge variant="secondary" className="bg-white/20 text-white border-white/30">
+                  <Clock className="w-3 h-3 mr-1" />
+                  Aggiornato ora
+                </Badge>
+              </div>
+            </div>
+            <div className="flex gap-3 w-full md:w-auto md:justify-end">
+              <Button variant="glass" className="bg-white/20 text-white border-white/30 hover:bg-white/30 w-full md:w-auto">
+                <Download className="h-4 w-4 mr-2" />
+                Export Dati
+              </Button>
+              <Button variant="enterprise" className="w-full md:w-auto">
+                <Plus className="h-4 w-4 mr-2" />
+                Nuovo Cliente
+              </Button>
+            </div>
           </div>
         </div>
       </div>
 
       {/* KPI Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {kpis.map((kpi, index) => {
           const IconComponent = kpi.icon;
           return (
-            <Card key={index} className="glass-subtle border-white/10 hover:border-white/20 transition-all duration-300">
+            <Card key={index} className="glass-strong border-border/50 hover:glass transition-all duration-300 group">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div className="space-y-2">
-                    <p className="text-sm text-white/70">{kpi.title}</p>
-                    <p className="text-2xl font-bold text-white">{kpi.value}</p>
-                    <div className="flex items-center space-x-1">
-                      <TrendingUp className={`w-4 h-4 ${kpi.trend === 'up' ? 'text-green-500' : 'text-red-500'}`} />
-                      <span className={`text-sm ${kpi.trend === 'up' ? 'text-green-400' : 'text-red-400'}`}>
-                        {kpi.change}
+                    <p className="text-sm text-muted-foreground">{kpi.title}</p>
+                    <p className="text-3xl font-bold">{kpi.value}</p>
+                    <div className="flex items-center space-x-2">
+                      <div className="flex items-center space-x-1">
+                        <ArrowUpRight className="w-4 h-4 text-success" />
+                        <span className="text-sm font-medium text-success">
+                          {kpi.change}
+                        </span>
+                      </div>
+                      <span className="text-xs text-muted-foreground">
+                        {kpi.description}
                       </span>
                     </div>
                   </div>
-                  <div className={`p-3 rounded-full bg-white/10`}>
-                    <IconComponent className={`w-6 h-6 ${kpi.color}`} />
+                  <div className="p-3 rounded-xl bg-gradient-primary group-hover:shadow-glow-orange transition-all duration-300">
+                    <IconComponent className="w-6 h-6 text-white" />
                   </div>
                 </div>
               </CardContent>
@@ -165,71 +215,102 @@ export const DashboardPage = () => {
         })}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Recent Activities */}
-        <Card className="glass-subtle border-white/10 lg:col-span-2">
-          <CardHeader>
-            <CardTitle className="text-white flex items-center space-x-2">
-              <Activity className="w-5 h-5" />
-              <span>Attività Recenti</span>
-            </CardTitle>
-            <CardDescription className="text-white/70">
-              Ultimi eventi dal tuo sistema
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {activities.map((activity) => {
-              const IconComponent = getActivityIcon(activity.type);
-              return (
-                <div key={activity.id} className="flex items-start space-x-3 p-3 rounded-lg hover:bg-white/5 transition-colors">
-                  <div className={`p-2 rounded-full bg-white/10`}>
-                    <IconComponent className={`w-4 h-4 ${getStatusColor(activity.status)}`} />
+      {/* Quick Actions */}
+      <div className="mb-8">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-xl font-semibold">Azioni Rapide</h2>
+          <div className="flex gap-2">
+            <Button variant="glass" size="sm">
+              <Filter className="h-4 w-4 mr-2" />
+              Filtri
+            </Button>
+          </div>
+        </div>
+        
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          {quickActions.map((item, index) => {
+            const IconComponent = item.icon;
+            return (
+              <Card key={index} className="glass-strong border-border/50 hover:glass transition-all duration-300">
+                <CardHeader className="pb-3">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-lg bg-gradient-primary">
+                      <IconComponent className="h-4 w-4 text-white" />
+                    </div>
+                    <div>
+                      <CardTitle className="text-sm font-medium">{item.title}</CardTitle>
+                      <CardDescription className="text-xs">{item.desc}</CardDescription>
+                    </div>
                   </div>
-                  <div className="flex-1">
-                    <p className="text-sm text-white">{activity.message}</p>
-                    <p className="text-xs text-white/50 mt-1">{activity.time}</p>
+                </CardHeader>
+                <CardContent className="pt-0">
+                  <Button variant="enterprise" size="sm" className="w-full">
+                    {item.action}
+                  </Button>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Recent Activities */}
+      <Card className="glass-strong border-border/50">
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle className="text-xl flex items-center space-x-2">
+                <Activity className="w-5 h-5" />
+                <span>Attività Recenti</span>
+              </CardTitle>
+              <CardDescription>
+                Operazioni e transazioni più recenti
+              </CardDescription>
+            </div>
+            <Button variant="ghost" size="sm">
+              Vedi tutte
+              <ArrowUpRight className="w-4 h-4 ml-1" />
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {activities.map((activity) => (
+              <div key={activity.id} className="flex items-center justify-between p-4 rounded-lg glass hover:glass-strong transition-all duration-200">
+                <div className="flex items-center gap-4">
+                  <div className={`p-2 rounded-full ${
+                    activity.status === 'success' ? 'bg-success/20' :
+                    activity.status === 'warning' ? 'bg-warning/20' :
+                    activity.status === 'info' ? 'bg-info/20' : 'bg-muted/20'
+                  }`}>
+                    <div className={`w-2 h-2 rounded-full ${
+                      activity.status === 'success' ? 'bg-success' :
+                      activity.status === 'warning' ? 'bg-warning' :
+                      activity.status === 'info' ? 'bg-info' : 'bg-muted'
+                    }`} />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <Badge variant="outline" className="text-xs">
+                        {activity.type}
+                      </Badge>
+                      <span className="text-xs text-muted-foreground">{activity.time}</span>
+                    </div>
+                    <p className="text-sm font-medium">{activity.message}</p>
+                    <p className="text-xs text-muted-foreground">{activity.client}</p>
                   </div>
                 </div>
-              );
-            })}
-            <Button variant="outline" className="w-full border-white/20 text-white hover:bg-white/10">
-              Vedi tutte le attività
-            </Button>
-          </CardContent>
-        </Card>
-
-        {/* Quick Actions */}
-        <Card className="glass-subtle border-white/10">
-          <CardHeader>
-            <CardTitle className="text-white">Azioni Rapide</CardTitle>
-            <CardDescription className="text-white/70">
-              Funzioni più utilizzate
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <Button className="w-full justify-start bg-primary/20 hover:bg-primary/30 text-primary border-primary/30">
-              <ShoppingCart className="w-4 h-4 mr-2" />
-              Nuovo Ordine
-            </Button>
-            <Button variant="outline" className="w-full justify-start border-white/20 text-white hover:bg-white/10">
-              <Users className="w-4 h-4 mr-2" />
-              Aggiungi Lead
-            </Button>
-            <Button variant="outline" className="w-full justify-start border-white/20 text-white hover:bg-white/10">
-              <Package className="w-4 h-4 mr-2" />
-              Verifica Stock
-            </Button>
-            <Button variant="outline" className="w-full justify-start border-white/20 text-white hover:bg-white/10">
-              <BarChart3 className="w-4 h-4 mr-2" />
-              Report Vendite
-            </Button>
-            <Button variant="outline" className="w-full justify-start border-white/20 text-white hover:bg-white/10">
-              <Target className="w-4 h-4 mr-2" />
-              Nuova Gara
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
+                <div className="text-right">
+                  <p className="font-semibold text-sm">{activity.value}</p>
+                  <Button variant="ghost" size="sm" className="mt-1">
+                    Dettagli
+                  </Button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
