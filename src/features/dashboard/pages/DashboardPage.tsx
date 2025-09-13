@@ -26,6 +26,7 @@ import {
 import { useAuth } from '@/core/providers/AuthProvider';
 import { useRBAC } from '@/core/providers/RBACProvider';
 import heroImage from '@/assets/hero-dashboard.jpg';
+import { useEffect } from 'react';
 
 export const DashboardPage = () => {
   const { user, tenant } = useAuth();
@@ -33,6 +34,18 @@ export const DashboardPage = () => {
   
   const currentHour = new Date().getHours();
   const greeting = currentHour < 12 ? 'Buongiorno' : currentHour < 18 ? 'Buon pomeriggio' : 'Buonasera';
+  
+  useEffect(() => {
+    document.title = 'Dashboard Enterprise WindTre - W3 Suite';
+    const desc = 'Dashboard enterprise: KPI, attività recenti e azioni rapide per WindTre Partner.';
+    let meta = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
+    if (!meta) {
+      meta = document.createElement('meta');
+      meta.name = 'description';
+      document.head.appendChild(meta);
+    }
+    meta.content = desc;
+  }, []);
   
   // WindTre Enterprise KPIs
   const kpis = [
@@ -141,9 +154,9 @@ export const DashboardPage = () => {
   ];
 
   return (
-    <div className="space-y-6">
+    <main className="space-y-6" role="main" aria-label="Dashboard Enterprise">
       {/* Hero Section with WindTre Branding */}
-      <div className="relative mb-8 overflow-hidden rounded-2xl">
+      <header className="relative mb-8 overflow-hidden rounded-2xl" role="banner">
         <div 
           className="h-48 bg-cover bg-center relative"
           style={{ backgroundImage: `url(${heroImage})` }}
@@ -180,7 +193,7 @@ export const DashboardPage = () => {
             </div>
           </div>
         </div>
-      </div>
+      </header>
 
       {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -311,6 +324,6 @@ export const DashboardPage = () => {
           </div>
         </CardContent>
       </Card>
-    </div>
+    </main>
   );
 };
