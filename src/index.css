@@ -66,13 +66,13 @@ All colors based on official WindTre brand palette - HSL format only
     --gradient-background: linear-gradient(135deg, hsl(210 25% 97%), hsl(210 30% 95%));
 
     /* Enterprise Sidebar */
-    --sidebar-background: hsl(var(--glass-white));
+    --sidebar-background: var(--glass-white);
     --sidebar-foreground: 210 15% 25%;
     --sidebar-primary: var(--windtre-orange);
     --sidebar-primary-foreground: var(--glass-white);
-    --sidebar-accent: hsla(var(--windtre-orange), 0.1);
+    --sidebar-accent: var(--windtre-orange) / 0.1;
     --sidebar-accent-foreground: 210 15% 25%;
-    --sidebar-border: hsla(var(--glass-white), 0.2);
+    --sidebar-border: var(--glass-white) / 0.2;
     --sidebar-ring: var(--windtre-orange);
 
     /* Enterprise Status Colors */
@@ -119,11 +119,11 @@ All colors based on official WindTre brand palette - HSL format only
     --glass-border: hsla(var(--glass-white), 0.1);
     --glass-shadow: 0 8px 32px hsla(var(--glass-black), 0.3);
 
-    --sidebar-background: hsl(210 25% 15%);
+    --sidebar-background: 210 25% 15%;
     --sidebar-foreground: 210 15% 75%;
-    --sidebar-accent: hsla(var(--windtre-orange), 0.2);
+    --sidebar-accent: var(--windtre-orange) / 0.2;
     --sidebar-accent-foreground: 210 15% 75%;
-    --sidebar-border: hsla(var(--glass-white), 0.1);
+    --sidebar-border: var(--glass-white) / 0.1;
 
     --gradient-background: linear-gradient(135deg, hsl(210 25% 8%), hsl(210 30% 10%));
   }
