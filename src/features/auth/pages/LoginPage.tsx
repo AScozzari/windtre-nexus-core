@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -20,6 +20,7 @@ export const LoginPage = () => {
   const { user, login, isLoading } = useAuth();
   const { toast } = useToast();
   const location = useLocation();
+  const navigate = useNavigate();
   
   // Redirect if already logged in
   if (user && !isLoading) {
@@ -40,10 +41,13 @@ export const LoginPage = () => {
       const success = await login({ email, password });
       
       if (success) {
+        const from = location.state?.from?.pathname || '/';
         toast({
           title: "Login effettuato",
           description: "Benvenuto in W3 Suite",
         });
+        // Navigate immediately to avoid visual flicker
+        navigate(from, { replace: true });
       } else {
         setError('Credenziali non valide');
       }
