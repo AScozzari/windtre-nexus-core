@@ -157,6 +157,14 @@ All colors based on official WindTre brand palette - HSL format only
     box-shadow: var(--glass-shadow);
   }
 
+  .glass-subtle {
+    background: hsla(var(--glass-white), 0.15);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid hsla(var(--glass-white), 0.1);
+    box-shadow: 0 4px 16px hsla(var(--glass-black), 0.05);
+  }
+
   /* Professional Animations */
   .animate-float {
     animation: float 6s ease-in-out infinite;
